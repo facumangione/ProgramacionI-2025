@@ -10,6 +10,8 @@ def create_app():
     load_dotenv()
     api.add_resource(resources.UsuarioResource,'/usuario/<id>')
     api.add_resource(resources.UsuariosResource,'/usuarios')
-    api.init_app()
+    api.add_resource(resources.PedidoResource,'/pedido/<id>')
+    api.add_resource(resources.PedidosResource,'/pedidos')
+    api.init_app(app)
     return app
 

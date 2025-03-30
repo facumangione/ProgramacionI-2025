@@ -1,0 +1,176 @@
+{
+	"info": {
+		"_postman_id": "c69dcee2-bde0-4216-be44-ef5953282e0d",
+		"name": "Programacion1-2025",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "34023614"
+	},
+	"item": [
+		{
+			"name": "usuario/s",
+			"item": [
+				{
+					"name": "usuarios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/usuarios"
+					},
+					"response": []
+				},
+				{
+					"name": "usuarios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre_apellido\":\"Maria Peña\",\n    \"DNI\":\"40264857\",\n    \"telefono\":\"2615492167\",\n    \"mail\":\"mariapeña@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/usuarios"
+					},
+					"response": []
+				},
+				{
+					"name": "usuario 1",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/usuario/1"
+					},
+					"response": []
+				},
+				{
+					"name": "usuario 1",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://127.0.0.1:7000/usuario/1"
+					},
+					"response": []
+				},
+				{
+					"name": "usuario 1",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre_apellido\":\"Pedro Gonzalez\",\n    \"DNI\":\"45956487\",\n    \"telefono\":\"2616754862\",\n    \"mail\":\"pedrogonzalez12@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/usuario/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pedido/s",
+			"item": [
+				{
+					"name": "pedidos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/pedidos"
+					},
+					"response": []
+				},
+				{
+					"name": "pedidos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id_usuario\": \"2\",\n        \"total\": \"15000\",\n        \"comidas\": \"pizza\",\n        \"estado\": \"listo\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/pedidos"
+					},
+					"response": []
+				},
+				{
+					"name": "pedido",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/pedido/1"
+					},
+					"response": []
+				},
+				{
+					"name": "pedido 1",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_usuario\": \"1\",\n    \"total\": \"12000\",\n    \"comidas\": \"hamburguesa\",\n    \"estado\": \"en preparacion\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/pedido/1"
+					},
+					"response": []
+				},
+				{
+					"name": "pedido 1",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "http://127.0.0.1:7000/pedido/1"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
