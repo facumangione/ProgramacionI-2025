@@ -1,8 +1,9 @@
-/bin
+/backend/bin/
 /include
-/lib
+/backend/lib
 /lib64
 pyvenv.cfg
 .env
 /venv
-backend/main/__pycache__/
+/backend/main/__pycache__/
+/backend/main/resources/__pycache__/
