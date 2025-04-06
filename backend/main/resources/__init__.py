@@ -2,9 +2,11 @@ from .usuario import Usuario as UsuarioResource
 from .usuario import Usuarios as UsuariosResource
 from .pedido import Pedido as PedidoResource
 from .pedido import Pedidos as PedidosResource
-from .comida import ComidaResource 
-from .comida import COMIDAS as ComidasResource
-from .producto import Producto as ProductoResource
-from .producto import Productos as ProductosResource
-from .reseña import Reseña as ReseñaResource
-from .reseña import Reseñas as ReseñasResource
+from .comida import Comida as ComidaResource 
+from .comida import Comidas as ComidasResource
+from .resena import Resena as ResenaResource
+from .resena import Resenas as ResenasResource
+from .login import Login as LoginResource
+from .signin import Signin as SigninResource
+from .notificacion import Notificacion as NotificacionResource
+from .notificacion import Notificaciones as NotificacionesResource

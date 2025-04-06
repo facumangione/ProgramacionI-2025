@@ -8,7 +8,7 @@ COMIDAS = {
     3: {'nombre': 'Fideos', 'descripcion': 'Con salsa bolognesa', 'precio': 4500}
 }
 
-class ComidaResource(Resource):
+class Comida(Resource):
     def get(self, id):
         """Obtener una comida por ID"""
         if int(id) in COMIDAS:
@@ -30,3 +30,13 @@ class ComidaResource(Resource):
             comida.update(data)
             return 'Comida editada con éxito', 201
         return 'El ID de la comida que intentan editar es inexistente', 404
+    
+class Comidas(Resource):
+    def get(self):
+        return COMIDAS
+    
+    def post(self):
+        new_food=request.get_json()
+        id=int(max(COMIDAS.keys()))+1
+        COMIDAS[id]=new_food
+        return 'Creado con exito',201

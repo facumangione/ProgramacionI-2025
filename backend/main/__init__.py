@@ -21,13 +21,19 @@ def create_app():
     api.add_resource(resources.ComidaResource, '/comida/<id>')
     api.add_resource(resources.ComidasResource, '/comidas')
 
-    # Rutas de productos (stock)
-    api.add_resource(resources.ProductoResource, '/producto/<id>')
-    api.add_resource(resources.ProductosResource, '/productos')
-
     # Rutas de reseñas
-    api.add_resource(resources.ReseñaResource, '/reseña/<id>')
-    api.add_resource(resources.ReseñasResource, '/reseñas')
+    api.add_resource(resources.ResenaResource, '/resena/<id>')
+    api.add_resource(resources.ResenasResource, '/resenas')
+
+    #Login
+    api.add_resource(resources.LoginResource, '/login')
+
+    #Signin
+    api.add_resource(resources.SigninResource, '/signin')
+
+    #Notificaciones
+    api.add_resource(resources.NotificacionResource, '/notificacion/<id>')
+    api.add_resource(resources.NotificacionesResource, '/notificaciones')
 
     api.init_app(app)
     return app

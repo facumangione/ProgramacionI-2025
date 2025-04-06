@@ -171,6 +171,250 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "usuario 1",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/usuario/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "signin",
+			"item": [
+				{
+					"name": "usuario nuevo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre_apellido\":\"Maria Peña\",\n    \"DNI\":\"40264857\",\n    \"telefono\":\"2615492167\",\n    \"mail\":\"mariapeña@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/usuarios"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notificacion",
+			"item": [
+				{
+					"name": "notificacion 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/notificacion/1"
+					},
+					"response": []
+				},
+				{
+					"name": "notificacion 1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_usuario\": \"1\",\n    \"mensaje\": \"hola\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/notificacion/1"
+					},
+					"response": []
+				},
+				{
+					"name": "notificacion 1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://127.0.0.1:7000/notificacion/1"
+					},
+					"response": []
+				},
+				{
+					"name": "notificaciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/notificaciones"
+					},
+					"response": []
+				},
+				{
+					"name": "notificaciones",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_usuario\": \"1\",\n    \"mensaje\": \"Esta listo tu pedido\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/notificaciones"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comida",
+			"item": [
+				{
+					"name": "comida 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/comida/1"
+					},
+					"response": []
+				},
+				{
+					"name": "comida 1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Hamburguesa\",\n    \"descripcion\": \"triple carne con queso\",\n    \"precio\": 5000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/comida/1"
+					},
+					"response": []
+				},
+				{
+					"name": "comida 1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://127.0.0.1:7000/comida/1"
+					},
+					"response": []
+				},
+				{
+					"name": "comidas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/comidas"
+					},
+					"response": []
+				},
+				{
+					"name": "comidas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Hamburguesa\",\n    \"descripcion\": \"Doble carne con queso\",\n    \"precio\": 5000\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/comidas"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reseña",
+			"item": [
+				{
+					"name": "resena 1",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/resena/1"
+					},
+					"response": []
+				},
+				{
+					"name": "resena 1",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_usuario\": 1,\n    \"id_comida\": 2,\n    \"calificacion\": 4,\n    \"comentario\": \"Muy rica pizza!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/resena/1"
+					},
+					"response": []
+				},
+				{
+					"name": "resena 1",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://127.0.0.1:7000/resena/1"
+					},
+					"response": []
+				},
+				{
+					"name": "resenas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://127.0.0.1:7000/resenas"
+					},
+					"response": []
+				},
+				{
+					"name": "resenas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_usuario\": 1,\n    \"id_comida\": 2,\n    \"calificacion\": 5,\n    \"comentario\": \"Muy rica pizza!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/resenas"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
