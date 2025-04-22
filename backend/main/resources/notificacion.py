@@ -1,5 +1,7 @@
 from flask_restful import Resource
 from flask import request
+from ..models.init import NotificacionModel
+from .. import db
 
 NOTIFICACIONES={
     1:{'id_usuario':'1','mensaje':'Esta listo tu pedido'},
@@ -9,9 +11,8 @@ NOTIFICACIONES={
 
 class Notificacion(Resource):
     def get(self,id):
-        if int(id) in NOTIFICACIONES:
-            return NOTIFICACIONES[int(id)]
-        return 'El id es inexistente',404
+        notificacion=db.session.query(NotificacionModel).get_or_404(id)
+        return notificacion.to_json()
 
     def delete(self,id):
         if int(id) in NOTIFICACIONES:

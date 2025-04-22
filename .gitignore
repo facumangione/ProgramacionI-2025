@@ -7,3 +7,4 @@ pyvenv.cfg
 /venv
 /backend/main/__pycache__/
 /backend/main/resources/__pycache__/
+/backend/include

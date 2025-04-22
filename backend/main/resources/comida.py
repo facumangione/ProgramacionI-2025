@@ -1,5 +1,7 @@
 from flask_restful import Resource
 from flask import request
+from ..models.init import ComidaModel
+from .. import db
 
 # Simulación de base de datos para comidas
 COMIDAS = {
@@ -10,10 +12,8 @@ COMIDAS = {
 
 class Comida(Resource):
     def get(self, id):
-        """Obtener una comida por ID"""
-        if int(id) in COMIDAS:
-            return COMIDAS[int(id)]
-        return 'El ID de la comida es inexistente', 404
+        comida=db.session.query(ComidaModel).get_or_404(id)
+        return comida.to_json()
 
     def delete(self, id):
         """Eliminar una comida por ID"""

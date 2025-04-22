@@ -1,2 +1,2 @@
-#export PORT = 7000
-#export USER DB = "Lospibes"
+#export PORT = 3600
+#export USER DB = "db"

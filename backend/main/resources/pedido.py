@@ -1,5 +1,7 @@
 from flask_restful import Resource
 from flask import request
+from ..models.init import PedidoModel
+from .. import db
 
 PEDIDOS={
     1:{'id_usuario':'1','total':'12000','comidas':'hamburguesa','estado':'listo'},
@@ -9,9 +11,8 @@ PEDIDOS={
 
 class Pedido(Resource):
     def get(self,id):
-        if int(id) in PEDIDOS:
-            return PEDIDOS[int(id)]
-        return 'El id es inexistente',404
+        pedido=db.session.query(PedidoModel).get_or_404(id)
+        return pedido.to_json()
 
     def delete(self,id):
         if int(id) in PEDIDOS:

@@ -1,5 +1,7 @@
 from flask_restful import Resource
 from flask import request
+from ..models.init import ResenaModel
+from .. import db
 
 RESENAS = {
     1: {'id_usuario': 1, 'id_comida': 2, 'calificacion': 5, 'comentario': 'Muy rica pizza!'},
@@ -8,9 +10,8 @@ RESENAS = {
 
 class Resena(Resource):
     def get(self, id):
-        if int(id) in RESENAS:
-            return RESENAS[int(id)]
-        return 'El ID de la reseña es inexistente', 404
+        resena=db.session.query(ResenaModel).get_or_404(id)
+        return resena.to_json()
 
     def delete(self, id):
         if int(id) in RESENAS:
