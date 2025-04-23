@@ -15,3 +15,14 @@ class Comida(db.Model):
         }
         return comida_json 
     
+    @staticmethod
+    def from_json(comida_json):
+        id_comida=comida_json('id_comida')
+        nombre=comida_json('nombre')
+        descripcion=comida_json('descripcion')
+        precio=comida_json('precio')
+        return Comida(id_comida=id_comida,
+                       nombre=nombre,
+                       descripcion=descripcion,
+                       precio=precio,
+                       )

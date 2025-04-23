@@ -17,3 +17,16 @@ class Pedido(db.Model):
         }
         return pedido_json 
     
+    @staticmethod
+    def from_json(pedido_json):
+        id_pedido=pedido_json('id_pedido')
+        id_usuario=pedido_json('id_usuario')
+        fecha=pedido_json('fecha')
+        estado=pedido_json('estado')
+        total=pedido_json('total')
+        return Pedido(id_pedido=id_pedido,
+                       id_usuario=id_usuario,
+                       fecha=fecha,
+                       estado=estado,
+                       total=total
+                       )

@@ -17,3 +17,16 @@ class Resena(db.Model):
         }
         return resena_json 
     
+    @staticmethod
+    def from_json(resena_json):
+        id_resena=resena_json('id_resena')
+        id_usuario=resena_json('id_usuario')
+        id_comida=resena_json('id_comida')
+        comentario=resena_json('comentario')
+        calificacion=resena_json('califacion')
+        return Resena(id_resena=id_resena,
+                      id_usuario=id_usuario,
+                      id_comida=id_comida,
+                      comentario=comentario,
+                      calificacion=calificacion
+                       )

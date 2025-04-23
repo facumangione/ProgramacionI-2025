@@ -17,3 +17,16 @@ class Usuario(db.Model):
         }
         return usuario_json 
     
+    @staticmethod
+    def from_json(usuario_json):
+        id_usuario=usuario_json('id_usuario')
+        nombre=usuario_json('nombre')
+        mail=usuario_json('mail')
+        telefono=usuario_json('telefono')
+        rol=usuario_json('rol')
+        return Usuario(id_usuario=id_usuario,
+                       nombre=nombre,
+                       mail=mail,
+                       telefono=telefono,
+                       rol=rol
+                       )

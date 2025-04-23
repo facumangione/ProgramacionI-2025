@@ -15,3 +15,14 @@ class Notificacion(db.Model):
         }
         return notificacion_json 
     
+    @staticmethod
+    def from_json(notificacion_json):
+        id_notificacion=notificacion_json('id_notificacion')
+        id_usuario=notificacion_json('id_usuario')
+        mensaje=notificacion_json('mensaje')
+        fecha=notificacion_json('fecha')
+        return Notificacion(id_notificacion=id_notificacion,
+                       id_usuario=id_usuario,
+                       mensaje=mensaje,
+                       fecha=fecha,
+                       )
