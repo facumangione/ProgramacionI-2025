@@ -1,13 +1,8 @@
 from flask_restful import Resource
-from flask import request
+from flask import request,jsonify
 from ..models.init import PedidoModel
 from .. import db
-
-PEDIDOS={
-    1:{'id_usuario':'1','total':'12000','comidas':'hamburguesa','estado':'listo'},
-    2:{'id_usuario':'3','total':'25000','comidas':'pizza','estado':'en preparacion'},
-    3:{'id_usuario':'2','total':'10000','comidas':'fideos','estado':'entregado'}
-}
+from datetime import datetime
 
 class Pedido(Resource):
     def get(self,id):
@@ -15,25 +10,29 @@ class Pedido(Resource):
         return pedido.to_json()
 
     def delete(self,id):
-        if int(id) in PEDIDOS:
-            del PEDIDOS[int(id)]
-            return 'Eliminado con exito',204
-        return 'El id a eliminar es inexistente',404
+        pedido=db.session.query(PedidoModel).get_or_404(id)
+        db.session.delete(pedido)
+        db.session.commit()
+        return pedido.to_json(), 200
 
     def put(self,id):
-        if int(id) in PEDIDOS:
-            pedido=PEDIDOS[int(id)]
-            data=request.get_json()
-            pedido.update(data)
-            return 'Pedido editado con exito',201
-        return 'El id que intentan editar es inexistente',404
+        pedido=db.session.query(PedidoModel).get_or_404(id)
+        data=request.get_json().items()
+        for key,value in data:
+            if key == 'fecha':
+                value = datetime.strptime(value, "%d-%m-%Y %H:%M")
+            setattr(pedido,key,value)
+        db.session.add(pedido)
+        db.session.commit()
+        return pedido.to_json(),201
     
 class Pedidos(Resource):
     def get(self):
-        return PEDIDOS
+        pedidos=db.session.query(PedidoModel).all()
+        return jsonify([pedido.to_json() for pedido in pedidos])
     
     def post(self):
-        nuevo_pedido=request.get_json()
-        id=int(max(PEDIDOS.keys()))+1
-        PEDIDOS[id]=nuevo_pedido
-        return 'Creado con exito',201
+        new_pedido=PedidoModel.from_json(request.get_json())
+        db.session.add(new_pedido)
+        db.session.commit()
+        return new_pedido.to_json(),201

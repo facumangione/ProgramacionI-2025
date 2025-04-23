@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import request
+from flask import request,jsonify
 from ..models.init import ResenaModel
 from .. import db
 
@@ -14,25 +14,27 @@ class Resena(Resource):
         return resena.to_json()
 
     def delete(self, id):
-        if int(id) in RESENAS:
-            del RESENAS[int(id)]
-            return 'Reseña eliminada con éxito', 204
-        return 'El ID de la reseña a eliminar es inexistente', 404
+        resena=db.session.query(ResenaModel).get_or_404(id)
+        db.session.delete(resena)
+        db.session.commit()
+        return resena.to_json(), 200
     
     def put(self,id):
-        if int(id) in RESENAS:
-            resena=RESENAS[int(id)]
-            data=request.get_json()
-            resena.update(data)
-            return 'Reseñas editado con exito',201
-        return 'El id que intentan editar es inexistente',404
+        resena=db.session.query(ResenaModel).get_or_404(id)
+        data=request.get_json().items()
+        for key,value in data:
+            setattr(resena,key,value)
+        db.session.add(resena)
+        db.session.commit()
+        return resena.to_json(),201
 
 class Resenas(Resource):
     def get(self):
-        return RESENAS
-
+        resenas=db.session.query(ResenaModel).all()
+        return jsonify([resena.to_json() for resena in resenas])
+    
     def post(self):
-        nueva_resena = request.get_json()
-        id = int(max(RESENAS.keys())) + 1
-        RESENAS[id] = nueva_resena
-        return 'Reseña creada con éxito', 201
+        new_resena=ResenaModel.from_json(request.get_json())
+        db.session.add(new_resena)
+        db.session.commit()
+        return new_resena.to_json(),201

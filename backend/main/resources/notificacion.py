@@ -1,7 +1,8 @@
 from flask_restful import Resource
-from flask import request
+from flask import request, jsonify
 from ..models.init import NotificacionModel
 from .. import db
+from datetime import datetime
 
 NOTIFICACIONES={
     1:{'id_usuario':'1','mensaje':'Esta listo tu pedido'},
@@ -15,25 +16,29 @@ class Notificacion(Resource):
         return notificacion.to_json()
 
     def delete(self,id):
-        if int(id) in NOTIFICACIONES:
-            del NOTIFICACIONES[int(id)]
-            return 'Eliminado con exito',204
-        return 'El id a eliminar es inexistente',404
+        notificacion=db.session.query(NotificacionModel).get_or_404(id)
+        db.session.delete(notificacion)
+        db.session.commit()
+        return notificacion.to_json(), 200
 
     def put(self,id):
-        if int(id) in NOTIFICACIONES:
-            notificacion=NOTIFICACIONES[int(id)]
-            data=request.get_json()
-            notificacion.update(data)
-            return 'Usuario editado con exito',201
-        return 'El id que intentan editar es inexistente',404
+        notificacion=db.session.query(NotificacionModel).get_or_404(id)
+        data=request.get_json().items()
+        for key,value in data:
+            if key == 'fecha':
+                value = datetime.strptime(value, "%d-%m-%Y %H:%M")
+            setattr(notificacion,key,value)
+        db.session.add(notificacion)
+        db.session.commit()
+        return notificacion.to_json(),201
     
 class Notificaciones(Resource):
     def get(self):
-        return NOTIFICACIONES
+        notificaciones=db.session.query(NotificacionModel).all()
+        return jsonify([notificacion.to_json() for notificacion in notificaciones])
     
     def post(self):
-        new_notificacion=request.get_json()
-        id=int(max(NOTIFICACIONES.keys()))+1
-        NOTIFICACIONES[id]=new_notificacion
-        return 'Creado con exito',201
+        new_notificacion=NotificacionModel.from_json(request.get_json())
+        db.session.add(new_notificacion)
+        db.session.commit()
+        return new_notificacion.to_json(),201

@@ -31,7 +31,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre_apellido\":\"Maria Peña\",\n    \"DNI\":\"40264857\",\n    \"telefono\":\"2615492167\",\n    \"mail\":\"mariapeña@gmail.com\"\n}",
+							"raw": "{\n    \"nombre\":\"Martin Gutierrez\",\n    \"telefono\":\"2616497812\",\n    \"mail\":\"martingutierrez@gmail.com\",\n    \"rol\":\"CLIENTE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,7 +62,16 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "http://127.0.0.1:7000/usuario/1"
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/usuario/3"
 					},
 					"response": []
 				},
@@ -76,14 +85,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre_apellido\":\"Pedro Gonzalez\",\n    \"DNI\":\"45956487\",\n    \"telefono\":\"2616754862\",\n    \"mail\":\"pedrogonzalez12@gmail.com\"\n}",
+							"raw": "{\n    \"nombre\":\"Pedro Gonzalez\",\n    \"telefono\":\"2611246547\",\n    \"mail\":\"pedrogonzalez12@gmail.com\",\n    \"rol\":\"CLIENTE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://127.0.0.1:7000/usuario/1"
+						"url": "http://127.0.0.1:7000/usuario/2"
 					},
 					"response": []
 				}
@@ -114,7 +123,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"id_usuario\": \"2\",\n        \"total\": \"15000\",\n        \"comidas\": \"pizza\",\n        \"estado\": \"listo\"\n    }",
+							"raw": "{\n        \"id_usuario\": \"3\",\n        \"fecha\":\"12-02-2025 22:30\",\n        \"estado\": \"LISTO\",\n        \"total\":\"15000\"\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -147,14 +156,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_usuario\": \"1\",\n    \"total\": \"12000\",\n    \"comidas\": \"hamburguesa\",\n    \"estado\": \"en preparacion\"\n}",
+							"raw": "{\n        \"id_usuario\": \"2\",\n        \"fecha\":\"12-02-2025 22:30\",\n        \"estado\": \"RETIRADO\",\n        \"total\":\"15000\"\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://127.0.0.1:7000/pedido/1"
+						"url": "http://127.0.0.1:7000/pedido/2"
 					},
 					"response": []
 				},
@@ -166,7 +175,7 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "http://127.0.0.1:7000/pedido/1"
+						"url": "http://127.0.0.1:7000/pedido/2"
 					},
 					"response": []
 				}
@@ -199,7 +208,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre_apellido\":\"Maria Peña\",\n    \"DNI\":\"40264857\",\n    \"telefono\":\"2615492167\",\n    \"mail\":\"mariapeña@gmail.com\"\n}",
+							"raw": "{\n    \"nombre\":\"Martin Gutierrez\",\n    \"telefono\":\"2616482154\",\n    \"mail\":\"martingutierrez@gmail.com@gmail.com\",\n    \"rol\":\"CLIENTE\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -231,7 +240,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_usuario\": \"1\",\n    \"mensaje\": \"hola\"\n}",
+							"raw": "{\n    \"id_usuario\": \"3\",\n    \"mensaje\": \"gracias por su pedido\",\n    \"fecha\":\"23-04-2025 14:30\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -247,7 +256,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://127.0.0.1:7000/notificacion/1"
+						"url": "http://127.0.0.1:7000/notificacion/2"
 					},
 					"response": []
 				},
@@ -267,7 +276,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_usuario\": \"1\",\n    \"mensaje\": \"Esta listo tu pedido\"\n}",
+							"raw": "{\n    \"id_usuario\": \"3\",\n    \"mensaje\": \"gracias por su pedido\",\n    \"fecha\":\"23-04-2025 14:00\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -299,14 +308,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Hamburguesa\",\n    \"descripcion\": \"triple carne con queso\",\n    \"precio\": 5000\n}",
+							"raw": "{\n    \"nombre\": \"Hamburguesa\",\n    \"descripcion\": \"triple carne con queso\",\n    \"precio\": 7000\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://127.0.0.1:7000/comida/1"
+						"url": "http://127.0.0.1:7000/comida/2"
 					},
 					"response": []
 				},
@@ -315,7 +324,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://127.0.0.1:7000/comida/1"
+						"url": "http://127.0.0.1:7000/comida/2"
 					},
 					"response": []
 				},
@@ -335,7 +344,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombre\": \"Hamburguesa\",\n    \"descripcion\": \"Doble carne con queso\",\n    \"precio\": 5000\n}",
+							"raw": "{\n    \"nombre\": \"hambueguesa\",\n    \"descripcion\": \"doblke con queso\",\n    \"precio\": 8000\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -367,14 +376,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_usuario\": 1,\n    \"id_comida\": 2,\n    \"calificacion\": 4,\n    \"comentario\": \"Muy rica pizza!\"\n}",
+							"raw": "{\n    \"id_usuario\": 3,\n    \"id_comida\": 2,\n    \"comentario\": \"hamburguesa regular\",\n    \"calificacion\": 3.5\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://127.0.0.1:7000/resena/1"
+						"url": "http://127.0.0.1:7000/resena/2"
 					},
 					"response": []
 				},
@@ -383,7 +392,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "http://127.0.0.1:7000/resena/1"
+						"url": "http://127.0.0.1:7000/resena/2"
 					},
 					"response": []
 				},
@@ -403,7 +412,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id_usuario\": 1,\n    \"id_comida\": 2,\n    \"calificacion\": 5,\n    \"comentario\": \"Muy rica pizza!\"\n}",
+							"raw": "{\n    \"id_usuario\": 3,\n    \"id_comida\": 2,\n    \"comentario\": \"hamburguesa regular\",\n    \"calificacion\": 3.2\n}",
 							"options": {
 								"raw": {
 									"language": "json"

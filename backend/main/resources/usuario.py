@@ -15,10 +15,10 @@ class Usuario(Resource):
         return usuario.to_json()
 
     def delete(self,id):
-        usuario=db.session.query(UsuarioModel).geto_or_404(id)
+        usuario=db.session.query(UsuarioModel).get_or_404(id)
         db.session.delete(usuario)
         db.session.commit()
-        return usuario.to_json, 200
+        return usuario.to_json(), 200
 
     def put(self,id):
         usuario=db.session.query(UsuarioModel).get_or_404(id)

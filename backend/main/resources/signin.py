@@ -11,7 +11,7 @@ USUARIOS={
 
 class Signin(Resource):
     def post(self):
-                new_user=request.get_json()
-                id=int(max(USUARIOS.keys()))+1
-                USUARIOS[id]=new_user
-                return 'Creado con exito',201
+        new_usuario=UsuarioModel.from_json(request.get_json())
+        db.session.add(new_usuario)
+        db.session.commit()
+        return new_usuario.to_json(),201

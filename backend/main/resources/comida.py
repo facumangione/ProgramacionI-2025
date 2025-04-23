@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from flask import request
+from flask import request,jsonify
 from ..models.init import ComidaModel
 from .. import db
 
@@ -16,27 +16,27 @@ class Comida(Resource):
         return comida.to_json()
 
     def delete(self, id):
-        """Eliminar una comida por ID"""
-        if int(id) in COMIDAS:
-            del COMIDAS[int(id)]
-            return 'Comida eliminada con éxito', 204
-        return 'El ID de la comida a eliminar es inexistente', 404
+        comida=db.session.query(ComidaModel).get_or_404(id)
+        db.session.delete(comida)
+        db.session.commit()
+        return comida.to_json(), 200
 
     def put(self, id):
-        """Editar una comida por ID"""
-        if int(id) in COMIDAS:
-            comida = COMIDAS[int(id)]
-            data = request.get_json()
-            comida.update(data)
-            return 'Comida editada con éxito', 201
-        return 'El ID de la comida que intentan editar es inexistente', 404
+        comida=db.session.query(ComidaModel).get_or_404(id)
+        data=request.get_json().items()
+        for key,value in data:
+            setattr(comida,key,value)
+        db.session.add(comida)
+        db.session.commit()
+        return comida.to_json(),201
     
 class Comidas(Resource):
     def get(self):
-        return COMIDAS
+        comidas=db.session.query(ComidaModel).all()
+        return jsonify([comida.to_json() for comida in comidas])
     
     def post(self):
-        new_food=request.get_json()
-        id=int(max(COMIDAS.keys()))+1
-        COMIDAS[id]=new_food
-        return 'Creado con exito',201
+        new_comida=ComidaModel.from_json(request.get_json())
+        db.session.add(new_comida)
+        db.session.commit()
+        return new_comida.to_json(),201
