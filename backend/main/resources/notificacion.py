@@ -19,7 +19,7 @@ class Notificacion(Resource):
         notificacion=db.session.query(NotificacionModel).get_or_404(id)
         db.session.delete(notificacion)
         db.session.commit()
-        return notificacion.to_json(), 200
+        return notificacion.to_json(), 204
 
     def put(self,id):
         notificacion=db.session.query(NotificacionModel).get_or_404(id)

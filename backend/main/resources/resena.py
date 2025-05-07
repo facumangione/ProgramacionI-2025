@@ -17,7 +17,7 @@ class Resena(Resource):
         resena=db.session.query(ResenaModel).get_or_404(id)
         db.session.delete(resena)
         db.session.commit()
-        return resena.to_json(), 200
+        return resena.to_json(), 204
     
     def put(self,id):
         resena=db.session.query(ResenaModel).get_or_404(id)

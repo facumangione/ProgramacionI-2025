@@ -19,7 +19,7 @@ class Comida(Resource):
         comida=db.session.query(ComidaModel).get_or_404(id)
         db.session.delete(comida)
         db.session.commit()
-        return comida.to_json(), 200
+        return comida.to_json(), 204
 
     def put(self, id):
         comida=db.session.query(ComidaModel).get_or_404(id)

@@ -123,7 +123,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"id_usuario\": \"3\",\n        \"fecha\":\"12-02-2025 22:30\",\n        \"estado\": \"LISTO\",\n        \"total\":\"15000\"\n    }",
+							"raw": "{\n        \"id_usuario\": \"2\",\n        \"fecha\":\"12-02-2025 22:30\",\n        \"estado\": \"EN PREPARACION\",\n        \"total\":\"15000\",\n        \"comidas\":[1]\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -175,7 +175,7 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"url": "http://127.0.0.1:7000/pedido/2"
+						"url": "http://127.0.0.1:7000/pedido/1"
 					},
 					"response": []
 				}

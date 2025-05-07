@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request,jsonify
-from ..models.init import PedidoModel
+from ..models.init import PedidoModel, ComidaModel
 from .. import db
 from datetime import datetime
 
@@ -13,7 +13,7 @@ class Pedido(Resource):
         pedido=db.session.query(PedidoModel).get_or_404(id)
         db.session.delete(pedido)
         db.session.commit()
-        return pedido.to_json(), 200
+        return pedido.to_json(), 204
 
     def put(self,id):
         pedido=db.session.query(PedidoModel).get_or_404(id)
@@ -32,7 +32,12 @@ class Pedidos(Resource):
         return jsonify([pedido.to_json() for pedido in pedidos])
     
     def post(self):
+        comidas_ids=request.get_json().get('comidas')
         new_pedido=PedidoModel.from_json(request.get_json())
+        if comidas_ids:
+            comidas=ComidaModel.query.filter(ComidaModel.id_comida.in_(comidas_ids)).all()
+            new_pedido.comidas.extend(comidas)
+
         db.session.add(new_pedido)
         db.session.commit()
         return new_pedido.to_json(),201
