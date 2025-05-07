@@ -48,5 +48,8 @@ def create_app():
     api.add_resource(resources.NotificacionResource, '/notificacion/<id>')
     api.add_resource(resources.NotificacionesResource, '/notificaciones')
 
+    #Añadir comida a pedido
+    api.add_resource(resources.Añadir_carritoResource, '/anadircarrito')
+
     api.init_app(app)
     return app

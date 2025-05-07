@@ -424,6 +424,29 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "añadir_carrito",
+			"item": [
+				{
+					"name": "New Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_pedido\": 2,\n    \"id_comida\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://127.0.0.1:7000/anadircarrito"
+					},
+					"response": []
+				}
+			]
 		}
 	]
 }
