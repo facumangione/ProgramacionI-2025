@@ -2,12 +2,7 @@ from flask_restful import Resource
 from flask import request, jsonify
 from ..models.init import UsuarioModel
 from .. import db
-
-#USUARIOS={
-#    1:{'nombre_apellido':'Pedro Gonzalez','DNI':'45956487','telefono':'2616754862','mail':'pedrogonzalez@gmail.com'},
-#    2:{'nombre_apellido':'Martin Gutierrez','DNI':'42659715','telefono':'2616475123','mail':'martingutierrez@gmail.com'},
-#    3:{'nombre_apellido':'Juan Ortiz','DNI':'44652178','telefono':'2617512648','mail':'juanortiz@gmail.com'}
-#}
+from sqlalchemy import func,desc
 
 class Usuario(Resource):
     def get(self,id):
@@ -31,8 +26,23 @@ class Usuario(Resource):
     
 class Usuarios(Resource):
     def get(self):
-        usuarios=db.session.query(UsuarioModel).all()
-        return jsonify([usuario.to_json() for usuario in usuarios])
+        page=1
+        per_page=5
+
+        usuarios=db.session.query(UsuarioModel)
+        
+        if request.args.get('page'):
+            page=int(request.args.get('page'))
+        if request.args.get('per_page'):
+            per_page=int(request.args.get('per_page'))
+
+        usuarios=usuarios.paginate(page=page, per_page=per_page, error_out=False)
+
+        return jsonify({'usuarios':[usuario.to_json() for usuario in usuarios],
+                       'total':usuarios.total,
+                       'pages':usuarios.pages,
+                       'per_page':page
+                       })
     
     def post(self):
         new_usuario=UsuarioModel.from_json(request.get_json())

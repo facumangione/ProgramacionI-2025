@@ -28,8 +28,22 @@ class Pedido(Resource):
     
 class Pedidos(Resource):
     def get(self):
-        pedidos=db.session.query(PedidoModel).all()
-        return jsonify([pedido.to_json() for pedido in pedidos])
+        page=1
+        per_page=5
+
+        pedidos=db.session.query(PedidoModel)
+
+        if request.args.get('page'):
+            page=int(request.args.get('page'))
+        if request.args.get('per_page'):
+            per_page=int(request.args.get('per_page'))
+
+        pedidos=pedidos.paginate(page=page, per_page=per_page, error_out=False)
+
+        return jsonify({'pedidos':[pedido.to_json() for pedido in pedidos],
+                        'total':pedidos.total,
+                       'pages':pedidos.pages,
+                       'per_page':page})
     
     def post(self):
         comidas_ids=request.get_json().get('comidas')

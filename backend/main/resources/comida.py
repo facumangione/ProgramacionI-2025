@@ -32,8 +32,23 @@ class Comida(Resource):
     
 class Comidas(Resource):
     def get(self):
-        comidas=db.session.query(ComidaModel).all()
-        return jsonify([comida.to_json() for comida in comidas])
+        page=1
+        per_page=5
+
+        comidas=db.session.query(ComidaModel)
+
+        if request.args.get('page'):
+            page=int(request.args.get('page'))
+        if request.args.get('per_page'):
+            per_page=int(request.args.get('per_page'))
+
+        comidas=comidas.paginate(page=page, per_page=per_page, error_out=False)
+
+        return jsonify({'comidas':[comida.to_json() for comida in comidas],
+                        'total':comidas.total,
+                       'pages':comidas.pages,
+                       'per_page':page
+                       })
     
     def post(self):
         new_comida=ComidaModel.from_json(request.get_json())

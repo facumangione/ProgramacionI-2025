@@ -30,8 +30,22 @@ class Resena(Resource):
 
 class Resenas(Resource):
     def get(self):
-        resenas=db.session.query(ResenaModel).all()
-        return jsonify([resena.to_json() for resena in resenas])
+        page=1
+        per_page=5
+
+        resenas=db.session.query(ResenaModel)
+
+        if request.args.get('page'):
+            page=int(request.args.get('page'))
+        if request.args.get('per_page'):
+            per_page=int(request.args.get('per_page'))
+
+        resenas=resenas.paginate(page=page, per_page=per_page, error_out=False)
+
+        return jsonify({'resenas':[resena.to_json() for resena in resenas],
+                        'total':resenas.total,
+                       'pages':resenas.pages,
+                       'per_page':page})
     
     def post(self):
         new_resena=ResenaModel.from_json(request.get_json())

@@ -34,8 +34,23 @@ class Notificacion(Resource):
     
 class Notificaciones(Resource):
     def get(self):
-        notificaciones=db.session.query(NotificacionModel).all()
-        return jsonify([notificacion.to_json() for notificacion in notificaciones])
+        page=1
+        per_page=5
+
+        notificaciones=db.session.query(NotificacionModel)
+
+        if request.args.get('page'):
+            page=int(request.args.get('page'))
+        if request.args.get('per_page'):
+            per_page=int(request.args.get('per_page'))
+
+        notificaciones=notificaciones.paginate(page=page, per_page=per_page, error_out=False)
+
+        return jsonify({'notificaciones':[notificacion.to_json() for notificacion in notificaciones],
+                        'total':notificaciones.total,
+                       'pages':notificaciones.pages,
+                       'per_page':page
+                       })
     
     def post(self):
         new_notificacion=NotificacionModel.from_json(request.get_json())

@@ -95,6 +95,45 @@
 						"url": "http://127.0.0.1:7000/usuario/2"
 					},
 					"response": []
+				},
+				{
+					"name": "usuario paginacion",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\":\"Martin Gutierrez\",\n    \"telefono\":\"2616482154\",\n    \"mail\":\"martingutierrez@gmail.com@gmail.com\",\n    \"rol\":\"CLIENTE\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7000/usuarios?page=1&per_page=1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7000",
+							"path": [
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -176,6 +215,38 @@
 						"method": "DELETE",
 						"header": [],
 						"url": "http://127.0.0.1:7000/pedido/1"
+					},
+					"response": []
+				},
+				{
+					"name": "pedidos paginacion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7000/pedidos?page=1&per_page=1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7000",
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -286,6 +357,38 @@
 						"url": "http://127.0.0.1:7000/notificaciones"
 					},
 					"response": []
+				},
+				{
+					"name": "notificacciones paginacion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7000/notificaciones?page=1&per_page=1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7000",
+							"path": [
+								"notificaciones"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -354,6 +457,38 @@
 						"url": "http://127.0.0.1:7000/comidas"
 					},
 					"response": []
+				},
+				{
+					"name": "comidas paginacion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7000/comidas?page=1&per_page=1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7000",
+							"path": [
+								"comidas"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -420,6 +555,38 @@
 							}
 						},
 						"url": "http://127.0.0.1:7000/resenas"
+					},
+					"response": []
+				},
+				{
+					"name": "resenas paginacion",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7000/resenas?page=1&per_page=1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7000",
+							"path": [
+								"resenas"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "1"
+								}
+							]
+						}
 					},
 					"response": []
 				}
