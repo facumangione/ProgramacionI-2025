@@ -134,6 +134,41 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Usuarios Mayor Cant Pedidos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\":\"Martin Gutierrez\",\n    \"telefono\":\"2616482154\",\n    \"mail\":\"martingutierrez@gmail.com@gmail.com\",\n    \"rol\":\"CLIENTE\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:7000/usuarios?MayorCantPedido=True",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7000",
+							"path": [
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "MayorCantPedido",
+									"value": "True"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -162,7 +197,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n        \"id_usuario\": \"2\",\n        \"fecha\":\"12-02-2025 22:30\",\n        \"estado\": \"EN PREPARACION\",\n        \"total\":\"15000\",\n        \"comidas\":[1]\n    }",
+							"raw": "{\n        \"id_usuario\": \"3\",\n        \"fecha\":\"12-02-2025 22:30\",\n        \"estado\": \"EN PREPARACION\",\n        \"total\":\"15000\",\n        \"comidas\":[1]\n    }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -244,6 +279,62 @@
 								{
 									"key": "per_page",
 									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pedidos estado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7000/pedidos?estado=LISTO",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7000",
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "estado",
+									"value": "LISTO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pedidos por id_usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7000/pedidos?id_usuario=3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7000",
+							"path": [
+								"pedidos"
+							],
+							"query": [
+								{
+									"key": "id_usuario",
+									"value": "3"
 								}
 							]
 						}
@@ -484,6 +575,34 @@
 								{
 									"key": "per_page",
 									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "comidas Mayor Cant Pedidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:7000/comidas?MayorCantPedidos=True",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "7000",
+							"path": [
+								"comidas"
+							],
+							"query": [
+								{
+									"key": "MayorCantPedidos",
+									"value": "True"
 								}
 							]
 						}

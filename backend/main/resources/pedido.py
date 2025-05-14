@@ -38,6 +38,12 @@ class Pedidos(Resource):
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
 
+        if request.args.get('estado'):
+            pedidos=pedidos.filter(PedidoModel.estado.like("%"+request.args.get('estado')+"%"))
+
+        if request.args.get('id_usuario'):
+            pedidos=pedidos.filter(PedidoModel.id_usuario.like("%"+request.args.get('id_usuario')+"%"))
+
         pedidos=pedidos.paginate(page=page, per_page=per_page, error_out=False)
 
         return jsonify({'pedidos':[pedido.to_json() for pedido in pedidos],

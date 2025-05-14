@@ -1,14 +1,8 @@
 from flask_restful import Resource
 from flask import request,jsonify
-from ..models.init import ComidaModel
+from ..models.init import ComidaModel, PedidoModel
 from .. import db
-
-# Simulación de base de datos para comidas
-COMIDAS = {
-    1: {'nombre': 'Hamburguesa', 'descripcion': 'Doble carne con queso', 'precio': 5000},
-    2: {'nombre': 'Pizza', 'descripcion': 'Muzzarella con aceitunas', 'precio': 8000},
-    3: {'nombre': 'Fideos', 'descripcion': 'Con salsa bolognesa', 'precio': 4500}
-}
+from sqlalchemy import func,desc
 
 class Comida(Resource):
     def get(self, id):
@@ -41,6 +35,9 @@ class Comidas(Resource):
             page=int(request.args.get('page'))
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
+
+        if request.args.get('MayorCantPedidos'):
+            comidas = comidas.outerjoin(PedidoModel.comidas).group_by(ComidaModel.id_comida).order_by(func.count().desc())
 
         comidas=comidas.paginate(page=page, per_page=per_page, error_out=False)
 

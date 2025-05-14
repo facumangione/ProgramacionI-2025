@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request, jsonify
-from ..models.init import UsuarioModel
+from ..models.init import UsuarioModel, PedidoModel
 from .. import db
 from sqlalchemy import func,desc
 
@@ -35,6 +35,9 @@ class Usuarios(Resource):
             page=int(request.args.get('page'))
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
+
+        if request.args.get('MayorCantPedido'):
+            usuarios = usuarios.outerjoin(UsuarioModel.pedidos).group_by(UsuarioModel.id_usuario).order_by(func.count(PedidoModel.id_pedido).desc())
 
         usuarios=usuarios.paginate(page=page, per_page=per_page, error_out=False)
 

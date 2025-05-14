@@ -21,7 +21,7 @@ class Pedido(db.Model):
     def to_json(self):
         pedido_json={
             'id_pedido':self.id_pedido,
-            'id_usuario':str(self.id_usuario),
+            'id_usuario':int(self.id_usuario),
             'fecha':str(self.fecha.strftime("%d-%m-%Y %H:%M" )),
             'estado':self.estado,
             'total':self.total,
