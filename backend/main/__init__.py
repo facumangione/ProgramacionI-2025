@@ -3,10 +3,16 @@ from dotenv import load_dotenv
 from flask_restful import Api
 import os
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from flask_jwt_extended import JWTManager
 
 api = Api()
 
 db=SQLAlchemy()
+
+migrate=Migrate()
+
+jwt=JWTManager()
 
 def create_app():
     app = Flask(__name__)
@@ -38,12 +44,6 @@ def create_app():
     api.add_resource(resources.ResenaResource, '/resena/<id>')
     api.add_resource(resources.ResenasResource, '/resenas')
 
-    #Login
-    api.add_resource(resources.LoginResource, '/login')
-
-    #Signin
-    api.add_resource(resources.SigninResource, '/signin')
-
     #Notificaciones
     api.add_resource(resources.NotificacionResource, '/notificacion/<id>')
     api.add_resource(resources.NotificacionesResource, '/notificaciones')
@@ -52,4 +52,12 @@ def create_app():
     api.add_resource(resources.Añadir_carritoResource, '/anadircarrito')
 
     api.init_app(app)
+
+    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = int(os.getenv('JWT_ACCESS_TOKEN_EXPIRES'))
+    jwt.init_app(app)
+
+    from main.auth import routes
+    app.register_blueprint(routes.auth)
+
     return app

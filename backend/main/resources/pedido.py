@@ -3,18 +3,32 @@ from flask import request,jsonify
 from ..models.init import PedidoModel, ComidaModel
 from .. import db
 from datetime import datetime
+from flask_jwt_extended import get_jwt_identity,get_jwt
+from main.auth.decorators import role_required
 
 class Pedido(Resource):
+    
+    @role_required(roles=["ADMIN",'CLIENTE'])
     def get(self,id):
         pedido=db.session.query(PedidoModel).get_or_404(id)
+        rol=get_jwt().get('rol')
+        if rol=='CLIENTE' and pedido.id_usuario!=get_jwt_identity():
+            return 'No tiene permiso para ver este pedido',403
         return pedido.to_json()
 
+    @role_required(roles=["ADMIN",'CLIENTE'])
     def delete(self,id):
         pedido=db.session.query(PedidoModel).get_or_404(id)
+        rol=get_jwt().get('rol')
+        if rol=='CLIENTE' and pedido.id_usuario!=get_jwt_identity():
+            return 'No tiene permiso para eliminar este pedido',403
+        if rol=='CLIENTE' and pedido.estado==['LISTO','RETIRADO']:
+            return 'Ya completo este pedido, no puede eliminarlo'
         db.session.delete(pedido)
         db.session.commit()
         return pedido.to_json(), 204
 
+    @role_required(roles=["ADMIN"])
     def put(self,id):
         pedido=db.session.query(PedidoModel).get_or_404(id)
         data=request.get_json().items()
@@ -27,6 +41,8 @@ class Pedido(Resource):
         return pedido.to_json(),201
     
 class Pedidos(Resource):
+
+    @role_required(roles=["ADMIN"])
     def get(self):
         page=1
         per_page=5
@@ -51,6 +67,7 @@ class Pedidos(Resource):
                        'pages':pedidos.pages,
                        'per_page':page})
     
+    @role_required(roles=["ADMIN","CLIENTE"])
     def post(self):
         comidas_ids=request.get_json().get('comidas')
         new_pedido=PedidoModel.from_json(request.get_json())

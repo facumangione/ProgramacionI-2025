@@ -2,9 +2,11 @@ from flask_restful import Resource
 from flask import request, jsonify
 from .. import db
 from ..models.init import pedidos_comidasModel
-
+from flask_jwt_extended import jwt_required,get_jwt_identity,get_jwt
+from main.auth.decorators import role_required
 
 class Anadir_carrito(Resource):
+    @role_required(roles=["ADMIN",'CLIENTE'])
     def post(self):
         id_pedido=request.get_json().get('id_pedido')
         id_comida=request.get_json().get('id_comida')

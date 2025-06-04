@@ -3,20 +3,35 @@ from flask import request, jsonify
 from ..models.init import UsuarioModel, PedidoModel
 from .. import db
 from sqlalchemy import func,desc
+from flask_jwt_extended import jwt_required,get_jwt_identity,get_jwt
+from main.auth.decorators import role_required
 
-class Usuario(Resource):
+class Usuario(Resource): 
+
+    @jwt_required(optional=True)
     def get(self,id):
         usuario=db.session.query(UsuarioModel).get_or_404(id)
-        return usuario.to_json()
+        current_identity=get_jwt_identity()
+        if current_identity==usuario.id_usuario:
+            return usuario.to_json()
+        else: return usuario.to_json_nombre()
 
+    @role_required(roles=["ADMIN",'CLIENTE'])
     def delete(self,id):
         usuario=db.session.query(UsuarioModel).get_or_404(id)
+        rol=get_jwt().get('rol')
+        if rol=='CLIENTE' and usuario.id_usuario!=get_jwt_identity():
+            return 'No tiene permiso para eliminar este usuario',403
         db.session.delete(usuario)
         db.session.commit()
         return usuario.to_json(), 204
 
+    @role_required(roles=['ADMIN','CLIENTE'])
     def put(self,id):
         usuario=db.session.query(UsuarioModel).get_or_404(id)
+        rol=get_jwt().get('rol')
+        if rol=='CLIENTE' and usuario.id_usuario!=get_jwt_identity():
+            return 'No tiene permiso para editar este usuario',403
         data=request.get_json().items()
         for key,value in data:
             setattr(usuario,key,value)
@@ -25,6 +40,8 @@ class Usuario(Resource):
         return usuario.to_json(),201
     
 class Usuarios(Resource):
+
+    @role_required(roles=['ADMIN'])
     def get(self):
         page=1
         per_page=5

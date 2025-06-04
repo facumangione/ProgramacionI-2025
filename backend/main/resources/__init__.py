@@ -6,8 +6,6 @@ from .comida import Comida as ComidaResource
 from .comida import Comidas as ComidasResource
 from .resena import Resena as ResenaResource
 from .resena import Resenas as ResenasResource
-from .login import Login as LoginResource
-from .signin import Signin as SigninResource
 from .notificacion import Notificacion as NotificacionResource
 from .notificacion import Notificaciones as NotificacionesResource
 from .anadir_carrito import Anadir_carrito as Añadir_carritoResource

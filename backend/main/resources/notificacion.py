@@ -3,24 +3,27 @@ from flask import request, jsonify
 from ..models.init import NotificacionModel
 from .. import db
 from datetime import datetime
-
-NOTIFICACIONES={
-    1:{'id_usuario':'1','mensaje':'Esta listo tu pedido'},
-    2:{'id_usuario':'2','mensaje':'Pedido Cancelado'},
-    3:{'id_usuario':'3','mensaje':'Modificacion de pedido'}
-}
+from flask_jwt_extended import jwt_required,get_jwt_identity,get_jwt
+from main.auth.decorators import role_required
 
 class Notificacion(Resource):
+    
+    @role_required(roles=["ADMIN",'CLIENTE'])
     def get(self,id):
         notificacion=db.session.query(NotificacionModel).get_or_404(id)
+        rol=get_jwt().get('rol')
+        if rol=='CLIENTE' and notificacion.id_usuario!=get_jwt_identity():
+            return 'No tiene permiso para ver esta notificacion',403
         return notificacion.to_json()
 
+    @role_required(roles=["ADMIN"])
     def delete(self,id):
         notificacion=db.session.query(NotificacionModel).get_or_404(id)
         db.session.delete(notificacion)
         db.session.commit()
         return notificacion.to_json(), 204
 
+    @role_required(roles=["ADMIN"])
     def put(self,id):
         notificacion=db.session.query(NotificacionModel).get_or_404(id)
         data=request.get_json().items()
@@ -33,6 +36,7 @@ class Notificacion(Resource):
         return notificacion.to_json(),201
     
 class Notificaciones(Resource):
+    @role_required(roles=["ADMIN"])
     def get(self):
         page=1
         per_page=5
@@ -52,6 +56,7 @@ class Notificaciones(Resource):
                        'per_page':page
                        })
     
+    @role_required(roles=["ADMIN"])
     def post(self):
         new_notificacion=NotificacionModel.from_json(request.get_json())
         db.session.add(new_notificacion)

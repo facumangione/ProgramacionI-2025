@@ -1,2 +1,5 @@
 #export PORT = 3600
 #export USER DB = "db"
+
+#export JWT_SECRET_KEY='key-example'
+#export JWT_ACCESS_TOKEN_EXPIRES=3600
