@@ -12,7 +12,8 @@ class Usuario(Resource):
     def get(self,id):
         usuario=db.session.query(UsuarioModel).get_or_404(id)
         current_identity=get_jwt_identity()
-        if current_identity==usuario.id_usuario:
+        rol=get_jwt().get('rol')
+        if current_identity==usuario.id_usuario or rol=='ADMIN':
             return usuario.to_json()
         else: return usuario.to_json_nombre()
 
@@ -33,7 +34,11 @@ class Usuario(Resource):
         if rol=='CLIENTE' and usuario.id_usuario!=get_jwt_identity():
             return 'No tiene permiso para editar este usuario',403
         data=request.get_json().items()
+        if rol=='CLIENTE' and 'rol' in data:
+            data.pop('rol')
         for key,value in data:
+            if rol=='CLIENTE' and key=='rol':
+                continue
             setattr(usuario,key,value)
         db.session.add(usuario)
         db.session.commit()
