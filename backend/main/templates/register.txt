@@ -1,0 +1,9 @@
+Bienvenido {{usuario.nombre}}!
+
+Gracias por registrarte en nuestro sistema.
+
+Con nuestro servicio podras:
+
+- ver nuestro Menu de comidas
+- Hacer pedidos de comida
+- Ver y hacer reseñas de nuestras comidas
