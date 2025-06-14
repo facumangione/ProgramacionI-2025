@@ -1,0 +1,21 @@
+¡Pedido tomado, {{usuario.nombre}}!
+
+Gracias por pedir con nosotros. Tu pedido ha sido recibido y está siendo procesado.
+
+Datos del pedido:
+- Número de pedido: #{{pedido.id_pedido}}
+- Fecha: {{pedido.fecha.strftime("%d-%m-%Y %H:%M")}}
+
+Comidas pedidas:
+{% for comida in pedido.comidas %}
+• {{comida.nombre}}
+  {{comida.descripcion}}
+  ${{comida.precio}}
+
+{% endfor %}
+
+TOTAL: ${{pedido.total}}
+
+Te notificaremos cuando tu pedido esté listo para retirar.
+
+¡Gracias por elegirnos!

@@ -5,6 +5,7 @@ from .. import db
 from datetime import datetime
 from flask_jwt_extended import get_jwt_identity,get_jwt
 from main.auth.decorators import role_required
+from main.mail.functions import sendMail
 
 class Pedido(Resource):
     
@@ -71,6 +72,9 @@ class Pedidos(Resource):
     def post(self):
         comidas_ids=request.get_json().get('comidas')
         new_pedido=PedidoModel.from_json(request.get_json())
+        mail=get_jwt().get('mail')
+        nombre= get_jwt().get('nombre')
+        send = sendMail([mail], 'Pedido confirmado', 'pedido', usuario={'nombre': nombre}, pedido=new_pedido)
         if comidas_ids:
             comidas=ComidaModel.query.filter(ComidaModel.id_comida.in_(comidas_ids)).all()
             new_pedido.comidas.extend(comidas)

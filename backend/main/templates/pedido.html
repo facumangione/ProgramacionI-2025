@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+<style>
+    .main{
+        border:2px solid #8B0000;
+        padding:35px;
+        background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+        margin:20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(139, 0, 0, 0.15);
+    }
+    body{
+        background: linear-gradient(45deg, #ffeaea 0%, #f5f5f5 100%);
+        font-family: Arial, sans-serif;
+    }
+    .pedido-info{
+        background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+        box-shadow: 0 12px 20px rgba(183, 28, 28, 0.25);
+        padding:20px;
+        border:2px solid #c62828;
+        border-radius: 10px;
+        margin: 20px 0;
+    }
+    .comida-item{
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 10px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1{
+        font-weight: bold;
+        font-size:32px;
+        color:#b71c1c;
+        text-shadow: 2px 2px 4px rgba(183, 28, 28, 0.1);
+        margin-bottom: 15px;
+    }
+    h2{
+        font-weight: bold;
+        font-size:20px;
+        color:#d32f2f;
+        margin-bottom: 10px;
+    }
+    p{
+        font-size: 16px;
+        color: #424242;
+        line-height: 1.6;
+    }
+    .precio{
+        font-weight: bold;
+        color: #c62828;
+        font-size: 18px;
+    }
+    .total{
+        background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+</style>
+<body>
+<br/>
+<div class="main">
+    <h1>¡Pedido tomado, {{usuario.nombre}}!</h1>
+    <p>Gracias por pedir con nosotros. Tu pedido ha sido recibido y está siendo procesado.</p>
+    
+    <div class="pedido-info">
+        <h2>Datos del pedido:</h2>
+        <p><strong>Número de pedido:</strong> #{{pedido.id_pedido}}</p>
+        <p><strong>Fecha:</strong> {{pedido.fecha.strftime("%d-%m-%Y %H:%M")}}</p>
+        <p><strong>Estado:</strong> {{pedido.estado}}</p>
+        
+        <h2>Comidas pedidas:</h2>
+        {% for comida in pedido.comidas %}
+        <div class="comida-item">
+            <h3 style="color: #d32f2f; margin: 0 0 8px 0;">{{comida.nombre}}</h3>
+            <p style="margin: 5px 0; color: #666;">{{comida.descripcion}}</p>
+            <p class="precio">${{comida.precio}}</p>
+        </div>
+        {% endfor %}
+        
+        <div class="total">
+            TOTAL: ${{pedido.total}}
+        </div>
+    </div>
+    
+    <p>Te notificaremos cuando tu pedido esté listo para retirar.</p>
+    <p>¡Gracias por elegirnos!</p>
+</div>
+</body>
+</html>
