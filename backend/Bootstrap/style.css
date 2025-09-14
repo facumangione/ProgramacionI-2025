@@ -1,0 +1,20 @@
+/* Colores personalizados de tu diseño */
+:root {
+  --red: #a22020;   /* rojo del navbar */
+  --green: #28a745; /* verde de confirmar */
+  --light: #f8f9fa; /* fondo claro */
+}
+
+.bg-red {
+  background-color: var(--red) !important;
+}
+
+.btn-green {
+  background-color: var(--green) !important;
+  border: none;
+  color: white;
+}
+
+.link-red {
+  color: var(--red);
+}
