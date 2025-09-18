@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Buen Sabor - Iniciar Sesión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #c53030;
+            --success-green: #38a169;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        
+        .auth-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+            display: flex;
+            min-height: 400px;
+        }
+        
+        .login-brand {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 3rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 50%;
+        }
+        
+        .login-brand h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.2;
+            margin: 0;
+        }
+        
+        .login-form-section {
+            flex: 1;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-control {
+            border: none;
+            border-bottom: 2px solid #e2e8f0;
+            border-radius: 0;
+            padding: 0.75rem 0 0.75rem 3rem;
+            background-color: transparent;
+            font-size: 1rem;
+            transition: border-bottom-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-bottom-color: var(--primary-red);
+            box-shadow: none;
+            background-color: transparent;
+        }
+        
+        .form-control::placeholder {
+            color: #a0aec0;
+        }
+        
+        .form-icon {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #718096;
+            font-size: 1.2rem;
+            z-index: 5;
+        }
+        
+        
+        .btn-login {
+            background-color: #000;
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-login:hover {
+            background-color: #333;
+            color: white;
+        }
+        
+        .back-btn {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: none;
+            border: none;
+            color: var(--primary-red);
+            font-size: 1.5rem;
+            z-index: 1000;
+        }
+        
+        .back-btn:hover {
+            color: #9b2c2c;
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #718096;
+        }
+        
+        .signup-link a {
+            color: var(--primary-red);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .forgot-password {
+            text-align: center;
+            margin-top: 0.5rem;
+        }
+        
+        .forgot-password a {
+            color: #718096;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .auth-card {
+                flex-direction: column;
+                max-width: 400px;
+            }
+            
+            .login-brand {
+                flex: none;
+                text-align: center;
+                padding: 2rem 1rem;
+            }
+            
+            .login-brand h1 {
+                font-size: 2.5rem;
+            }
+            
+            .login-form-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .login-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="login-brand">
+                <h1>EL<br>BUEN<br>SABOR</h1>
+            </div>
+            <div class="login-form-section">
+                <h2 class="login-title">LOG IN</h2>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <i class="fas fa-user form-icon"></i>
+                        <input type="email" class="form-control" name="email" placeholder="Email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <i class="fas fa-lock form-icon"></i>
+                        <input type="password" class="form-control" name="password" id="loginPassword" placeholder="Contraseña" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-login w-100">
+                        LOGIN
+                    </button>
+                </form>
+                
+                <div class="forgot-password">
+                    </a>¿Olvidaste tu contraseña?</a>
+                </div>
+                
+                <div class="signup-link">
+                    ¿No tienes cuenta? <a href="signup.html">Registrarse</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

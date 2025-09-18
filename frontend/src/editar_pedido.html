@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Buen Sabor - Editar Reseña</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {--primary-red: #c53030;--success-green: #38a169;}
+        
+        .title-section {background-color: #c53030;padding: 2rem 0;}
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-custom {background-color: var(--primary-red);padding: 1rem 0;}
+        
+        .navbar-custom .navbar-brand {color: white;font-weight: bold;font-size: 1.5rem;text-decoration: none; }
+        
+        .navbar-custom .navbar-brand:hover {color: white;}
+      
+        .profile-icon {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        
+        .profile-icon:hover {
+            background-color: white;
+            color: var(--primary-red);
+            transform: scale(1.05);
+            text-decoration: none;
+        }
+        
+        .menu-title {background-color: var(--primary-red);color: white;text-align: center;padding: 1rem;margin: 0;font-size: 1.5rem;font-weight: bold;}
+        
+        .reseña-content {
+            background-color: #e2e8f0;
+            min-height: 600px;
+            padding: 2rem 0;
+        }
+        
+        .reseña-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .form-control, .form-select {
+            background-color: #e2e8f0;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            padding: 0.75rem 1rem;
+            font-weight: 500;
+            color: #4a5568;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: #fff;
+            border-color: var(--primary-red);
+            box-shadow: 0 0 0 0.2rem rgba(197, 48, 48, 0.25);
+            color: #2d3748;
+        }
+
+        .form-control[readonly]:focus {
+            box-shadow: none;
+            border-color: #ced4da;
+            cursor: default;
+        }
+        
+        .form-control.textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn-cancelar {
+            background-color: #e53e3e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        .btn-cancelar:hover {
+            background-color: #c53030;
+            color: white;
+        }
+        
+        .btn-actualizar {
+            background-color: var(--success-green);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+        }
+        
+        .btn-actualizar:hover {
+            background-color: #2f855a;
+            color: white;
+        }
+        
+        .footer-section {background-color: #4a5568;color: white;padding: 2rem 0;margin-top: 0;}
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
+            cursor: pointer;
+        }
+        
+        .footer-links li:hover {
+            color: white;
+        }
+        
+        .contact-info p {
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
+        }
+        
+        .social-icons i {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: #e2e8f0;
+            cursor: pointer;
+        }
+        
+        .social-icons i:hover {
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {font-size: 2.2rem;}
+            .auth-buttons {margin-top: 1rem;}
+            .reseña-card {padding: 1rem;}
+        }
+
+    </style>
+</head>
+<body>
+    <div class="title-section">
+        <div class="container text-center">
+            <div class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-hamburger me-3 fs-1 text-light"></i>
+                <a class="main-title mb-0" href="principal_admin.html">EL BUEN SABOR</a>
+            </div>
+        </div>
+    </div>
+    
+    <nav class="navbar navbar-custom">
+        <div class="container">
+            <div class="row w-100 align-items-center">
+                <div class="col-md-2">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bars me-2"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="comidas_admin.html"></i>Comidas</a></li>
+                            <li><a class="dropdown-item" href="reseñas.html"></i>Reseñas</a></li>
+                            <li><a class="dropdown-item" href="pedidos_admin.html"></i>Pedidos</a></li>
+                            <li><a class="dropdown-item" href="usuarios_admin.html"></i>Usuarios</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                </div>
+                <div class="col-md-2">
+                    <div class="auth-buttons text-end">
+                        <a class="profile-icon" href="perfil.html">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="menu-title">
+        EDITAR PEDIDO
+    </div>
+
+    <div class="reseña-content">
+        <div class="container">
+            <div class="reseña-card">
+                <form id="editarReseñaForm">
+                    <div class="form-group">
+                        <label for="ID_PEDIDO">ID_PEDIDO:</label>
+                        <input type="text" class="form-control" id="ID_PEDIDO" name="id_pedido" value="12345" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comida">Comida:</label>
+                        <select class="form-select" id="comida" name="comida" required>
+                            <option value="">Seleccionar comida...</option>
+                            <option value="spaghetti-fileto" selected>Spaghetti a la Fileto</option>
+                            <option value="lasagna">Lasagna</option>
+                            <option value="ñoquis">Ñoquis a la sazón</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="estado">Estado:</label>
+                        <select class="form-select" id="calificacion" name="calificacion" required>
+                            <option value="">Seleccionar estado...</option>
+                            <option value="1">EN PREPARACIÓN</option>
+                            <option value="2">LISTO</option>
+                            <option value="5">ENTREGADO</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="FECHA">FECHA:</label>
+                        <input type="text" class="form-control" id="FECHA" name="fecha" value="25/05/25" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="TOTAL">TOTAL:</label>
+                        <input type="text" class="form-control" id="TOTAL" name="total" value="$3500" readonly>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <a href="pedidos_admin.html" class="btn btn-cancelar">
+                                <i class="fas fa-times me-2"></i>CANCELAR
+                            </a>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <button type="submit" class="btn btn-actualizar">
+                                <i class="fas fa-save me-2"></i>ACTUALIZAR PEDIDO
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <h6>EL BUEN SABOR</h6>
+                    <ul class="footer-links">
+                        <li>COMIDAS</li>
+                        <li>RESEÑAS</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h6>UBICACIÓN <i class="fas fa-map-marker-alt"></i></h6>
+                    <div class="map-placeholder" style="background-color: #e2e8f0; height: 100px; border-radius: 5px; margin-top: 1rem;">
+                        <div class="d-flex align-items-center justify-content-center h-100">
+                            <i class="fas fa-map text-muted fs-2"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h6>CONTACTO</h6>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone me-2"></i>+5492617659542</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <h6>REDES SOCIALES</h6>
+                    <div class="social-icons">
+                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
