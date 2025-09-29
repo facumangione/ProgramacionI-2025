@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+<div class="menu-title">
+        PERFIL
+    </div>
+
+    <div class="profile-content">
+        <div class="container">
+            <div class="profile-card">
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                    </div>
+                    <div class="col-md-9">
+                        <div class="profile-info">
+                            <div class="profile-field">
+                                <label>Nombre:</label>
+                                <span>{{usuario.nombre}}</span>
+                            </div>
+                            <div class="profile-field">
+                                <label>Mail:</label>
+                                <span>{{usuario.mail}}</span>
+                            </div>
+                            <div class="profile-field">
+                                <label>Teléfono:</label>
+                                <span>{{usuario.telefono}}</span>
+                            </div>
+                            <div class="profile-field">
+                                <label>Rol:</label>
+                                <span>{{usuario.rol}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <button class="btn btn-eliminar" (click)="deleteUsuario()">
+                            <i  class="fas fa-trash me-2"></i>ELIMINAR
+                        </button>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <button class="btn btn-editar" (click)="goToEditarPerfil()">
+                            <i class="fas fa-edit me-2"></i>EDITAR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<app-footer></app-footer>

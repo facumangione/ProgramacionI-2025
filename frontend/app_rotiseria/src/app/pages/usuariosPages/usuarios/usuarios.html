@@ -1,0 +1,61 @@
+<app-header></app-header>
+
+<div class="menu-title">
+        USUARIOS
+</div>
+
+<div class="usuarios-content">
+        <div class="container">
+
+        <div class="search-section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="position-relative">
+                            <input (change)="buscar()" [(ngModel)]="nombreBuscado" type="text" class="search-input" placeholder="NOMBRE Y APELLIDO" id="searchNombre">
+                            <button class="search-btn" type="button" onclick="searchUsers()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="row table-header">
+                <div class="col-2 text-center">NOMBRE</div>
+                <div class="col-2 text-center">TELÉFONO</div>
+                <div class="col-4 text-center">MAIL</div>
+                <div class="col-2">ROL</div>
+            </div>
+            @for (usuario of arrayFiltred; track usuario.id_usuario){
+            <div class="usuario-row">
+                <div class="row usuario-item">
+                    <div class="col-2 ">
+                        <span class="usuario-arrow">▶</span>
+                        <span>{{usuario.nombre}}</span>
+                    </div>
+                    <div class="col-2 text-center">
+                        <span>{{usuario.telefono}}</span>
+                    </div>
+                    <div class="col-4 text-center">
+                        <span>{{usuario.mail}}</span>
+                    </div>
+                    <div class="col-2">
+                        <span>{{usuario.rol}}</span>
+                    </div>
+                    <div class="col-2 text-center">
+                        <button (click)="eliminarUsuario(usuario.id_usuario)" class="btn btn-eliminar-small">ELIMINAR</button>
+                        <a (click)="goToEditarUsuario(usuario.id_usuario)" class="btn btn-editar-small">EDITAR</a>
+                    </div>
+                </div>
+            </div>
+        }
+            <div class="text-end">
+                <a (click)="goToCrearUsuario()" class="btn btn-crear-usuario">
+                    CREAR USUARIO
+                </a>
+            </div>
+
+        </div>
+    </div><p></p>
+
+<app-footer></app-footer>

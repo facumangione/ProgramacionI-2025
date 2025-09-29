@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<div class="menu-title">
+        MI PEDIDO
+    </div>
+
+    <div class="pedido-content">
+        <div class="container">
+            <div class="pedido-card">
+                <div class="pedido-info">
+                    <div class="mb-3">
+                        <span class="pedido-label">ID_PEDIDO:</span>
+                        <span class="pedido-value">{{pedido.id_pedido}}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="pedido-label">COMIDAS:</span>
+                        <span class="pedido-value">{{pedido.comida}}</span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <span class="pedido-label">FECHA:</span>
+                        <span class="pedido-value">{{pedido.fecha}}</span>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <span class="pedido-label">ESTADO:</span>
+                        <span class="estado-listo">{{pedido.estado}}</span>
+                    </div>
+                    
+                    <div class="total-section">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="pedido-label total-amount">TOTAL:</span>
+                            <span class="total-amount">${{pedido.total}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<app-footer></app-footer>

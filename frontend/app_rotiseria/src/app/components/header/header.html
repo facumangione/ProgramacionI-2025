@@ -1,0 +1,66 @@
+<div class="title-section">
+        <div class="container text-center">
+            <div class="d-flex justify-content-center align-items-center">
+                <i class="fas fa-hamburger me-3 fs-1 text-light"></i>
+                <a class="main-title mb-0" href="#" routerLink="/home">EL BUEN SABOR</a>
+            </div>
+        </div>
+</div>
+    
+    <nav class="navbar navbar-custom">
+        <div class="container">
+            <div class="row w-100 align-items-center">
+                <div class="col-md-2">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-bars me-2"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a class="dropdown-item" href="#" routerLink="/resenas">Reseñas</a></li>
+
+                            @if (rol == 'CLIENTE'){
+                            <li><a class="dropdown-item" href="#" routerLink="/pedidos/:id">Mis Pedidos</a></li>
+                            <li><a class="dropdown-item" href="#" routerLink="/resenas/:id">Mis Reseñas</a></li>
+                            }
+                            @if (rol == 'ADMIN'){
+                            <li><a class="dropdown-item" href="#" routerLink="/pedidos">Pedidos</a></li>
+                            <li><a class="dropdown-item" href="#" routerLink="/usuarios">Usuarios</a></li>
+                            <li><a class="dropdown-item" href="#" routerLink="/comidas">Comidas</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                
+                <div class="col-md-7">
+                    @if (isHome) {
+                    <div class="search-container mx-auto">
+                        <div class="input-group">
+                        <input type="text"
+                                [(ngModel)]="searchText"
+                                (input)="onSearch()"
+                                class="form-control"
+                                placeholder="Buscar comida...">
+                        <button class="btn btn-light" type="button" (click)="onSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        </div>
+                    </div>
+                    }
+                </div>
+
+                <div class="col-md-3">
+                    @if (rol == null){
+                    <div class="auth-buttons text-end">
+                        <a class="btn btn-login btn-sm" href="#" routerLink="/login">LOG IN</a>
+                        <a class="btn btn-signup btn-sm" href="#" routerLink="/signup">SIGN UP</a>
+                    </div>
+                    } @else {
+                    <div class="auth-buttons text-end">
+                        <a class="profile-icon" (click)="goToPerfil()"><i class="fas fa-user"></i></a>
+                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </nav>

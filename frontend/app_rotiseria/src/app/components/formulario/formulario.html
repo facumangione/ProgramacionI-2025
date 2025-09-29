@@ -1,0 +1,71 @@
+<div class="formulario-content">
+  <div class="container">
+    <div class="formulario-card">
+      <form #formularioRef="ngForm" (ngSubmit)="funcionGuardarCambio()" novalidate>
+
+        @for (field of config.fields; track field.name) {
+          <div class="form-group">
+            <label [for]="field.name">{{ field.label }}</label>
+
+            @if (field.type === 'select') {
+              <select 
+                class="form-control" 
+                [id]="field.name" 
+                [name]="field.name" 
+                [required]="field.required || false"
+                [(ngModel)]="field.value">
+                
+                @for (option of field.options; track option.value) {
+                  <option [ngValue]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
+                }
+              </select>
+            } @else if (field.type === 'textarea') {
+              <textarea
+                class="form-control textarea"
+                [id]="field.name"
+                [name]="field.name"
+                [placeholder]="field.placeholder"
+                [required]="field.required"
+                [(ngModel)]="field.value"></textarea>
+            } @else {
+              <input 
+                [type]="field.type" 
+                class="form-control"
+                [id]="field.name"
+                [name]="field.name"
+                [placeholder]="field.placeholder"
+                [required]="field.required"
+                [(ngModel)]="field.value">
+            }
+          </div>
+        }
+
+        <div class="row mt-4">
+          <div class="col-md-6">
+            @if (isFunction(config.cancelRoute)) {
+              <button 
+                type="button"
+                (click)="config.cancelRoute()" 
+                class="btn btn-cancelar">
+                <i class="fas fa-times me-2"></i>CANCELAR
+              </button>
+            } @else {
+              <a 
+                [routerLink]="config.cancelRoute" 
+                class="btn btn-cancelar">
+                <i class="fas fa-times me-2"></i>CANCELAR
+              </a>
+            }
+          </div>
+          <div class="col-md-6 text-end">
+            <button 
+                type="submit" 
+                class="btn btn-guardar">
+                <i class="fas fa-save me-2"></i>{{ config.submitText }}
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

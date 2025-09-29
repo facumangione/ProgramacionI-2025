@@ -1,0 +1,17 @@
+<app-header (searchEvent)="buscar($event)"></app-header>
+<div class="menu-title">
+    COMIDAS
+</div>
+    <div class="container">
+        <div class="row">
+        @for (comida of arrayFiltred; track comida.id_comida) {
+            <div class="col-lg-4 col-md-6">
+                <app-product-card 
+                    [comida]="comida" [login]="login">
+                </app-product-card>
+            </div> 
+        }          
+        </div>
+    </div>
+
+<app-footer></app-footer>

@@ -1,0 +1,17 @@
+<div class="product-card" (click)="goToComida()">
+  <img src={{comida.image}} alt={{comida.alt}} class="product-image">
+  <div class="product-info">
+    <h5 class="product-title">{{ comida.nombre }}</h5>
+    <p class="product-description">{{ comida.descripcion }}</p>
+    <div class="d-flex justify-content-between align-items-center">
+      <span class="product-price">${{ comida.precio }}</span>
+      <div>
+        @if (login) {
+          <a (click)="goToConfirmarPedido()" class="btn btn-pedir" (click)="$event.stopPropagation()">PEDIR</a>
+        } @else {
+          <a routerLink="/login" class="btn btn-pedir" (click)="$event.stopPropagation()">PEDIR</a>
+        }
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<app-header></app-header>
+
+<div class="menu-title">
+        CONFIRMAR PEDIDO
+    </div>
+
+    <div class="pedido-content">
+        <div class="container">
+            <div class="pedido-card">
+                <div class="pedido-info">
+                    <div class="mb-3">
+                        <span class="pedido-label">COMIDA:</span>
+                        <span class="pedido-value">{{comida.nombre}}</span>
+                    </div>
+                    
+                    <div class="total-section">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="pedido-label total-amount">TOTAL:</span>
+                            <span class="total-amount">${{comida.precio}}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <a  (click)="goBack()" class="btn btn-cancelar">
+                            <i class="fas fa-times me-2"></i>CANCELAR PEDIDO
+                        </a>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <a (click)="goToPedidoResumen()" class="btn btn-confirmar" id="confirmarPedidoBtn">
+                            <i class="fas fa-check me-2"></i>CONFIRMAR PEDIDO
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<app-footer></app-footer>

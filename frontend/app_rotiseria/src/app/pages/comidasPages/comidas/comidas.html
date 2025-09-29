@@ -1,0 +1,43 @@
+<app-header></app-header>
+
+<div class="menu-title">
+        COMIDAS
+</div>
+
+<div class="comidas-content">
+        <div class="container">
+            <div class="row table-header">
+                <div class="col-3">NOMBRE</div>
+                <div class="col-4">DESCRIPCIÓN</div>
+                <div class="col-2 text-center">PRECIO</div>
+            </div>
+            @for (comida of comidas; track comida.id_comida){
+            <div class="comida-row">
+                <div class="row comida-item">
+                    <div class="col-3">
+                        <span class="comida-arrow">▶</span>
+                        <span> {{comida.nombre}}</span>
+                    </div>
+                    <div class="col-4">
+                        <span>{{comida.descripcion}}</span>
+                    </div>
+                    <div class="col-2 text-center">
+                        <span>${{comida.precio}}</span>
+                    </div>
+                    <div class="col-3 text-center">
+                        <button (click)="eliminarComida(comida.id_comida)" class="btn btn-eliminar-small">ELIMINAR</button>
+                        <a (click)="goToEditarComida(comida.id_comida)" class="btn btn-editar-small">EDITAR</a>
+                    </div>
+                </div>
+            </div>
+        }
+            <div class="text-end">
+                <a (click)="goToCrearComida()" class="btn btn-crear-comida">
+                    AÑADIR COMIDA
+                </a>
+            </div>
+
+        </div>
+    </div><p></p>
+
+<app-footer></app-footer>

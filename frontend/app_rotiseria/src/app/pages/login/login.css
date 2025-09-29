@@ -1,0 +1,166 @@
+:root {--primary-red: #c53030;--success-green: #38a169;}
+        
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+        
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+        
+.auth-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    max-width: 800px;
+    width: 100%;
+    display: flex;
+    min-height: 400px;
+}
+        
+.login-brand {
+    background-color: #c53030;
+    color: white;
+    padding: 3rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 50%;
+}
+        
+.login-brand h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+    margin: 0;
+}
+        
+.login-form-section {
+    flex: 1;
+    padding: 3rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+        
+.login-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+        
+.form-group {
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+        
+.form-control {
+    border: none;
+    border-bottom: 2px solid #e2e8f0;
+    border-radius: 0;
+    padding: 0.75rem 0 0.75rem 3rem;
+    background-color: transparent;
+    font-size: 1rem;
+    transition: border-bottom-color 0.3s;
+}
+        
+.form-control:focus {
+    border-bottom-color: #c53030;
+    box-shadow: none;
+    background-color: transparent;
+}
+        
+.form-control::placeholder {
+    color: #a0aec0;
+}
+        
+.form-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #718096;
+    font-size: 1.2rem;
+    z-index: 5;
+}
+        
+        
+.btn-login {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+        
+.btn-login:hover {
+    background-color: #333;
+    color: white;
+}
+               
+.signup-link {
+    text-align: center;
+    margin-top: 1rem;
+    color: #718096;
+}
+        
+.signup-link a {
+    color: #c53030;
+    text-decoration: none;
+    font-weight: 600;
+}
+        
+.signup-link a:hover {
+    text-decoration: underline;
+}
+        
+.forgot-password {
+    text-align: center;
+    margin-top: 0.5rem;
+}
+        
+.forgot-password a {
+    color: #718096;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+        
+@media (max-width: 768px) {
+    .auth-card {
+        flex-direction: column;
+        max-width: 400px;
+    }
+            
+    .login-brand {
+        flex: none;
+        text-align: center;
+        padding: 2rem 1rem;
+    }
+            
+    .login-brand h1 {
+        font-size: 2.5rem;
+    }
+            
+    .login-form-section {
+        padding: 2rem 1.5rem;
+    }
+            
+    .login-title {
+        font-size: 1.5rem;
+    }
+}

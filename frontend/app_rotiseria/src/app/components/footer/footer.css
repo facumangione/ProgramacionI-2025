@@ -1,0 +1,21 @@
+:root {--primary-red: #c53030;--success-green: #38a169;}
+
+.footer-section {background-color: #4a5568;color: white;padding: 2rem 0;margin-top: auto;width: 100%;}
+        
+.footer-links {list-style: none;padding: 0;}
+        
+.footer-links li {margin-bottom: 0.5rem;color: #e2e8f0;cursor: pointer;}
+        
+.footer-links li:hover {color: white;}
+        
+.contact-info p {margin-bottom: 0.5rem;color: #e2e8f0;}
+        
+.social-icons i {font-size: 1.5rem;margin-right: 1rem;color: #e2e8f0;cursor: pointer;}
+        
+.social-icons i:hover {color: white;}
+        
+@media (max-width: 768px) {
+    .main-title {font-size: 2.2rem;}
+    .auth-buttons {margin-top: 1rem;}
+    .comida-card {padding: 1rem;}
+}

@@ -1,0 +1,49 @@
+<app-header></app-header>
+
+
+<div class="menu-title">
+        RESEÑAS
+    </div>
+
+    <div class="reseñas-content">
+        <div class="container">
+            <div class="row table-header">
+                <div class="col-2 text-center">USUARIO</div>
+                <div class="col-2 text-center">COMIDA</div>
+                <div class="col-2 text-center">CALIFICACIÓN</div>
+                <div class="col-6">COMENTARIO</div>
+            </div>
+            @for (resena of resenas; track resena.id_resena){
+            <div class="reseña-row">
+                <div class="row reseña-item">
+                    <div class="col-2 text-center">
+                        <span class="reseña-arrow">▶</span>
+                        <span>{{resena.nombre_usuario}}</span>
+                    </div>
+                    <div class="col-2 text-center">
+                        <span>{{resena.comida}}</span>
+                    </div>
+                    <div class="col-2 text-center">
+                        <span>{{resena.calificacion}}</span>
+                    </div>
+                    <div class="col-4">
+                        <span>{{resena.comentario}}</span>
+                    </div>
+                    <div class="col-2 text-end">
+                        <button (click)="eliminarResena(resena.id_resena)" class="btn btn-eliminar-small">ELIMINAR</button>
+                        <a (click)="goToEditarResena(resena.id_resena)" class="btn btn-editar-small">EDITAR</a>
+                    </div>
+                </div>
+            </div>
+        }
+            <div class="text-end">
+                <a (click)="goToCrearResena()" class="btn btn-añadir-reseña">
+                    AÑADIR RESEÑA
+                </a>
+            </div>
+
+        </div>
+    </div><p></p>
+
+
+<app-footer></app-footer>

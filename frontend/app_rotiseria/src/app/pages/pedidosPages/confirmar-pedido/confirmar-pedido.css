@@ -1,0 +1,95 @@
+:root {--primary-red: #c53030;--success-green: #38a169;}
+
+.menu-title {background-color: #c53030;color: white;text-align: center;padding: 1rem;margin: 0;font-size: 1.5rem;font-weight: bold;}
+        
+.pedido-content {
+    background-color: #e2e8f0;
+    min-height: 600px;
+    padding: 2rem 0;
+}
+        
+.pedido-card {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+        
+.pedido-info {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+        
+.pedido-label {
+    font-weight: bold;
+    color: #2d3748;
+    display: inline-block;
+    min-width: 120px;
+}
+        
+.pedido-value {
+    color: #4a5568;
+}
+        
+.total-section {
+    border-top: 2px solid #e2e8f0;
+    padding-top: 1rem;
+    margin-top: 2rem;
+}
+        
+.total-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d3748;
+}
+        
+.btn-cancelar {
+    background-color: #e53e3e;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+}
+        
+.btn-cancelar:hover {
+    background-color: #c53030;
+    color: white;
+    text-decoration: none;
+}
+        
+.btn-confirmar {
+    background-color: #36a36c;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: 600;
+}
+        
+.btn-confirmar:hover {
+    background-color: #2f855a;
+    color: white;
+}
+        
+.estado-badge {
+    background-color: #fbd38d;
+    color: #744210;
+    padding: 0.5rem 1rem;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .main-title {font-size: 2.2rem;}
+    .auth-buttons {margin-top: 1rem;}
+    .pedido-card {padding: 1rem;}
+    .btn-cancelar, .btn-confirmar {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}

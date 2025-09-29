@@ -1,0 +1,60 @@
+:root {--primary-red: #c53030;--success-green: #38a169;}
+
+.menu-title {background-color: #c53030;color: white;text-align: center;padding: 1rem;margin: 0;font-size: 1.5rem;font-weight: bold;}
+        
+.pedido-content {
+    background-color: #f8f9fa;
+    min-height: 600px;
+    padding: 2rem 0;
+}
+        
+.pedido-card {
+    background: white;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+        
+.pedido-info {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+        
+.pedido-label {
+    font-weight: bold;
+    color: #2d3748;
+    display: inline-block;
+    min-width: 120px;
+}
+        
+.pedido-value {
+    color: #4a5568;
+}
+        
+.total-section {
+    border-top: 2px solid #e2e8f0;
+    padding-top: 1rem;
+    margin-top: 2rem;
+}
+        
+.total-amount {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d3748;
+}
+        
+.estado-listo {
+    background-color: #c6f6d5;
+    color: #22543d;
+    padding: 0.4rem 1rem;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .main-title {font-size: 2.2rem;}
+    .auth-buttons {margin-top: 1rem;}
+    .pedido-card {padding: 1rem;}
+}
