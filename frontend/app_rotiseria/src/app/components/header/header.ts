@@ -12,10 +12,6 @@ export class Header{
 
   @Output() searchEvent = new EventEmitter<string>();
   searchText: string = '';
-  
-  //rol: 'ADMIN' | 'CLIENTE' | null=null;
-  rol: 'ADMIN' | 'CLIENTE' | null = 'ADMIN';
-  //rol: 'ADMIN' | 'CLIENTE' | null = 'CLIENTE';
 
   usuario={
     id_usuario:1,
@@ -40,6 +36,21 @@ export class Header{
 
   goToPerfil(){
     this.router.navigate(['/perfil',this.usuario.id_usuario])
+  }
+
+  isToken(){
+    return localStorage.getItem('token');
+  }
+
+  logout(){
+    localStorage.removeItem('token');
+    localStorage.removeItem('mail');
+    localStorage.removeItem('id_usuario');
+    localStorage.removeItem('rol');
+  }
+
+  getRol(){
+    return localStorage.getItem('rol');
   }
   
 }

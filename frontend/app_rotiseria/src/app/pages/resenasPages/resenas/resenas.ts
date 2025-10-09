@@ -46,4 +46,13 @@ export class Resenas {
     this.router.navigate(['/resenas/crear'])
   }
 
+  isUserAdmin(){
+    const rol=localStorage.getItem('rol')
+    if (rol==='ADMIN'){
+      return true
+    } else{
+      return false
+    }
+  }
+
 }

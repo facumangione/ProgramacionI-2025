@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
+from flask_cors import CORS
 
 api = Api()
 
@@ -20,6 +21,8 @@ mailsender=Mail()
 def create_app():
     app = Flask(__name__)
     load_dotenv()
+
+    CORS(app)
 
     # Crear Base de Datos
     if not os.path.exists(os.getenv('DATABASE_PATH')+os.getenv('DATABASE_NAME')):

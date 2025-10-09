@@ -24,6 +24,20 @@
         
 .profile-icon:hover {background-color: white;color: var(--primary-red);transform: scale(1.05);}
 
+.dropdown-item-cerrar-sesion {
+    background-color: #d44c3d;
+    width: 100%;
+    padding: 0.25em 1.5rem;
+    color: white;
+    margin: 0.25rem 0.5rem;
+    white-space: nowrap;
+    text-align: center;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+}
+.dropdown-item-cerrar-sesion:hover {background-color: #d63523;color: white;cursor: pointer;}
+
 @media (max-width: 768px) {
             .main-title {font-size: 2.2rem;}
             .search-container {max-width: 100%;margin: 1rem 0;}

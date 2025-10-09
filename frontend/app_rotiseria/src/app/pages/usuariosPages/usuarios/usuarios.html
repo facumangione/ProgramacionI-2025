@@ -9,12 +9,21 @@
 
         <div class="search-section">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="position-relative">
-                            <input (change)="buscar()" [(ngModel)]="nombreBuscado" type="text" class="search-input" placeholder="NOMBRE Y APELLIDO" id="searchNombre">
+                            <input (change)="filtrarUsuarios()" [(ngModel)]="nombreBuscado" type="text" class="search-input" placeholder="NOMBRE Y APELLIDO" id="searchNombre">
                             <button class="search-btn" type="button" onclick="searchUsers()">
                                 <i class="fas fa-search"></i>
                             </button>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="position-relative">
+                            <select (change)="filtrarUsuarios()" [(ngModel)]="rolBuscado" class="search-input select-filter" id="rol" name="rol">
+                                <option value="null" selected>Seleccionar Rol</option>
+                                <option value="ADMIN" selected>ADMIN</option>
+                                <option value="CLIENTE">CLIENTE</option>
+                            </select>
                         </div>
                     </div>
                 </div>

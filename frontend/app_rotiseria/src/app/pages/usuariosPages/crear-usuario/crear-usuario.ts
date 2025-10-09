@@ -39,7 +39,7 @@ export class CrearUsuario {
           required: true 
         },
         { label: 'Mail:',
-          type: 'text',
+          type: 'email',
           name: 'mail',
           value: '',
           placeholder: "usuario@ejemplo.com",

@@ -11,8 +11,8 @@ import { ProductCard } from '../../components/product-card/product-card';
   styleUrl: './home.css'
 })
 export class Home {
-  //login=false; //si no esta logeado
-  login=true; //si esta logeado
+  login=false; //si no esta logeado
+  //login=true; //si esta logeado
 
   comidas=[
     {

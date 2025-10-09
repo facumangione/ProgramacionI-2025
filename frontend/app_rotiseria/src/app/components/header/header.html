@@ -18,14 +18,16 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li><a class="dropdown-item" href="#" routerLink="/resenas">Reseñas</a></li>
 
-                            @if (rol == 'CLIENTE'){
+                            @if (getRol() == 'CLIENTE'){
                             <li><a class="dropdown-item" href="#" routerLink="/pedidos/:id">Mis Pedidos</a></li>
                             <li><a class="dropdown-item" href="#" routerLink="/resenas/:id">Mis Reseñas</a></li>
+                            <li><a class="dropdown-item-cerrar-sesion" (click)="logout()" >CERRAR SESION</a></li>
                             }
-                            @if (rol == 'ADMIN'){
+                            @if (getRol() == 'ADMIN'){
                             <li><a class="dropdown-item" href="#" routerLink="/pedidos">Pedidos</a></li>
                             <li><a class="dropdown-item" href="#" routerLink="/usuarios">Usuarios</a></li>
                             <li><a class="dropdown-item" href="#" routerLink="/comidas">Comidas</a></li>
+                            <li><a class="dropdown-item-cerrar-sesion" (click)="logout()" >CERRAR SESION</a></li>
                             }
                         </ul>
                     </div>
@@ -50,14 +52,14 @@
                 </div>
 
                 <div class="col-md-3">
-                    @if (rol == null){
+                    @if (isToken()){
                     <div class="auth-buttons text-end">
-                        <a class="btn btn-login btn-sm" href="#" routerLink="/login">LOG IN</a>
-                        <a class="btn btn-signup btn-sm" href="#" routerLink="/signup">SIGN UP</a>
+                        <a class="profile-icon" (click)="goToPerfil()"><i class="fas fa-user"></i></a>
                     </div>
                     } @else {
                     <div class="auth-buttons text-end">
-                        <a class="profile-icon" (click)="goToPerfil()"><i class="fas fa-user"></i></a>
+                        <a class="btn btn-login btn-sm" href="#" routerLink="/login">LOG IN</a>
+                        <a class="btn btn-signup btn-sm" href="#" routerLink="/signup">SIGN UP</a>
                     </div>
                     }
                 </div>
