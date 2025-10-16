@@ -41,7 +41,6 @@ export const routes: Routes = [
     { path: 'comida/:id_comida/editar', component: EditarComida, canActivate:[authsessionGuard,roladminGuard] },
     //pedidos:
     { path: 'pedidos', component: Pedidos, canActivate:[authsessionGuard] },
-    { path: 'pedidos/:id_usuario', component: Pedidos, canActivate:[authsessionGuard,usermatchGuard] },
     { path: 'pedido/:id_pedido/editar', component: EditarPedido, canActivate:[authsessionGuard,roladminGuard] },
     { path: 'pedido/:id_comida/confirmar', component: ConfirmarPedido, canActivate:[authsessionGuard]},
     { path: 'pedido/:id_pedido/resumen', component: ResumenPedido, canActivate:[authsessionGuard] },
@@ -50,7 +49,7 @@ export const routes: Routes = [
     { path: 'resenas/crear', component: CrearResena, canActivate:[authsessionGuard] },
     { path: 'resenas/:id_comida', component: Resenas },
     { path: 'resenas/:id_usuario', component: Resenas, canActivate:[authsessionGuard,usermatchGuard] },
-    { path: 'resena/:id_comida/editar', component: EditarResena, canActivate:[authsessionGuard]},
+    { path: 'resena/:id_resena/editar', component: EditarResena, canActivate:[authsessionGuard]},
     //usuarios:
     { path: 'usuarios', component: Usuarios, canActivate:[authsessionGuard,roladminGuard] },
     { path: 'usuarios/crear', component: CrearUsuario, canActivate:[authsessionGuard,roladminGuard] },

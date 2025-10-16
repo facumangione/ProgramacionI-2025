@@ -6,7 +6,7 @@
     <div class="d-flex justify-content-between align-items-center">
       <span class="product-price">${{ comida.precio }}</span>
       <div>
-        @if (login) {
+        @if (isToken()) {
           <a (click)="goToConfirmarPedido()" class="btn btn-pedir" (click)="$event.stopPropagation()">PEDIR</a>
         } @else {
           <a routerLink="/login" class="btn btn-pedir" (click)="$event.stopPropagation()">PEDIR</a>

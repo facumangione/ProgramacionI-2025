@@ -1,11 +1,39 @@
 <app-header></app-header>
 
 <div class="menu-title">
+    @if (getRol() == 'ADMIN'){
         PEDIDOS
+    }
+    @if (getRol() == 'CLIENTE'){
+        MIS PEDIDOS
+    }
 </div>
 
 <div class="pedidos-content">
         <div class="container">
+
+            <div class="search-section">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="position-relative">
+                            <input (change)="filtrarPedidos()" [(ngModel)]="idBuscado" type="number" class="search-input" placeholder="INGRESAR ID DEL PEDIDO" id="searchIdPedido">
+                            <button class="search-btn" type="button" onclick="searchPedidos()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="position-relative">
+                            <select (change)="filtrarPedidos()" [(ngModel)]="estadoBuscado" class="search-input select-filter" id="estado" name="estado">
+                                <option value="null" selected>Seleccionar Estado</option>
+                                <option value="EN PREPARACION">EN PREPARACION</option>
+                                <option value="LISTO">LISTO</option>
+                                <option value="ENTREGADO">ENTREGADO</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="row table-header">
                 <div class="col-2 text-center">ID_PEDIDO</div>
@@ -14,7 +42,7 @@
                 <div class="col-2 text-center">FECHA</div>
                 <div class="col-2 text-center">TOTAL</div>
             </div>
-            @for (pedido of pedidos; track pedido.id_pedido){
+            @for (pedido of arrayFiltred; track pedido.id_pedido){
             <div class="pedido-row">
                 <div class="row pedido-item">
                     <div class="col-2 text-center">
@@ -22,7 +50,7 @@
                         <span>{{pedido.id_pedido}}</span>
                     </div>
                     <div class="col-2">
-                        <span>{{pedido.comida}}</span>
+                        <span>{{ getComida(pedido) }}</span>
                     </div>
                     <div class="col-2 text-center">
                         <span>{{pedido.estado}}</span>

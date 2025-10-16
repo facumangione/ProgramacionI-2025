@@ -4,6 +4,7 @@ import { Footer } from '../../../components/footer/footer';
 import { Formulario } from '../../../components/formulario/formulario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ComidasSvc } from '../../../services/comidas';
 
 @Component({
   selector: 'app-editar-comida',
@@ -13,21 +14,12 @@ import { Location } from '@angular/common';
 })
 export class EditarComida {
   
-  comida={
-      id_comida:1,
-      nombre: 'Spaghetti a la Fileto',
-      descripcion:'Al estilo italiano',
-      precio: 1500,
-      image: 'assets/spaghetti.jpg',
-      alt:'Spaghetti a la Fileto'
-    }
+  comida: any;
+  formConfig: any;
 
-    formConfig: any;
-
-  constructor(private route: ActivatedRoute,public router: Router, private location: Location) {}
+  constructor(private route: ActivatedRoute,public router: Router, private location: Location, private comidasSvc: ComidasSvc) {}
 
   ngOnInit() {
-
     this.formConfig = {
       title: 'Editar Comida',
       cancelRoute: this.goBack.bind(this),
@@ -58,7 +50,7 @@ export class EditarComida {
           type: 'file',
           name: 'imagen',
           value: '',
-          placeholder: "Selecciona una imagen para el producto (JPG, PNG)",
+          placeholder: "Selecciona una imagen para el producto (en formato JPG y en minuscula)",
           required: true 
         },
         
@@ -67,6 +59,15 @@ export class EditarComida {
 
     this.editarComida=this.editarComida.bind(this);
 
+    const id = Number(this.route.snapshot.paramMap.get('id_comida'));
+    this.comidasSvc.getComidaById(id).subscribe({
+    next: (res) => {
+      console.log('Comida encontrada:', res);
+      this.comida = res;
+    },error: (err) => {
+      console.error('Error al traer comida:', err);
+    }
+    });
   }
 
   goBack() {

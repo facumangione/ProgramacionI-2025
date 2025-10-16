@@ -3,6 +3,7 @@ import { Header } from '../../../components/header/header';
 import { Footer } from '../../../components/footer/footer';
 import { Formulario } from '../../../components/formulario/formulario';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UsuariosSvc } from '../../../services/usuarios';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -12,21 +13,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditarPerfil {
 
-  usuario = {
-    id_usuario:1,
-    nombre: 'Ignacio Milutin',
-    mail: 'i.milutin@alumno.um.edu.ar',
-    telefono: 26164579875,
-    rol: 'ADMIN'
-  };
+  // usuario = {
+  //   id_usuario:1,
+  //   nombre: 'Ignacio Milutin',
+  //   mail: 'i.milutin@alumno.um.edu.ar',
+  //   telefono: 26164579875,
+  //   rol: 'ADMIN'
+  // };
 
+  usuario: any;
   formConfig: any;
 
-  constructor(private route: ActivatedRoute,public router: Router) {}
+  constructor(private route: ActivatedRoute,public router: Router, private usuariosSvc: UsuariosSvc) {}
   
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id_usuario'); 
+    const id = Number(this.route.snapshot.paramMap.get('id_usuario')); 
 
     this.formConfig = {
       title: 'Editar Perfil',
@@ -49,6 +51,16 @@ export class EditarPerfil {
     };
 
     this.editarPerfil = this.editarPerfil.bind(this);
+
+    this.usuariosSvc.getUsuarioById(id).subscribe({
+    next: (res) => {
+      console.log('Usuario encontrado:', res);
+      this.usuario = res;
+    },
+    error: (err) => {
+      console.error('Error al traer usuario:', err);
+    }
+  });
 
   }
 

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -12,20 +11,26 @@ import { RouterModule } from '@angular/router';
   styleUrl: './formulario.css'
 })
 
-export class Formulario implements OnInit{
+export class Formulario implements OnInit, OnChanges {
 
   @Input() config: any;
   @Input() infoActual: any;
   @Input() funcionGuardarCambio: any
 
-  ngOnInit() {
-    if (this.infoActual && this.config) {
-      this.config.fields.forEach((field: any) => {
-        if (this.infoActual[field.name] !== undefined) {
-          field.value = this.infoActual[field.name];
-        }
-      });
+  ngOnInit() {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['infoActual'] && this.infoActual && this.config) {
+      this.actualizarCampos();
     }
+  }
+
+  actualizarCampos() {
+    this.config.fields.forEach((field: any) => {
+      if (this.infoActual[field.name] !== undefined) {
+        field.value = this.infoActual[field.name];
+      }
+    });
   }
 
   isFunction(value: any): value is Function {
@@ -33,5 +38,3 @@ export class Formulario implements OnInit{
   }
 
 }
-
-

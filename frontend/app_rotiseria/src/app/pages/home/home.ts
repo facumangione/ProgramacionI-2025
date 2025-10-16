@@ -3,6 +3,7 @@ import { Footer } from '../../components/footer/footer';
 import { Router, RouterLink } from '@angular/router';
 import { Header } from '../../components/header/header';
 import { ProductCard } from '../../components/product-card/product-card';
+import { ComidasSvc } from '../../services/comidas';
 
 @Component({
   selector: 'app-home',
@@ -11,39 +12,28 @@ import { ProductCard } from '../../components/product-card/product-card';
   styleUrl: './home.css'
 })
 export class Home {
-  login=false; //si no esta logeado
-  //login=true; //si esta logeado
 
-  comidas=[
-    {
-      id_comida:1,
-      nombre: 'Spaghetti a la Fileto',
-      descripcion:'Al estilo italiano',
-      precio: 1500,
-      image: 'assets/spaghetti.jpg',
-      alt:'Spaghetti a la Fileto'
-    },
-    {
-      id_comida:2,
-      nombre: 'Lasagna',
-      descripcion:'Con Salsa Boloñesa',
-      precio: 1600,
-      image: 'assets/lasagna.jpg',
-      alt:'Lasagna'
-    },
-    {
-      id_comida:3,
-      nombre: 'Ñoquis a la sazón',
-      descripcion:'Con Yogur y Panceta',
-      precio: 1800,
-      image: 'assets/noquis.jpg',
-      alt:'Ñoquis'
-    } 
-  ]
+  comidas:any[]=[];
+  arrayFiltred=[...this.comidas];
 
-  arrayFiltred=[...this.comidas]
+  constructor(private router:Router,private comidasSvc: ComidasSvc){}
 
-  constructor(private router:Router,){}
+  ngOnInit(){
+    this.comidasSvc.getComidas().subscribe({
+      next: (res:any)=>{
+        console.log("Comidas: ",res);
+        this.comidas = res.comidas.map((comida: any) => ({
+        ...comida,
+        image: `assets/${comida.nombre.toLowerCase()}.jpg`,
+        alt: comida.nombre
+      }));
+        this.arrayFiltred=[...this.comidas]
+      },
+      error: (err)=>{
+        console.log("Error al traer comidas: ",err)
+      }
+    })
+  }
 
   buscar(nombreBuscado:string){
     console.log('Home.buscar recibió:', nombreBuscado);

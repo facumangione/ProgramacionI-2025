@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Header } from '../../../components/header/header';
 import { Footer } from '../../../components/footer/footer';
 import { Router } from '@angular/router';
+import { ComidasSvc } from '../../../services/comidas';
 
 @Component({
   selector: 'app-comidas',
@@ -11,31 +12,21 @@ import { Router } from '@angular/router';
 })
 export class Comidas {
 
-  comidas=[
-    {
-      id_comida:1,
-      nombre: 'Spaghetti a la Fileto',
-      descripcion:'Al estilo italiano',
-      precio: 1500,
-      image: 'assets/spaghetti.jpg',
-    },
-    {
-      id_comida:2,
-      nombre: 'Lasagna',
-      descripcion:'Con Salsa Boloñesa',
-      precio: 1600,
-      image: 'assets/lasagna.jpg',
-    },
-    {
-      id_comida:3,
-      nombre: 'Ñoquis a la sazón',
-      descripcion:'Con Yogur y Panceta',
-      precio: 1800,
-      image: 'assets/noquis.jpg'
-    } 
-  ]
+  comidas:any[]=[];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,private comidasSvc: ComidasSvc) {}
+
+  ngOnInit(){
+    this.comidasSvc.getComidas().subscribe({
+      next: (res:any)=>{
+        console.log("Comidas: ",res);
+        this.comidas=res.comidas; 
+      }, 
+      error: (err)=>{ 
+        console.log("Error al traer comidas: ",err) 
+      } 
+    }) 
+  }
 
   //Deberia hacer delete de la comida
   eliminarComida(id_comida:any) {

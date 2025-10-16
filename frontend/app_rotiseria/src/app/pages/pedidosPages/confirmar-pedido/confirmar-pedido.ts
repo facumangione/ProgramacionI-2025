@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Footer } from '../../../components/footer/footer';
 import { Header } from '../../../components/header/header';
+import { ComidasSvc } from '../../../services/comidas';
 
 @Component({
   selector: 'app-confirmar-pedido',
@@ -14,38 +15,27 @@ export class ConfirmarPedido {
 
   comida: any = null;
 
-  comidas=[
-    {
-      id_comida:1,
-      nombre: 'Spaghetti a la Fileto',
-      descripcion:'Al estilo italiano',
-      precio: 1500,
-      image: 'assets/spaghetti.jpg',
-      alt:'Spaghetti a la Fileto'
-    },
-    {
-      id_comida:2,
-      nombre: 'Lasagna',
-      descripcion:'Con Salsa Boloñesa',
-      precio: 1600,
-      image: 'assets/lasagna.jpg',
-      alt:'Lasagna'
-    },
-    {
-      id_comida:3,
-      nombre: 'Ñoquis a la sazón',
-      descripcion:'Con Yogur y Panceta',
-      precio: 1800,
-      image: 'assets/noquis.jpg',
-      alt:'Ñoquis'
-    } 
-  ]
-
-  constructor(private route: ActivatedRoute, private router: Router, private location: Location) {}
+  constructor(private route: ActivatedRoute,
+    private router: Router, 
+    private location: Location,
+    private comidasSvc: ComidasSvc
+  ) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id_comida'));
-    this.comida = this.comidas.find(comida => comida.id_comida === id);
+    this.comidasSvc.getComidaById(id).subscribe({
+    next: (res) => {
+      console.log('Comida encontrada:', res);
+      this.comida = {
+        ...res,
+        image: `assets/${res.nombre.toLowerCase()}.jpg`,
+        alt: res.nombre
+      };
+    },
+    error: (err) => {
+      console.error('Error al traer comida:', err);
+    }
+  });
   }
 
   goBack() {

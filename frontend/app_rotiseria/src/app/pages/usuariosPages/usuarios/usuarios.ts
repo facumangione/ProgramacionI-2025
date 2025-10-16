@@ -13,29 +13,6 @@ import { UsuariosSvc } from '../../../services/usuarios';
 })
 export class Usuarios {
 
-  
-
-  // usuarios=[
-  //   {
-  //     id_usuario:1,
-  //     nombre:'Ignacio Milutin',
-  //     mail:'i.milutin@alumno.um.edu.ar',
-  //     password:'1234',
-  //     telefono:26164579875,
-  //     rol:'ADMIN'
-  //   },
-  //   {
-  //     id_usuario:2,
-  //     nombre:'Santiago Escudero',
-  //     mail:'s.escudero@alumno.um.edu.ar',
-  //     password:'5678',
-  //     telefono:2613466782,
-  //     rol:'CLIENTE'
-  //   },
-  // ]
-
-  // arrayFiltred=[...this.usuarios]
-
   nombreBuscado!: string;
   rolBuscado: string = 'null';
   usuarios:any[]=[];
@@ -57,11 +34,6 @@ export class Usuarios {
         console.log("Error al traer usuarios: ",err)
       }
     })
-  }
-
-  buscarNombre(){
-    let nombreBuscado = this.nombreBuscado.toLowerCase();
-    this.arrayFiltred=this.usuarios.filter(u => u.nombre.toLowerCase().includes(nombreBuscado))
   }
 
   filtrarUsuarios(){

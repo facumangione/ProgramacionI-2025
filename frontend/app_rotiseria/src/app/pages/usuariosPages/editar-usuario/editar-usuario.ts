@@ -4,6 +4,7 @@ import { Footer } from '../../../components/footer/footer';
 import { Formulario } from '../../../components/formulario/formulario';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UsuariosSvc } from '../../../services/usuarios';
 
 @Component({
   selector: 'app-editar-usuario',
@@ -13,18 +14,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditarUsuario {
 
-  usuario={
-      id_usuario:1,
-      nombre:'Ignacio Milutin',
-      mail:'i.milutin@alumno.um.edu.ar',
-      password:'1234',
-      telefono:26164579875,
-      rol:'ADMIN'
-    }
-
+  usuario: any;
   formConfig: any;
 
-  constructor(private route: ActivatedRoute,public router: Router, private location: Location) {}
+  constructor(private route: ActivatedRoute,public router: Router, private location: Location, private usuariosSvc: UsuariosSvc) {}
 
   ngOnInit() {
     this.formConfig = {
@@ -70,6 +63,16 @@ export class EditarUsuario {
 
     this.editarUsuario=this.editarUsuario.bind(this);
 
+    const id = Number(this.route.snapshot.paramMap.get('id_usuario'));
+    this.usuariosSvc.getUsuarioById(id).subscribe({
+    next: (res) => {
+      console.log('Usuario encontrado:', res);
+      this.usuario = res;
+    },
+    error: (err) => {
+      console.error('Error al traer usuario:', err);
+    }
+    });
   }
 
   goBack() {

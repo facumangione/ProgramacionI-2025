@@ -35,15 +35,22 @@ export class Login {
         console.log('Respuesta login: ',res);
         localStorage.setItem('token',res.access_token);
         localStorage.setItem('mail',res.mail);
-        localStorage.setItem('id_usuario',res.id_usuario.toString());
         this.router.navigateByUrl('/home');
 
         const decodedToken: any=jwtDecode(res.access_token);
+        
         const rol=decodedToken.rol
         if (rol){
           localStorage.setItem('rol', rol);
         }else{
           console.log('No se encontro el rol')
+        }
+
+        const id_usuario=decodedToken.id
+        if (id_usuario){
+          localStorage.setItem('id_usuario', id_usuario);
+        }else{
+          console.log('No se encontro el id')
         }
       },
       error: (err)=> {
@@ -52,6 +59,7 @@ export class Login {
         localStorage.removeItem('token');
         localStorage.removeItem('mail');
         localStorage.removeItem('id_usuario');
+        localStorage.removeItem('rol');
       }
     })
   }

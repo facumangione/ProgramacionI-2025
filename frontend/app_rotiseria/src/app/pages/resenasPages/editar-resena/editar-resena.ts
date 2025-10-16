@@ -4,6 +4,8 @@ import { Footer } from '../../../components/footer/footer';
 import { Formulario } from '../../../components/formulario/formulario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { ResenasSvc } from '../../../services/resenas-svc';
+import { ComidasSvc } from '../../../services/comidas';
 
 @Component({
   selector: 'app-editar-resena',
@@ -13,35 +15,31 @@ import { Location } from '@angular/common';
 })
 export class EditarResena {
 
-  resena={
-      id_resena: 1,
-      nombre_usuario:'Juan Pérez',
-      comida: 'Spaghetti a la Fileto',
-      calificacion: 5,
-      comentario: 'Excelente'
-    }
-
   formConfig: any;
+  resena: any;
 
-  constructor(private route: ActivatedRoute,public router: Router, private location: Location) {}
+  constructor(
+    private route: ActivatedRoute,
+    public router: Router,
+    private location: Location,
+    private resenaSvc: ResenasSvc,
+    private comidaSvc: ComidasSvc
+  ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id_resena'); 
+    const id_resena = Number(this.route.snapshot.paramMap.get('id_resena')); 
 
     this.formConfig = {
       title: 'Editar Reseña',
       cancelRoute: this.goBack.bind(this),
       submitText: 'GUARDAR CAMBIOS',
       fields: [
-        { 
-          label: 'Comida:', 
-          type: 'select', 
-          name: 'comida',
-          options: [
-            { value: 'Spaghetti a la Fileto', label: 'Spaghetti a la Fileto' },
-            { value: 'Lasagna', label: 'Lasagna' },
-            { value: 'Ñoquis a la sazón', label: 'Ñoquis a la sazón' }
-          ]
+        {
+          label: 'Comida:',
+          type: 'text', 
+          name: 'nombre_comida',
+          required: false,
+          readonly: true,
         },
         { 
           label: 'Calificación:', 
@@ -55,11 +53,39 @@ export class EditarResena {
             { value: 5, label: '5 - Excelente' }
           ]
         },
-        { label: 'Comentario:', type: 'text', name: 'comentario', required: true },
+        { label: 'Comentario:',
+          type: 'text', 
+          name: 'comentario', 
+          required: true
+        },
       ]
     };
 
     this.editarResena=this.editarResena.bind(this);
+
+    this.resenaSvc.getResenaById(id_resena).subscribe({
+      next: (res) => {
+        console.log('Reseña encontrada:', res);
+        this.resena = res;
+
+        this.comidaSvc.getComidaById(res.id_comida).subscribe({
+          next: (comida: any) => {
+            console.log('Comida asociada:', comida.nombre);
+            this.resena = {
+              ...this.resena,
+              nombre_comida: comida.nombre
+            };  
+          },
+          error: (err) => {
+            console.error('Error al obtener la comida:', err);
+            this.resena.nombre_comida = 'Comida no encontrada';
+          },
+        });
+      },
+      error: (err) => {
+        console.error('Error al traer reseña:', err);
+      },
+    });
 
   }
 

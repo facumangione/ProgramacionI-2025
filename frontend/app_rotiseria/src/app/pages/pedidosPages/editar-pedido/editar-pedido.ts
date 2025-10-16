@@ -4,6 +4,7 @@ import { Footer } from '../../../components/footer/footer';
 import { Formulario } from '../../../components/formulario/formulario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { PedidosSvc } from '../../../services/pedidos-svc';
 
 @Component({
   selector: 'app-editar-pedido',
@@ -13,18 +14,14 @@ import { Location } from '@angular/common';
 })
 export class EditarPedido {
 
-  pedido={
-    id_pedido:1,
-    id_usuario:1,
-    fecha:'12/4/25',
-    estado:'EN PREPARACIÓN',
-    total: 1500,
-    comida:'Spaghetti a la Fileto'
-  };
-
+  pedido: any;
   formConfig: any;
 
-  constructor(private route: ActivatedRoute,public router: Router, private location: Location) {}
+  constructor(private route: ActivatedRoute,
+    public router: Router,
+    private location: Location, 
+    private pedidosSvc: PedidosSvc) 
+  {}
 
   ngOnInit() {
     this.formConfig = {
@@ -33,24 +30,22 @@ export class EditarPedido {
       submitText: 'EDITAR PEDIDO',
       fields: [
         { label: 'ID_PEDIDO:',
-          type: 'text',
+          type: 'number',
           name: 'id_pedido',
           value: '',
-          placeholder: "Nombre y apellido completo...",
-          required: true 
+          placeholder: "ID del pedido",
+          required: true,
+          readonly: true,
         },
         { 
-          label: 'Comida:', 
-          type: 'select', 
-          name: 'comida',
-          value: null,
-          required: true,
-          options: [
-            { value: null, label: 'Seleccionar comida...',disabled: true },
-            { value: "Spaghetti a la Fileto", label: "Spaghetti a la Fileto" },
-            { value: "Lasagna", label: "Lasagna" },
-            { value: "Ñoquis a la sazón", label: "Ñoquis a la sazón" },
-          ]
+          label: 'Comidas:', 
+          type: 'text', 
+          name: 'comidas',
+          value: '',
+          placeholder: "Comida del pedido",
+          required: false,
+          disabled: true,
+          readonly: true,
         },
         { 
           label: 'Estado', 
@@ -60,29 +55,54 @@ export class EditarPedido {
           required: true,
           options: [
             { value: null, label: 'Seleccionar estado...',disabled: true },
-            { value: "EN PREPARACIÓN", label: "EN PREPARACIÓN" },
+            { value: "EN PREPARACION", label: "EN PREPARACION" },
             { value: "LISTO", label: "LISTO" },
             { value: "ENTREGADO", label: "ENTREGADO" },
           ]
         },
         { label: 'FECHA:',
           type: 'text',
-          name: 'FECHA',
+          name: 'fecha',
           value: '',
-          placeholder: "fecha",
-          required: true 
+          placeholder: "DD-MM-YYYY HH:MM",
+          required: true,
+          disabled: true,
+          readonly: true,
         },
         { label: 'TOTAL:',
           type: 'text',
           name: 'total',
           value: '',
           placeholder: "total",
-          required: true 
+          required: true,
+          disabled: true ,
+          readonly: true,
         },
       ]
     };
 
     this.editarPedido=this.editarPedido.bind(this);
+
+    const id = Number(this.route.snapshot.paramMap.get('id_pedido'));
+
+    this.pedidosSvc.getPedidoById(id).subscribe({
+      next: (res) => {
+        console.log('Pedido encontrado:', res);
+        const nombresComidas = res.comidas && res.comidas.length > 0
+          ? res.comidas.map((c: any) => c.nombre).join(', ')
+          : 'Sin comidas';
+        this.pedido = {
+          id_pedido: res.id_pedido,
+          comidas: nombresComidas,
+          estado: res.estado,
+          fecha: res.fecha,
+          total: `${res.total}`
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar pedido:', err);
+      }
+    });
 
   }
 

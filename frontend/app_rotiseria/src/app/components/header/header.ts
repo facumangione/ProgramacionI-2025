@@ -13,14 +13,6 @@ export class Header{
   @Output() searchEvent = new EventEmitter<string>();
   searchText: string = '';
 
-  usuario={
-    id_usuario:1,
-    nombre:'Ignacio Milutin',
-    mail:'i.milutin@alumno.um.edu.ar',
-    password:'1234',
-    telefono:26164579875,
-    rol:'ADMIN'
-  }
 
   constructor(public router: Router) {}
 
@@ -35,7 +27,16 @@ export class Header{
   }
 
   goToPerfil(){
-    this.router.navigate(['/perfil',this.usuario.id_usuario])
+    const id_usuario = localStorage.getItem('id_usuario')
+    this.router.navigate(['/perfil',id_usuario])
+  }
+
+  goToPedidos(){
+    this.router.navigate(['/pedidos']);
+  }
+
+  goToComidas(){
+    this.router.navigate(['/comidas']);
   }
 
   isToken(){

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Header } from '../../../components/header/header';
 import { Footer } from '../../../components/footer/footer';
 import { Router } from '@angular/router';
+import { ResenasSvc } from '../../../services/resenas-svc';
+import { ComidasSvc } from '../../../services/comidas';
 
 @Component({
   selector: 'app-resenas',
@@ -11,24 +13,74 @@ import { Router } from '@angular/router';
 })
 export class Resenas {
 
-  resenas=[
-    {
-      id_resena: 1,
-      nombre_usuario:'Juan Pérez',
-      comida: 'Spaghetti a la Fileto',
-      calificacion: 5,
-      comentario: 'Excelente'
-    },
-    {
-      id_resena: 2,
-      nombre_usuario:'Juan Pérez',
-      comida: 'Lasagna',
-      calificacion: 4,
-      comentario: 'Muy buena'
-    },
-  ]
+  resenas:any[]=[];
+  private Comidas = new Map<number, string>();
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router, 
+    private resenasSvc: ResenasSvc,
+    private comidasSvc: ComidasSvc
+  ) {}
+
+  ngOnInit() {
+    const rol = localStorage.getItem('rol');
+    const id_usuario = localStorage.getItem('id_usuario');
+
+    if (rol === 'ADMIN') {
+      this.cargarTodasResenas();
+    } else if (rol === 'CLIENTE' && id_usuario) {
+      this.cargarResenasUsuario(Number(id_usuario));
+    }
+  }
+
+  private cargarResenas(resenas: any[]): void {
+    resenas.forEach((resena) => {
+      const id = resena.id_comida;
+
+      if (this.Comidas.has(id)) {
+        resena.nombre_comida = this.Comidas.get(id);
+      } else {
+        this.comidasSvc.getComidaById(id).subscribe({
+          next: (comida: any) => {
+            resena.nombre_comida = comida.nombre;
+            this.Comidas.set(id, comida.nombre);
+          },
+          error: (err) => {
+            console.error(`Error al obtener comida ${id}:`, err);
+            resena.nombre_comida = 'Comida no encontrada';
+          }
+        });
+      }
+    });
+
+    this.resenas = resenas;
+  }
+
+  private cargarTodasResenas(): void {
+    this.resenasSvc.getResenas().subscribe({
+      next: (res: any) => {
+        console.log('Reseñas:', res);
+        this.cargarResenas(res.resenas);
+      },
+      error: (err) => {
+        console.log('Error al traer reseñas:', err);
+      }
+    });
+  }
+
+  private cargarResenasUsuario(id_usuario: number): void {
+    this.resenasSvc.getResenasByUsuario(id_usuario).subscribe({
+      next: (res: any) => {
+        console.log('Reseñas del usuario:', res);
+        this.cargarResenas(res.resenas);
+      },
+      error: (err) => {
+        console.log('Error al traer reseñas del usuario:', err);
+      }
+    });
+
+  }
+
 
   //Deberia hacer delete de la reseña
   eliminarResena(id_resena:any) {

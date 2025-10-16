@@ -35,7 +35,8 @@
                 [name]="field.name"
                 [placeholder]="field.placeholder"
                 [required]="field.required"
-                [(ngModel)]="field.value">
+                [(ngModel)]="field.value"
+                [readonly]="field.readonly || false">
             }
           </div>
         }

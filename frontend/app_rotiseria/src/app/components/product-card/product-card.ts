@@ -9,9 +9,12 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class ProductCard {
   @Input() comida: any;
-  @Input() login: boolean = false
 
   constructor(private router: Router) {}
+
+  isToken(){
+    return localStorage.getItem('token');
+  }
 
   goToComida() {
     this.router.navigate(['/comida', this.comida.id_comida]);

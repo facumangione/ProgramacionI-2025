@@ -24,6 +24,10 @@
         
 .profile-icon:hover {background-color: white;color: var(--primary-red);transform: scale(1.05);}
 
+.dropdown-item{
+    cursor: pointer;
+}
+
 .dropdown-item-cerrar-sesion {
     background-color: #d44c3d;
     width: 100%;

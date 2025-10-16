@@ -49,7 +49,7 @@ export class CrearComida {
           type: 'file',
           name: 'imagen',
           value: '',
-          placeholder: "Selecciona una imagen para el producto (colocar nombre con formato<nombre_comida>.JPG/PNG)",
+          placeholder: "Selecciona una imagen para el producto (colocar nombre con formato <nombre_comida_en_minuscula>.JPG",
           required: true 
         },
         
