@@ -37,5 +37,14 @@ export class PedidosSvc {
     });
     return this.http.get(`${this.url}/pedidos?id_usuario=${id_usuario}`, { headers });
   }
+
+  deletePedido(id_pedido:number): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.url}/pedido/${id_pedido}`, { headers }); 
+  }
   
 }

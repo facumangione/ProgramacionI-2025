@@ -29,4 +29,13 @@ export class UsuariosSvc {
     return this.http.get(`${this.url}/usuario/${id_usuario}`, { headers });
   }
 
+  deleteUsuario(id_usuario:number): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.url}/usuario/${id_usuario}`, { headers }); 
+  }
+
 }

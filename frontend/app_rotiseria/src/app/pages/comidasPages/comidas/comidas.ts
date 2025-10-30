@@ -28,10 +28,16 @@ export class Comidas {
     }) 
   }
 
-  //Deberia hacer delete de la comida
   eliminarComida(id_comida:any) {
-    console.log("Comida eliminada")
-    this.router.navigate(['/comidas']);
+    this.comidasSvc.deleteComida(id_comida).subscribe({
+      next: (res:any)=>{
+        console.log("Comida eliminada: ",res);
+      },
+      error: (err)=>{
+        console.log("Error al eliminar comida: ",err)
+      }
+    })
+    window.location.reload();
   }
 
   goToEditarComida(id_comida:any){

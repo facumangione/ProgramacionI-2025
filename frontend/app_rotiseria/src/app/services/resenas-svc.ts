@@ -44,5 +44,14 @@ export class ResenasSvc {
     });
     return this.http.get(`${this.url}/resena/${id_resena}`, { headers });
   }
+
+  deleteResena(id_resena:number): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.url}/resena/${id_resena}`, { headers }); 
+  }
   
 }

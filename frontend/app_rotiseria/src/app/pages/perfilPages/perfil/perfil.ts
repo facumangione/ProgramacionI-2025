@@ -14,7 +14,11 @@ export class Perfil {
 
   usuario: any;
 
-  constructor(private router: Router, private usuariosSvc: UsuariosSvc, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router, 
+    private usuariosSvc: UsuariosSvc, 
+    private route: ActivatedRoute
+  ) {}
 
 
   ngOnInit(){
@@ -31,10 +35,17 @@ export class Perfil {
 
   }
 
-  //eliminar perfil
-  deleteUsuario(){
-    this.router.navigate(['/home']) 
-  };
+  eliminarUsuario(id_usuario:any) {
+    this.usuariosSvc.deleteUsuario(id_usuario).subscribe({
+      next: (res:any)=>{
+        console.log("Usuario eliminado: ",res);
+      },
+      error: (err)=>{
+        console.log("Error al eliminar usuario: ",err)
+      }
+    })
+    this.router.navigate(['/home']);
+  }
 
   goToEditarPerfil(){
     this.router.navigate(['/perfil',this.usuario.id_usuario,'editar'])

@@ -68,10 +68,16 @@ export class Pedidos {
     return localStorage.getItem('rol');
   }
 
-  //Deberia hacer delete de la usuario
   eliminarPedido(id_pedido:any) {
-    console.log("pedido eliminado")
-    this.router.navigate(['/pedidos']);
+    this.pedidosSvc.deletePedido(id_pedido).subscribe({
+      next: (res:any)=>{
+        console.log("Pedido eliminado: ",res);
+      },
+      error: (err)=>{
+        console.log("Error al eliminar pedido: ",err)
+      }
+    })
+    window.location.reload();
   }
 
   goToEditarPedido(id_pedido:any){

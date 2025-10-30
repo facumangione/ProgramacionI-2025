@@ -103,10 +103,16 @@ export class Resenas {
   }
 
 
-  //Deberia hacer delete de la reseña
   eliminarResena(id_resena:any) {
-    console.log("reseña eliminada")
-    this.router.navigate(['/resenas']);
+    this.resenasSvc.deleteResena(id_resena).subscribe({
+      next: (res:any)=>{
+        console.log("Reseña eliminado: ",res);
+      },
+      error: (err)=>{
+        console.log("Error al reseña usuario: ",err)
+      }
+    })
+    window.location.reload();
   }
 
   goToEditarResena(id_resena:any){

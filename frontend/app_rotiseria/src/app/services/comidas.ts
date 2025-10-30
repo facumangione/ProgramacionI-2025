@@ -24,6 +24,15 @@ export class ComidasSvc {
     });
     return this.http.get(`${this.url}/comida/${id_comida}`, { headers });
   }
+
+  deleteComida(id_comida:number): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.url}/comida/${id_comida}`, { headers }); 
+  }
   
 }
   

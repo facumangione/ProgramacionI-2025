@@ -46,10 +46,16 @@ export class Usuarios {
     });
   }
 
-  //Deberia hacer delete de la usuario
   eliminarUsuario(id_usuario:any) {
-    console.log("usuario eliminado")
-    this.router.navigate(['/usuarios']);
+    this.usuariosSvc.deleteUsuario(id_usuario).subscribe({
+      next: (res:any)=>{
+        console.log("Usuario eliminado: ",res);
+      },
+      error: (err)=>{
+        console.log("Error al eliminar usuario: ",err)
+      }
+    })
+    window.location.reload();
   }
 
   goToEditarUsuario(id_usuario:any){
