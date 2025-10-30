@@ -47,6 +47,12 @@ class Resenas(Resource):
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
 
+        if request.args.get('id_usuario'):
+            resenas=resenas.filter(ResenaModel.id_usuario.like("%"+request.args.get('id_usuario')+"%"))
+
+        if request.args.get('id_comida'):
+            resenas=resenas.filter(ResenaModel.id_comida.like("%"+request.args.get('id_comida')+"%"))    
+
         resenas=resenas.paginate(page=page, per_page=per_page, error_out=False)
 
         return jsonify({'resenas':[resena.to_json() for resena in resenas],

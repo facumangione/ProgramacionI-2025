@@ -14,7 +14,10 @@ export class Comida {
 
   comida: any = null;
 
-  constructor(private route: ActivatedRoute, private router: Router, private comidasSvc: ComidasSvc) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router, 
+    private comidasSvc: ComidasSvc) {}
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id_comida'));

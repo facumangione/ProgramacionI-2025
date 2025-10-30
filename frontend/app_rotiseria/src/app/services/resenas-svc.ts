@@ -30,12 +30,10 @@ export class ResenasSvc {
   }
 
   getResenasByComida(id_comida: number): Observable<any> {
-    const token = localStorage.getItem('token') || '';
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
     });
-    return this.http.get(`${this.url}/resenas?id_usuario=${id_comida}`, { headers });
+    return this.http.get(`${this.url}/resenas?id_comida=${id_comida}`, { headers });
   }
 
   getResenaById(id_resena: number): Observable<any> {

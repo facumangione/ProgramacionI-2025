@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Header } from '../../../components/header/header';
 import { Footer } from '../../../components/footer/footer';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResenasSvc } from '../../../services/resenas-svc';
 import { ComidasSvc } from '../../../services/comidas';
 
@@ -17,7 +17,8 @@ export class Resenas {
   private Comidas = new Map<number, string>();
 
   constructor(
-    private router: Router, 
+    private router: Router,
+    private route: ActivatedRoute,
     private resenasSvc: ResenasSvc,
     private comidasSvc: ComidasSvc
   ) {}
@@ -25,12 +26,21 @@ export class Resenas {
   ngOnInit() {
     const rol = localStorage.getItem('rol');
     const id_usuario = localStorage.getItem('id_usuario');
+    const id_comida = this.route.snapshot.paramMap.get('id_comida');
+  
+    if (id_comida){
+      console.log('Cargar reseñas por comida')
+      this.cargarResenasComida(Number(id_comida));
+      return;
+    } 
 
     if (rol === 'ADMIN') {
       this.cargarTodasResenas();
     } else if (rol === 'CLIENTE' && id_usuario) {
       this.cargarResenasUsuario(Number(id_usuario));
     }
+      
+      
   }
 
   private cargarResenas(resenas: any[]): void {
@@ -78,7 +88,18 @@ export class Resenas {
         console.log('Error al traer reseñas del usuario:', err);
       }
     });
+  }
 
+  private cargarResenasComida(id_comida: number): void {
+    this.resenasSvc.getResenasByComida(id_comida).subscribe({
+      next: (res: any) => {
+        console.log('Reseñas de la comida:', res);
+        this.cargarResenas(res.resenas);
+      },
+      error: (err) => {
+        console.log('Error al traer reseñas de la comida:', err);
+      }
+    });
   }
 
 
