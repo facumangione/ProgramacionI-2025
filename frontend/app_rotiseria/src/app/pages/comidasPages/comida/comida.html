@@ -1,24 +1,24 @@
 <app-header></app-header>
 
 <div class="menu-title">
-        {{comida.nombre}}
+        {{comida?.nombre}}
     </div>
 
     <div class="product-content">
         <div class="container">
             <div class="row align-items-start">
                 <div class="col-md-5 text-center">
-                    <img src={{comida.image}} alt={{comida.alt}} class="product-image">
+                    <img src={{comida?.image}} alt={{comida?.alt}} class="product-image">
                 </div>
                 <div class="col-md-7">
                     <div class="product-details">
                         <div class="detail-item">
                             <span class="detail-label">DESCRIPCIÓN:</span>
-                            <span class="detail-value">{{comida.descripcion}}</span>
+                            <span class="detail-value">{{comida?.descripcion}}</span>
                         </div>                        
                         <div class="detail-item">
                             <span class="detail-label">PRECIO:</span>
-                            <span class="detail-value product-price">${{comida.precio}}</span>
+                            <span class="detail-value product-price">${{comida?.precio}}</span>
                         </div>
                         
                         <div class="detail-item d-flex gap-2">
