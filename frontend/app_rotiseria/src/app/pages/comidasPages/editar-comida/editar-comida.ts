@@ -5,6 +5,7 @@ import { Formulario } from '../../../components/formulario/formulario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ComidasSvc } from '../../../services/comidas';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editar-comida',
@@ -16,17 +17,33 @@ export class EditarComida {
   
   comida: any;
   formConfig: any;
+  comidaForm!: FormGroup;
 
-  constructor(private route: ActivatedRoute,public router: Router, private location: Location, private comidasSvc: ComidasSvc) {}
+  constructor(
+    private route: ActivatedRoute,
+    public router: Router, 
+    private location: Location, 
+    private comidasSvc: ComidasSvc,
+    private formBuilder: FormBuilder
+  ) {
+    this.comidaForm = this.formBuilder.group({
+      nombre: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+      precio: ['', [Validators.required]],
+      imagen: ['']
+    })
+  }
 
   ngOnInit() {
     this.formConfig = {
       title: 'Editar Comida',
       cancelRoute: this.goBack.bind(this),
       submitText: 'EDITAR COMIDA',
+      formGroup: this.comidaForm,
       fields: [
         { label: 'Nombre:',
           type: 'text',
+          formControlName: "nombre",
           name: 'nombre',
           value: '',
           placeholder: "Nombre de la comida...",
@@ -34,6 +51,7 @@ export class EditarComida {
         },
         { label: 'Descripción:',
           type: 'text',
+          formControlName: "descripcion",
           name: 'descripcion',
           value: '',
           placeholder: "Describe la comida...",
@@ -41,6 +59,7 @@ export class EditarComida {
         },
         { label: 'Precio:',
           type: 'number',
+          formControlName: "precio",
           name: 'precio',
           value: '',
           placeholder: "0",
@@ -48,6 +67,7 @@ export class EditarComida {
         },
         { label: 'Imagen:',
           type: 'file',
+          formControlName: "imagen",
           name: 'imagen',
           value: '',
           placeholder: "Selecciona una imagen para el producto (en formato JPG y en minuscula)",
@@ -74,10 +94,27 @@ export class EditarComida {
     this.location.back(); 
   }
 
-  //Deberia realizar el PUT, en el estado de ahora no trae los campos ingresados
-  editarComida(fields: any){
-    console.log('Comida actualizado:', this.comida.id_comida);
-    this.router.navigate(['/comidas']);
+  editarComida(){
+
+    const formData = this.comidaForm.value;
+
+    this.comidasSvc.putComida({
+      nombre: formData.nombre,
+      descripcion: formData.descripcion,
+      precio: Number(formData.precio)
+      },
+      this.comida.id_comida
+    ).subscribe({
+      next: (res) => {
+        console.log('Comida editada exitosamente:', res);
+        alert('Comida editada exitosamente');
+        this.router.navigate(['/comidas']);
+      },
+      error: (err) => {
+        console.error('Error al editar comida:', err);
+        alert('Error al editar comida');
+      }
+    });
   }
 
 }

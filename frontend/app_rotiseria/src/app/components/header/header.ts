@@ -39,6 +39,15 @@ export class Header{
     this.router.navigate(['/comidas']);
   }
 
+  goToResenas(){
+    this.router.navigate(['/resenas'])
+  }
+
+  goToUsuarios(){
+    this.router.navigate(['/usuarios'])
+  }
+
+
   isToken(){
     return localStorage.getItem('token');
   }

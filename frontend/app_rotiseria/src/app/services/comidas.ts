@@ -33,6 +33,24 @@ export class ComidasSvc {
     });
     return this.http.delete(`${this.url}/comida/${id_comida}`, { headers }); 
   }
+
+  postComida(dataComida:ComidaRequest): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(this.url+'/comidas',dataComida,{ headers })
+  }
+
+  putComida(dataComida:ComidaRequest,id_comida:number): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.put(`${this.url}/comida/${id_comida}`,dataComida ,{ headers });
+  }
   
 }
   

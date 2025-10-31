@@ -5,6 +5,8 @@ import { Formulario } from '../../../components/formulario/formulario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { PedidosSvc } from '../../../services/pedidos-svc';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-editar-pedido',
@@ -16,21 +18,32 @@ export class EditarPedido {
 
   pedido: any;
   formConfig: any;
+  pedidoForm!: FormGroup;
 
   constructor(private route: ActivatedRoute,
     public router: Router,
     private location: Location, 
-    private pedidosSvc: PedidosSvc) 
-  {}
+    private pedidosSvc: PedidosSvc,
+    private formBuilder: FormBuilder
+  ) {this.pedidoForm = this.formBuilder.group({
+      id_pedido: ['', [Validators.required]],
+      id_usuario: ['', [Validators.required]],
+      comidas: ['', [Validators.required]],
+      fecha: ['', [Validators.required]],
+      estado: ['', [Validators.required]],
+      total: ['', [Validators.required]]
+    })}
 
   ngOnInit() {
     this.formConfig = {
       title: 'Editar Pedido',
       cancelRoute: this.goBack.bind(this),
       submitText: 'EDITAR PEDIDO',
+      formGroup: this.pedidoForm,
       fields: [
         { label: 'ID_PEDIDO:',
           type: 'number',
+          formControlName: "id_pedido",
           name: 'id_pedido',
           value: '',
           placeholder: "ID del pedido",
@@ -40,16 +53,17 @@ export class EditarPedido {
         { 
           label: 'Comidas:', 
           type: 'text', 
+          formControlName: "comidas",
           name: 'comidas',
           value: '',
           placeholder: "Comida del pedido",
           required: false,
-          disabled: true,
           readonly: true,
         },
         { 
           label: 'Estado', 
           type: 'select', 
+          formControlName: "estado",
           name: 'estado',
           value: null,
           required: true,
@@ -62,6 +76,7 @@ export class EditarPedido {
         },
         { label: 'FECHA:',
           type: 'text',
+          formControlName: "fecha",
           name: 'fecha',
           value: '',
           placeholder: "DD-MM-YYYY HH:MM",
@@ -71,6 +86,7 @@ export class EditarPedido {
         },
         { label: 'TOTAL:',
           type: 'text',
+          formControlName: "total",
           name: 'total',
           value: '',
           placeholder: "total",
@@ -110,10 +126,27 @@ export class EditarPedido {
     this.location.back(); 
   }
 
-  //Deberia realizar el PUT, en el estado de ahora no trae los campos ingresados
-  editarPedido(fields: any){
-    console.log('Pedido actualizado:', this.pedido.id_pedido);
-    this.router.navigate(['/pedidos']);
+  editarPedido(){
+
+    const formData = this.pedidoForm.value;
+
+    this.pedidosSvc.putPedido({
+      fecha: formData.fecha,
+      estado: formData.estado,
+      total: formData.total
+      },
+      this.pedido.id_pedido
+    ).subscribe({
+      next: (res) => {
+        console.log('Pedido editado exitosamente:', res);
+        alert('Pedido editado exitosamente');
+        this.router.navigate(['/pedidos']);
+      },
+      error: (err) => {
+        console.error('Error al editar pedido:', err);
+        alert('Error al editar pedido');
+      }
+    });
   }
 
 }

@@ -53,5 +53,23 @@ export class ResenasSvc {
     });
     return this.http.delete(`${this.url}/resena/${id_resena}`, { headers }); 
   }
+
+  postResena(dataResena:ResenaRequest): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(this.url+'/resenas',dataResena,{ headers })
+  }
+
+  putResena(dataResena:ResenaRequest,id_resena:number): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.put(`${this.url}/resena/${id_resena}`,dataResena ,{ headers });
+  }
   
 }

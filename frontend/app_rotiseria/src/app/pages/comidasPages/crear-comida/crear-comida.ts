@@ -4,6 +4,8 @@ import { Footer } from '../../../components/footer/footer';
 import { Formulario } from '../../../components/formulario/formulario';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ComidasSvc } from '../../../services/comidas';
 
 @Component({
   selector: 'app-crear-comida',
@@ -14,8 +16,20 @@ import { Router } from '@angular/router';
 export class CrearComida {
 
   formConfig: any;
+  comidaForm!: FormGroup;
 
-  constructor(public router: Router, private location: Location) {}
+  constructor(
+    public router: Router, 
+    private location: Location,
+    private formBuilder: FormBuilder,
+    private comidasSvc: ComidasSvc
+  ) {
+    this.comidaForm = this.formBuilder.group({
+      nombre: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+      precio: [null, [Validators.required]]
+    })
+  }
 
   ngOnInit() {
 
@@ -23,9 +37,11 @@ export class CrearComida {
       title: 'Crear Comida',
       cancelRoute: this.goBack.bind(this),
       submitText: 'CREAR COMIDA',
+      formGroup: this.comidaForm,
       fields: [
         { label: 'Nombre:',
           type: 'text',
+          formControlName: "nombre",
           name: 'nombre',
           value: '',
           placeholder: "Nombre de la comida...",
@@ -33,6 +49,7 @@ export class CrearComida {
         },
         { label: 'Descripción:',
           type: 'text',
+          formControlName: "descripcion",
           name: 'descripcion',
           value: '',
           placeholder: "Describe la comida...",
@@ -40,6 +57,7 @@ export class CrearComida {
         },
         { label: 'Precio:',
           type: 'number',
+          formControlName: "precio",
           name: 'precio',
           value: '',
           placeholder: "0",
@@ -64,10 +82,32 @@ export class CrearComida {
     this.location.back(); 
   }
 
-  //Deberia realizar el POST
   crearComida(){
-    console.log('comida creado:');
-    this.router.navigate(['/comidas']);
+
+    if (this.comidaForm.invalid) {
+      console.error('Formulario inválido');
+      alert('Por favor complete todos los campos correctamente');
+      return;
+    }
+
+    const formData = this.comidaForm.value;
+
+    this.comidasSvc.postComida({
+      nombre: formData.nombre,
+      descripcion: formData.descripcion,
+      precio: Number(formData.precio),
+    }).subscribe({
+      next: (res) => {
+        console.log('Comida creada exitosamente:', res);
+        alert('Comida creada exitosamente');
+        this.router.navigate(['/comidas']);
+      },
+      error: (err) => {
+        console.error('Error al crear comida:', err);
+        alert('Error al crear comida');
+      }
+    });
+
   }
 
 }

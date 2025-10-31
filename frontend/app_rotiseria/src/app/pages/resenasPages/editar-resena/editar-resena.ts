@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ResenasSvc } from '../../../services/resenas-svc';
 import { ComidasSvc } from '../../../services/comidas';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editar-resena',
@@ -17,14 +18,23 @@ export class EditarResena {
 
   formConfig: any;
   resena: any;
+  resenaForm!: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     public router: Router,
     private location: Location,
-    private resenaSvc: ResenasSvc,
-    private comidaSvc: ComidasSvc
-  ) {}
+    private resenasSvc: ResenasSvc,
+    private comidaSvc: ComidasSvc,
+    private formBuilder: FormBuilder,
+  ) {
+    this.resenaForm = this.formBuilder.group({
+      id_usuario: [Number(localStorage.getItem('id_usuario')),[Validators.required]],
+      id_comida: ['',[Validators.required]],
+      comentario: ['', [Validators.required]],
+      calificacion: [null, [Validators.required]]
+    })
+  }
 
   ngOnInit() {
     const id_resena = Number(this.route.snapshot.paramMap.get('id_resena')); 
@@ -33,10 +43,12 @@ export class EditarResena {
       title: 'Editar Reseña',
       cancelRoute: this.goBack.bind(this),
       submitText: 'GUARDAR CAMBIOS',
+      formGroup: this.resenaForm,
       fields: [
         {
           label: 'Comida:',
           type: 'text', 
+          formControlName: "id_comida",
           name: 'nombre_comida',
           required: false,
           readonly: true,
@@ -44,6 +56,7 @@ export class EditarResena {
         { 
           label: 'Calificación:', 
           type: 'select', 
+          formControlName: "calificacion",
           name: 'calificacion',
           options: [
             { value: 1, label: '1 - Muy malo' },
@@ -55,6 +68,7 @@ export class EditarResena {
         },
         { label: 'Comentario:',
           type: 'text', 
+          formControlName: "comentario",
           name: 'comentario', 
           required: true
         },
@@ -63,7 +77,7 @@ export class EditarResena {
 
     this.editarResena=this.editarResena.bind(this);
 
-    this.resenaSvc.getResenaById(id_resena).subscribe({
+    this.resenasSvc.getResenaById(id_resena).subscribe({
       next: (res) => {
         console.log('Reseña encontrada:', res);
         this.resena = res;
@@ -93,10 +107,28 @@ export class EditarResena {
     this.location.back(); 
   }
 
-  //Deberia realizar el PUT, en el estado de ahora no trae los campos ingresados
-  editarResena(fields: any){
-    console.log('Reseña actualizada:', this.resena.id_resena);
-    //this.router.navigate(['/resenas', this.resena.id_resena]);
+  editarResena(){
+
+    const formData = this.resenaForm.value;
+
+    this.resenasSvc.putResena({
+      id_usuario: this.resena.id_usuario,
+      id_comida: Number(formData.id_comida),
+      comentario: formData.comentario,
+      calificacion: Number(formData.calificacion),
+      },
+      this.resena.id_resena
+    ).subscribe({
+      next: (res) => {
+        console.log('Resena editada exitosamente:', res);
+        alert('Resena editada exitosamente');
+        this.router.navigate(['/resenas']);
+      },
+      error: (err) => {
+        console.error('Error al editar resena:', err);
+        alert('Error al editar resena');
+      }
+    });
   }
 
 }

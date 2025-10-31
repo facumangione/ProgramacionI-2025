@@ -29,7 +29,7 @@
                     <div class="col-4">
                         <span>{{resena.comentario}}</span>
                     </div>
-                    @if (isUserAdmin() == true){
+                    @if (showEditDeleteButtons(resena.id_usuario) == true){
                     <div class="col-2 text-end">
                         <button (click)="eliminarResena(resena.id_resena)" class="btn btn-eliminar-small">ELIMINAR</button>
                         <a (click)="goToEditarResena(resena.id_resena)" class="btn btn-editar-small">EDITAR</a>

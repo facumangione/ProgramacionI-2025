@@ -38,4 +38,23 @@ export class UsuariosSvc {
     return this.http.delete(`${this.url}/usuario/${id_usuario}`, { headers }); 
   }
 
+  postUsuario(dataUsuario:UsuarioPostRequest): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.post(this.url+'/usuarios',dataUsuario)
+  }
+
+  putUsuario(dataUsuario:UsuarioPutRequest,id_usuario:number): Observable<any>{
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.put(`${this.url}/usuario/${id_usuario}`,dataUsuario ,{ headers });
+  }
+  
+
 }

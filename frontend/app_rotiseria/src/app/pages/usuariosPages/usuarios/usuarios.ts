@@ -55,7 +55,7 @@ export class Usuarios {
         console.log("Error al eliminar usuario: ",err)
       }
     })
-    window.location.reload();
+    this.router.navigate(['/usuarios']);
   }
 
   goToEditarUsuario(id_usuario:any){

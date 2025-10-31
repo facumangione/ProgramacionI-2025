@@ -4,6 +4,7 @@ import { Footer } from '../../../components/footer/footer';
 import { Formulario } from '../../../components/formulario/formulario';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UsuariosSvc } from '../../../services/usuarios';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-editar-perfil',
@@ -13,18 +14,23 @@ import { UsuariosSvc } from '../../../services/usuarios';
 })
 export class EditarPerfil {
 
-  // usuario = {
-  //   id_usuario:1,
-  //   nombre: 'Ignacio Milutin',
-  //   mail: 'i.milutin@alumno.um.edu.ar',
-  //   telefono: 26164579875,
-  //   rol: 'ADMIN'
-  // };
-
   usuario: any;
   formConfig: any;
+  usuarioForm!: FormGroup;
 
-  constructor(private route: ActivatedRoute,public router: Router, private usuariosSvc: UsuariosSvc) {}
+  constructor(
+    private route: ActivatedRoute,
+    public router: Router, 
+    private usuariosSvc: UsuariosSvc,
+    private formBuilder: FormBuilder
+  ) {
+    this.usuarioForm = this.formBuilder.group({
+      nombre: ['', [Validators.required]],
+      telefono: ['', [Validators.required]],
+      mail: ['', [Validators.required, Validators.email]],
+      rol: ['', [Validators.required]]
+    })
+  }
   
 
   ngOnInit() {
@@ -34,19 +40,26 @@ export class EditarPerfil {
       title: 'Editar Perfil',
       cancelRoute: `/perfil/${id}`,
       submitText: 'GUARDAR CAMBIOS',
+      formGroup: this.usuarioForm,
       fields: [
-        { label: 'Nombre:', type: 'text', name: 'nombre', required: true },
-        { label: 'Teléfono:', type: 'tel', name: 'telefono', required: true },
-        { label: 'Mail:', type: 'email', name: 'mail', required: true },
-        { 
-          label: 'Rol:', 
-          type: 'select', 
-          name: 'rol',
-          options: [
-            { value: 'ADMIN', label: 'ADMIN' },
-            { value: 'CLIENTE', label: 'CLIENTE' }
-          ]
-        }
+        { label: 'Nombre:', 
+          type: 'text', 
+          formControlName: "nombre",
+          name: 'nombre', 
+          required: true 
+        },
+        { label: 'Teléfono:', 
+          type: 'tel', 
+          formControlName: "telefono",
+          name: 'telefono', 
+          required: true 
+        },
+        { label: 'Mail:', 
+          type: 'email', 
+          formControlName: "mail",
+          name: 'mail', 
+          required: true 
+        },
       ]
     };
 
@@ -64,10 +77,35 @@ export class EditarPerfil {
 
   }
 
-  //Deberia realizar el PUT, en el estado de ahora no trae los campos ingresados
+  
   editarPerfil(fields: any){
-    console.log('Usuario actualizado:', this.usuario);
-    this.router.navigate(['/perfil', this.usuario.id_usuario]);
+
+    if (this.usuarioForm.invalid) {
+      console.error('Formulario inválido');
+      alert('Por favor complete todos los campos correctamente');
+      return;
+    }
+
+    const formData = this.usuarioForm.value;
+
+    this.usuariosSvc.putUsuario({
+      nombre: formData.nombre,
+      telefono: Number(formData.telefono),
+      mail: formData.mail,
+      rol: formData.rol
+      },
+      this.usuario.id_usuario
+    ).subscribe({
+      next: (res) => {
+        console.log('Perfil editado exitosamente:', res);
+        alert('Perfil editado exitosamente');
+        this.router.navigate(['/usuarios']);
+      },
+      error: (err) => {
+        console.error('Error al editar perfil:', err);
+        alert('Error al perfil usuario');
+      }
+    });
   }
 
 }

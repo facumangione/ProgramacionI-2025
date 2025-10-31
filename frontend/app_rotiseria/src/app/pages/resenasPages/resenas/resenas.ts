@@ -125,9 +125,10 @@ export class Resenas {
     this.router.navigate(['/resenas/crear'])
   }
 
-  isUserAdmin(){
+  showEditDeleteButtons(resena_id_usuario:number){
     const rol=localStorage.getItem('rol')
-    if (rol==='ADMIN'){
+    const id_usuario=Number(localStorage.getItem('id_usuario'))
+    if (rol==='ADMIN'||id_usuario===resena_id_usuario){
       return true
     } else{
       return false

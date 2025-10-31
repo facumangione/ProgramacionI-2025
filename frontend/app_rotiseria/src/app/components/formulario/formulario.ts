@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, ReactiveFormsModule],
   templateUrl: './formulario.html',
   styleUrl: './formulario.css'
 })
@@ -26,11 +26,9 @@ export class Formulario implements OnInit, OnChanges {
   }
 
   actualizarCampos() {
-    this.config.fields.forEach((field: any) => {
-      if (this.infoActual[field.name] !== undefined) {
-        field.value = this.infoActual[field.name];
-      }
-    });
+    if (this.config.formGroup) {
+      this.config.formGroup.patchValue(this.infoActual);
+  }
   }
 
   isFunction(value: any): value is Function {

@@ -1,7 +1,7 @@
 <div class="formulario-content">
   <div class="container">
     <div class="formulario-card">
-      <form #formularioRef="ngForm" (ngSubmit)="funcionGuardarCambio()" novalidate>
+      <form [formGroup]="config.formGroup" (ngSubmit)="funcionGuardarCambio()" novalidate>
 
         @for (field of config.fields; track field.name) {
           <div class="form-group">
@@ -13,7 +13,7 @@
                 [id]="field.name" 
                 [name]="field.name" 
                 [required]="field.required || false"
-                [(ngModel)]="field.value">
+                [formControlName]="field.formControlName">
                 
                 @for (option of field.options; track option.value) {
                   <option [ngValue]="option.value" [disabled]="option.disabled">{{ option.label }}</option>
@@ -26,7 +26,7 @@
                 [name]="field.name"
                 [placeholder]="field.placeholder"
                 [required]="field.required"
-                [(ngModel)]="field.value"></textarea>
+                [formControlName]="field.formControlName"></textarea>
             } @else {
               <input 
                 [type]="field.type" 
@@ -35,7 +35,7 @@
                 [name]="field.name"
                 [placeholder]="field.placeholder"
                 [required]="field.required"
-                [(ngModel)]="field.value"
+                [formControlName]="field.formControlName"
                 [readonly]="field.readonly || false">
             }
           </div>

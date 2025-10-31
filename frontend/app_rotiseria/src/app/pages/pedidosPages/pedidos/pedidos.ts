@@ -24,29 +24,37 @@ export class Pedidos {
     const rol = localStorage.getItem('rol');
     const id_usuario = localStorage.getItem('id_usuario');
 
-    if (rol==='ADMIN'){
-      this.pedidosSvc.getPedidos().subscribe({
-        next: (res:any)=>{
-          console.log("Pedidos: ",res);
-          this.pedidos=res.pedidos;
-          this.arrayFiltred=[...this.pedidos]
-        },
-        error: (err)=>{
-          console.log("Error al traer pedidos: ",err)
-        }
-      });
-    } else if (rol==='CLIENTE' && id_usuario){
-        this.pedidosSvc.getPedidoByUsuario(Number(id_usuario)).subscribe({
-        next: (res: any) => {
-          console.log("Pedidos del usuario: ", res);
-          this.pedidos = res.pedidos;
-          this.arrayFiltred = [...this.pedidos];
-        },
-        error: (err) => {
-          console.log("Error al traer pedidos del usuario: ", err);
-        }
-      });
+    if (rol === 'ADMIN') {
+      this.cargarTodosPedidos();
+    } else if (rol === 'CLIENTE' && id_usuario) {
+      this.cargarPedidosUsuario(Number(id_usuario));
     }
+  }
+
+  private cargarTodosPedidos(): void {
+    this.pedidosSvc.getPedidos().subscribe({
+      next: (res: any) => {
+        console.log('Pedidos:', res);
+        this.pedidos = res.pedidos;
+        this.arrayFiltred = [...this.pedidos];
+      },
+      error: (err) => {
+        console.log('Error al traer pedidos:', err);
+      }
+    });
+  }
+
+  private cargarPedidosUsuario(id_usuario: number): void {
+    this.pedidosSvc.getPedidosByUsuario(id_usuario).subscribe({
+      next: (res: any) => {
+        console.log('Pedidos del usuario:', res);
+        this.pedidos = res.pedidos;
+        this.arrayFiltred = [...this.pedidos];
+      },
+      error: (err) => {
+        console.log('Error al traer pedidos del usuario:', err);
+      }
+    });
   }
 
   getComida(pedido: any): string {
@@ -63,7 +71,7 @@ export class Pedidos {
       return cumpleID && cumpleEstado;
     });
   }
-
+  
   getRol(){
     return localStorage.getItem('rol');
   }

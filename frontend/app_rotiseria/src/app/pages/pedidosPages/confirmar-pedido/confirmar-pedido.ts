@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { Footer } from '../../../components/footer/footer';
 import { Header } from '../../../components/header/header';
 import { ComidasSvc } from '../../../services/comidas';
+import { PedidosSvc } from '../../../services/pedidos-svc';
 
 @Component({
   selector: 'app-confirmar-pedido',
@@ -18,7 +19,8 @@ export class ConfirmarPedido {
   constructor(private route: ActivatedRoute,
     private router: Router, 
     private location: Location,
-    private comidasSvc: ComidasSvc
+    private comidasSvc: ComidasSvc,
+    private pedidoSvc: PedidosSvc,
   ) {}
 
   ngOnInit() {
@@ -42,9 +44,33 @@ export class ConfirmarPedido {
     this.location.back(); 
   }
 
-  //este debe realizar el post de pedido luego
-  goToPedidoResumen(){  
-    const id_pedido=1
+  
+  crearPedido(){
+
+    const now = new Date();
+    const fechaActual=now.getDate()+'-'+(now.getMonth()+1)+'-'+now.getFullYear()+' '+now.getHours()+':'+now.getMinutes();
+
+    this.pedidoSvc.postPedido({
+      id_usuario: Number(localStorage.getItem('id_usuario')),
+      fecha: fechaActual,
+      estado: 'EN PREPARACION',
+      total: String(this.comida.precio),
+      comidas: [this.comida.id_comida]
+    }).subscribe({
+      next: (res) => {
+        console.log('Pedido creado exitosamente:', res);
+        alert('Pedido creado exitosamente');
+        this.goToPedidoResumen(res.id_pedido);
+      },
+      error: (err) => {
+        console.error('Error al crear pedido', err);
+        alert('Error al crear pedido');
+      }
+    });
+
+  }
+
+  goToPedidoResumen(id_pedido:number){  
     this.router.navigate(['/pedido',id_pedido,'resumen'])
   }
 }

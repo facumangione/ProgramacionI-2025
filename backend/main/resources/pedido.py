@@ -43,7 +43,7 @@ class Pedido(Resource):
     
 class Pedidos(Resource):
 
-    @role_required(roles=["ADMIN"])
+    @role_required(roles=["ADMIN","CLIENTE"])
     def get(self):
         page=1
         per_page=5
