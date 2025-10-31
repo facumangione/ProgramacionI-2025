@@ -10,12 +10,19 @@ export class ComidasSvc {
   private http = inject(HttpClient);
 
   url = 'http://127.0.0.1:7000';
-  
+
   getComidas(): Observable<any>{
     let headers=new HttpHeaders({
       'Content-Type':'application/json'
     });
-    return this.http.get(this.url+'/comidas', { headers })
+    return this.http.get(`${this.url}/comidas`, { headers })
+  }
+  
+  getComidasPaginado(page: number, per_page: number): Observable<any>{
+    let headers=new HttpHeaders({
+      'Content-Type':'application/json'
+    });
+    return this.http.get(`${this.url}/comidas?page=${page}&per_page=${per_page}`, { headers })
   }
 
   getComidaById(id_comida: number): Observable<any> {

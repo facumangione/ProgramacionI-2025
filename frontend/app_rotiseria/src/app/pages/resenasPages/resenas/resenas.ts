@@ -16,6 +16,10 @@ export class Resenas {
   resenas:any[]=[];
   private Comidas = new Map<number, string>();
 
+  currentPage = 1;
+  perPage = 5;
+  totalPages!: number;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -24,23 +28,26 @@ export class Resenas {
   ) {}
 
   ngOnInit() {
+    this.cargarPagina(1);
+  }
+
+  private cargarPagina(page: number): void {
     const rol = localStorage.getItem('rol');
     const id_usuario = localStorage.getItem('id_usuario');
     const id_comida = this.route.snapshot.paramMap.get('id_comida');
-  
+    this.currentPage = page;
+
     if (id_comida){
       console.log('Cargar reseñas por comida')
-      this.cargarResenasComida(Number(id_comida));
+      this.cargarResenasComida(Number(id_comida), page);
       return;
     } 
 
     if (rol === 'ADMIN') {
-      this.cargarTodasResenas();
+      this.cargarTodasResenas(page);
     } else if (rol === 'CLIENTE' && id_usuario) {
-      this.cargarResenasUsuario(Number(id_usuario));
+      this.cargarResenasUsuario(Number(id_usuario), page);
     }
-      
-      
   }
 
   private cargarResenas(resenas: any[]): void {
@@ -66,10 +73,11 @@ export class Resenas {
     this.resenas = resenas;
   }
 
-  private cargarTodasResenas(): void {
-    this.resenasSvc.getResenas().subscribe({
+  private cargarTodasResenas(page: number): void {
+    this.resenasSvc.getResenas(page, this.perPage).subscribe({
       next: (res: any) => {
         console.log('Reseñas:', res);
+        this.totalPages = Number(res.pages)
         this.cargarResenas(res.resenas);
       },
       error: (err) => {
@@ -78,10 +86,11 @@ export class Resenas {
     });
   }
 
-  private cargarResenasUsuario(id_usuario: number): void {
-    this.resenasSvc.getResenasByUsuario(id_usuario).subscribe({
+  private cargarResenasUsuario(id_usuario: number,page: number): void {
+    this.resenasSvc.getResenasByUsuario(id_usuario,page, this.perPage).subscribe({
       next: (res: any) => {
         console.log('Reseñas del usuario:', res);
+        this.totalPages = Number(res.pages);
         this.cargarResenas(res.resenas);
       },
       error: (err) => {
@@ -90,10 +99,11 @@ export class Resenas {
     });
   }
 
-  private cargarResenasComida(id_comida: number): void {
-    this.resenasSvc.getResenasByComida(id_comida).subscribe({
+  private cargarResenasComida(id_comida: number,page: number): void {
+    this.resenasSvc.getResenasByComida(id_comida,page, this.perPage).subscribe({
       next: (res: any) => {
         console.log('Reseñas de la comida:', res);
+        this.totalPages = Number(res.pages);
         this.cargarResenas(res.resenas);
       },
       error: (err) => {
@@ -132,6 +142,22 @@ export class Resenas {
       return true
     } else{
       return false
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.cargarPagina(this.currentPage + 1);
+    } else {
+      return
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.cargarPagina(this.currentPage - 1);
+    } else {
+      return
     }
   }
 

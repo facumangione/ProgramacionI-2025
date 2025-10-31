@@ -68,8 +68,8 @@
         }
 
         .btn-añadir-reseña {
-            background-color: #9db2d4;
-            color: #2d3748;
+            background-color: #3fb178;
+            color: white;
             border: none;
             padding: 0.75rem 2rem;
             border-radius: 25px;
@@ -78,6 +78,6 @@
         }
         
         .btn-añadir-reseña:hover {
-            background-color: #8ba3c7;
-            color: #2d3748;
+            background-color: #2f855a;
+            color: white;
         }

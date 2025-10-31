@@ -11,13 +11,13 @@ export class UsuariosSvc {
 
   url = 'http://127.0.0.1:7000';
   
-  getUsuarios(): Observable<any>{
+  getUsuarios(page: number, per_page: number): Observable<any>{
     const token=localStorage.getItem('token') || '';
     let headers=new HttpHeaders({
       'Content-Type':'application/json',
       'Authorization':`Bearer ${token}`
     });
-    return this.http.get(this.url+'/usuarios', { headers })
+    return this.http.get(`${this.url}/usuarios?page=${page}&per_page=${per_page}`, { headers })
   }
 
   getUsuarioById(id_usuario: number): Observable<any> {

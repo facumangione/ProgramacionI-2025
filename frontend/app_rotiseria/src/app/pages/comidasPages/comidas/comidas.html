@@ -31,6 +31,13 @@
                 </div>
             </div>
         }
+
+        <div class="pagination-controls text-center mt-4">
+            <button (click)="prevPage()"  class="btn btn-editar-small">Anterior</button>
+            <span> Página {{currentPage}} de {{totalPages}} </span>
+            <button (click)="nextPage()"  class="btn btn-editar-small">Siguiente</button>
+        </div>
+        
             <div class="text-end">
                 <a (click)="goToCrearComida()" class="btn btn-crear-comida">
                     AÑADIR COMIDA

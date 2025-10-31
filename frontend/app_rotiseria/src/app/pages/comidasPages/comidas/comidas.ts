@@ -14,18 +14,27 @@ export class Comidas {
 
   comidas:any[]=[];
 
+  currentPage = 1;
+  perPage = 5;
+  totalPages!: number;
+
   constructor(private router: Router,private comidasSvc: ComidasSvc) {}
 
   ngOnInit(){
-    this.comidasSvc.getComidas().subscribe({
+     this.cargarPagina(1);
+  }
+
+  private cargarPagina(page: number): void {
+    this.comidasSvc.getComidasPaginado(page, this.perPage).subscribe({
       next: (res:any)=>{
         console.log("Comidas: ",res);
         this.comidas=res.comidas; 
+        this.totalPages = Number(res.pages)
       }, 
       error: (err)=>{ 
         console.log("Error al traer comidas: ",err) 
       } 
-    }) 
+    })
   }
 
   eliminarComida(id_comida:any) {
@@ -48,6 +57,24 @@ export class Comidas {
   goToCrearComida(){
     console.log("redirigido a crear comida")
     this.router.navigate(['/comidas/crear'])
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage= this.currentPage + 1
+      this.cargarPagina(this.currentPage);
+    } else {
+      return
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage= this.currentPage - 1
+      this.cargarPagina(this.currentPage);
+    } else {
+      return
+    }
   }
 
 }

@@ -18,16 +18,25 @@ export class Usuarios {
   usuarios:any[]=[];
   arrayFiltred=[...this.usuarios]
 
+  currentPage = 1;
+  perPage = 5;
+  totalPages!: number;
+
   constructor(
     private router: Router,
     private usuariosSvc: UsuariosSvc
   ){}
 
   ngOnInit(){
-    this.usuariosSvc.getUsuarios().subscribe({
+    this.cargarPagina(1);
+  }
+
+  private cargarPagina(page: number): void {
+    this.usuariosSvc.getUsuarios(page, this.perPage).subscribe({
       next: (res:any)=>{
         console.log("Usuarios: ",res);
         this.usuarios=res.usuarios;
+        this.totalPages = Number(res.pages)
         this.arrayFiltred=[...this.usuarios]
       },
       error: (err)=>{
@@ -66,6 +75,24 @@ export class Usuarios {
   goToCrearUsuario(){
     console.log("redirigido a crear usuario")
     this.router.navigate(['/usuarios/crear'])
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage= this.currentPage + 1
+      this.cargarPagina(this.currentPage);
+    } else {
+      return
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage= this.currentPage - 1
+      this.cargarPagina(this.currentPage);
+    } else {
+      return
+    }
   }
 
 }

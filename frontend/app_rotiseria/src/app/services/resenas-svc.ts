@@ -11,29 +11,29 @@ export class ResenasSvc {
 
   url = 'http://127.0.0.1:7000';
   
-  getResenas(): Observable<any>{
+  getResenas(page: number, per_page: number): Observable<any>{
     const token=localStorage.getItem('token') || '';
     let headers=new HttpHeaders({
       'Content-Type':'application/json',
       'Authorization':`Bearer ${token}`
     });
-    return this.http.get(this.url+'/resenas', { headers })
+    return this.http.get(`${this.url}/resenas?page=${page}&per_page=${per_page}`, { headers })
   }
 
-  getResenasByUsuario(id_usuario: number): Observable<any> {
+  getResenasByUsuario(id_usuario: number,page: number, per_page: number): Observable<any> {
     const token = localStorage.getItem('token') || '';
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.get(`${this.url}/resenas?id_usuario=${id_usuario}`, { headers });
+    return this.http.get(`${this.url}/resenas?id_usuario=${id_usuario}&page=${page}&per_page=${per_page}`, { headers });
   }
 
-  getResenasByComida(id_comida: number): Observable<any> {
+  getResenasByComida(id_comida: number,page: number, per_page: number): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
-    return this.http.get(`${this.url}/resenas?id_comida=${id_comida}`, { headers });
+    return this.http.get(`${this.url}/resenas?id_comida=${id_comida}&page=${page}&per_page=${per_page}`, { headers });
   }
 
   getResenaById(id_resena: number): Observable<any> {

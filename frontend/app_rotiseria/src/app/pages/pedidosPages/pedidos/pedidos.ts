@@ -18,24 +18,37 @@ export class Pedidos {
   idBuscado!: number;
   estadoBuscado: string = 'null';
 
-  constructor(private router: Router, private pedidosSvc:PedidosSvc) {}
+  currentPage = 1;
+  perPage = 5;
+  totalPages!: number;
+
+  constructor(
+    private router: Router, 
+    private pedidosSvc:PedidosSvc
+  ) {}
 
   ngOnInit(){
+    this.cargarPagina(1);
+  }
+
+  private cargarPagina(page: number): void {
     const rol = localStorage.getItem('rol');
     const id_usuario = localStorage.getItem('id_usuario');
+    this.currentPage = page;
 
     if (rol === 'ADMIN') {
-      this.cargarTodosPedidos();
+      this.cargarTodosPedidos(page);
     } else if (rol === 'CLIENTE' && id_usuario) {
-      this.cargarPedidosUsuario(Number(id_usuario));
+      this.cargarPedidosUsuario(Number(id_usuario), page);
     }
   }
 
-  private cargarTodosPedidos(): void {
-    this.pedidosSvc.getPedidos().subscribe({
+  private cargarTodosPedidos(page: number): void {
+    this.pedidosSvc.getPedidos(page, this.perPage).subscribe({
       next: (res: any) => {
         console.log('Pedidos:', res);
         this.pedidos = res.pedidos;
+        this.totalPages = Number(res.pages)
         this.arrayFiltred = [...this.pedidos];
       },
       error: (err) => {
@@ -44,11 +57,12 @@ export class Pedidos {
     });
   }
 
-  private cargarPedidosUsuario(id_usuario: number): void {
-    this.pedidosSvc.getPedidosByUsuario(id_usuario).subscribe({
+  private cargarPedidosUsuario(id_usuario: number,page: number): void {
+    this.pedidosSvc.getPedidosByUsuario(id_usuario,page, this.perPage).subscribe({
       next: (res: any) => {
         console.log('Pedidos del usuario:', res);
         this.pedidos = res.pedidos;
+        this.totalPages = Number(res.pages)
         this.arrayFiltred = [...this.pedidos];
       },
       error: (err) => {
@@ -92,4 +106,21 @@ export class Pedidos {
     console.log("redirigido a editar comida en:  /comida",id_pedido,"editar" )
     this.router.navigate(['/pedido',id_pedido,'editar'])
   }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.cargarPagina(this.currentPage + 1);
+    } else {
+      return
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.cargarPagina(this.currentPage - 1);
+    } else {
+      return
+    }
+  }
+
 }

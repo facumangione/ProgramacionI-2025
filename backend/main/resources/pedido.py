@@ -1,5 +1,6 @@
 from flask_restful import Resource
 from flask import request,jsonify
+from sqlalchemy import func
 from ..models.init import PedidoModel, ComidaModel
 from .. import db
 from datetime import datetime
@@ -57,6 +58,9 @@ class Pedidos(Resource):
 
         if request.args.get('estado'):
             pedidos=pedidos.filter(PedidoModel.estado.like("%"+request.args.get('estado')+"%"))
+
+        if request.args.get('desc'):
+            pedidos=pedidos.order_by(PedidoModel.fecha.desc())
 
         if request.args.get('id_usuario'):
             pedidos=pedidos.filter(PedidoModel.id_usuario.like("%"+request.args.get('id_usuario')+"%"))
