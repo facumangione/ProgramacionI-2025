@@ -16,7 +16,8 @@ export class Pedidos {
   pedidos:any[]=[];
   arrayFiltred=[...this.pedidos];
   idBuscado!: number;
-  estadoBuscado: string = 'null';
+  estadoBuscado: any = '';
+  idPedidoBuscado: any = '';
 
   currentPage = 1;
   perPage = 5;
@@ -44,12 +45,19 @@ export class Pedidos {
   }
 
   private cargarTodosPedidos(page: number): void {
-    this.pedidosSvc.getPedidos(page, this.perPage).subscribe({
+
+    this.pedidosSvc.getPedidos(
+      page, 
+      this.perPage,
+      this.estadoBuscado,
+      this.idPedidoBuscado
+    ).subscribe({
       next: (res: any) => {
         console.log('Pedidos:', res);
         this.pedidos = res.pedidos;
-        this.totalPages = Number(res.pages)
         this.arrayFiltred = [...this.pedidos];
+        this.totalPages = Number(res.pages)
+        this.currentPage = page;
       },
       error: (err) => {
         console.log('Error al traer pedidos:', err);
@@ -57,8 +65,14 @@ export class Pedidos {
     });
   }
 
-  private cargarPedidosUsuario(id_usuario: number,page: number): void {
-    this.pedidosSvc.getPedidosByUsuario(id_usuario,page, this.perPage).subscribe({
+  private cargarPedidosUsuario(id_usuario: number,page: any): void {
+    this.pedidosSvc.getPedidosByUsuario(
+      id_usuario,
+      page,
+      this.perPage,
+      this.estadoBuscado,
+      this.idPedidoBuscado
+    ).subscribe({
       next: (res: any) => {
         console.log('Pedidos del usuario:', res);
         this.pedidos = res.pedidos;
@@ -79,11 +93,19 @@ export class Pedidos {
   }
 
   filtrarPedidos() {
-    this.arrayFiltred = this.pedidos.filter(pedido => {
-      let cumpleID = !this.idBuscado || pedido.id_pedido === Number(this.idBuscado);
-      let cumpleEstado = this.estadoBuscado === 'null' || pedido.estado === this.estadoBuscado;
-      return cumpleID && cumpleEstado;
+    console.log('Filtrando usuarios con:', { 
+      nombre: this.estadoBuscado, 
+      rol: this.idPedidoBuscado
     });
+    this.currentPage = 1;
+    this.cargarPagina(1);
+  }
+
+  limpiarFiltros() {
+    this.estadoBuscado = '';
+    this.idPedidoBuscado = '';
+    this.currentPage = 1;
+    this.cargarPagina(1);
   }
   
   getRol(){

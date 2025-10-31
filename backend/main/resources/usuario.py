@@ -58,6 +58,12 @@ class Usuarios(Resource):
         if request.args.get('per_page'):
             per_page=int(request.args.get('per_page'))
 
+        if request.args.get('rol'):
+            usuarios=usuarios.filter(UsuarioModel.rol.like("%"+request.args.get('rol')+"%"))
+
+        if request.args.get('nombre'):
+            usuarios=usuarios.filter(UsuarioModel.nombre.like("%"+request.args.get('nombre')+"%"))
+
         if request.args.get('MayorCantPedido'):
             usuarios = usuarios.outerjoin(UsuarioModel.pedidos).group_by(UsuarioModel.id_usuario).order_by(func.count(PedidoModel.id_pedido).desc())
 

@@ -65,6 +65,9 @@ class Pedidos(Resource):
         if request.args.get('id_usuario'):
             pedidos=pedidos.filter(PedidoModel.id_usuario.like("%"+request.args.get('id_usuario')+"%"))
 
+        if request.args.get('id_pedido'):
+            pedidos=pedidos.filter(PedidoModel.id_pedido.like("%"+request.args.get('id_pedido')+"%"))
+
         pedidos=pedidos.paginate(page=page, per_page=per_page, error_out=False)
 
         return jsonify({'pedidos':[pedido.to_json() for pedido in pedidos],

@@ -13,8 +13,8 @@ import { UsuariosSvc } from '../../../services/usuarios';
 })
 export class Usuarios {
 
-  nombreBuscado!: string;
-  rolBuscado: string = 'null';
+  nombreBuscado: string = '';
+  rolBuscado: string = '';
   usuarios:any[]=[];
   arrayFiltred=[...this.usuarios]
 
@@ -32,12 +32,21 @@ export class Usuarios {
   }
 
   private cargarPagina(page: number): void {
-    this.usuariosSvc.getUsuarios(page, this.perPage).subscribe({
+
+    console.log('Filtros aplicados:', { nombre: this.nombreBuscado, rol: this.rolBuscado });
+
+    this.usuariosSvc.getUsuarios(
+      page, 
+      this.perPage,
+      this.rolBuscado,
+      this.nombreBuscado
+    ).subscribe({
       next: (res:any)=>{
         console.log("Usuarios: ",res);
         this.usuarios=res.usuarios;
-        this.totalPages = Number(res.pages)
         this.arrayFiltred=[...this.usuarios]
+        this.totalPages = Number(res.pages)
+        this.currentPage = page;
       },
       error: (err)=>{
         console.log("Error al traer usuarios: ",err)
@@ -46,13 +55,19 @@ export class Usuarios {
   }
 
   filtrarUsuarios(){
-    let nombreBuscado = this.nombreBuscado ? this.nombreBuscado.toLowerCase() : '';
-    
-    this.arrayFiltred = this.usuarios.filter(u => {
-      let cumpleNombre = nombreBuscado === '' || u.nombre.toLowerCase().includes(nombreBuscado);
-      let cumpleRol = this.rolBuscado === 'null' || u.rol === this.rolBuscado;
-      return cumpleNombre && cumpleRol;
+    console.log('Filtrando usuarios con:', { 
+      nombre: this.nombreBuscado, 
+      rol: this.rolBuscado 
     });
+    this.currentPage = 1;
+    this.cargarPagina(1);
+  }
+
+  limpiarFiltros() {
+    this.nombreBuscado = '';
+    this.rolBuscado = '';
+    this.currentPage = 1;
+    this.cargarPagina(1);
   }
 
   eliminarUsuario(id_usuario:any) {
