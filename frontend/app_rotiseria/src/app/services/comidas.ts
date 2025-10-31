@@ -15,7 +15,7 @@ export class ComidasSvc {
     let headers=new HttpHeaders({
       'Content-Type':'application/json'
     });
-    return this.http.get(`${this.url}/comidas`, { headers })
+    return this.http.get(`${this.url}/comidas?page=1&per_page=999`, { headers })
   }
   
   getComidasPaginado(page: number, per_page: number): Observable<any>{
@@ -38,7 +38,7 @@ export class ComidasSvc {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
     });
-    return this.http.delete(`${this.url}/comida/${id_comida}`, { headers }); 
+    return this.http.delete(`${this.url}/comida/${id_comida}`, { headers });
   }
 
   postComida(dataComida:ComidaRequest): Observable<any>{
