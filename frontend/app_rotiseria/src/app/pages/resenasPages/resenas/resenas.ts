@@ -122,7 +122,7 @@ export class Resenas {
         console.log("Error al reseña usuario: ",err)
       }
     })
-    window.location.reload();
+    this.cargarPagina(1);
   }
 
   goToEditarResena(id_resena:any){

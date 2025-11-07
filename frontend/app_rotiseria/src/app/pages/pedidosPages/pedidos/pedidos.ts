@@ -121,7 +121,7 @@ export class Pedidos {
         console.log("Error al eliminar pedido: ",err)
       }
     })
-    window.location.reload();
+    this.cargarPagina(1);
   }
 
   goToEditarPedido(id_pedido:any){

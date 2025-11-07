@@ -41,12 +41,13 @@ export class Comidas {
     this.comidasSvc.deleteComida(id_comida).subscribe({
       next: (res:any)=>{
         console.log("Comida eliminada: ",res);
+        this.cargarPagina(1);
       },
       error: (err)=>{
         console.log("Error al eliminar comida: ",err)
       }
     })
-    window.location.reload();
+    ;
   }
 
   goToEditarComida(id_comida:any){

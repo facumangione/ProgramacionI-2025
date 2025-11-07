@@ -24,7 +24,7 @@ class Pedido(Resource):
         rol=get_jwt().get('rol')
         if rol=='CLIENTE' and pedido.id_usuario!=get_jwt_identity():
             return 'No tiene permiso para eliminar este pedido',403
-        if rol=='CLIENTE' and pedido.estado==['LISTO','RETIRADO']:
+        if rol=='CLIENTE' and pedido.estado==['LISTO','ENTREGADO']:
             return 'Ya completo este pedido, no puede eliminarlo'
         db.session.delete(pedido)
         db.session.commit()

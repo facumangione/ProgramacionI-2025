@@ -11,52 +11,28 @@ export class ComidasSvc {
 
   url = 'http://127.0.0.1:7000';
 
-  getComidas(): Observable<any>{
-    let headers=new HttpHeaders({
-      'Content-Type':'application/json'
-    });
-    return this.http.get(`${this.url}/comidas?page=1&per_page=999`, { headers })
+  getComidas(): Observable<any> {
+    return this.http.get(`${this.url}/comidas?page=1&per_page=999`);
   }
   
-  getComidasPaginado(page: number, per_page: number): Observable<any>{
-    let headers=new HttpHeaders({
-      'Content-Type':'application/json'
-    });
-    return this.http.get(`${this.url}/comidas?page=${page}&per_page=${per_page}`, { headers })
+  getComidasPaginado(page: number, per_page: number): Observable<any> {
+    return this.http.get(`${this.url}/comidas?page=${page}&per_page=${per_page}`);
   }
 
   getComidaById(id_comida: number): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return this.http.get(`${this.url}/comida/${id_comida}`, { headers });
+    return this.http.get(`${this.url}/comida/${id_comida}`);
   }
 
-  deleteComida(id_comida:number): Observable<any>{
-    const token = localStorage.getItem('token') || '';
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.delete(`${this.url}/comida/${id_comida}`, { headers });
+  deleteComida(id_comida: number): Observable<any> {
+    return this.http.delete(`${this.url}/comida/${id_comida}`);
   }
 
-  postComida(dataComida:ComidaRequest): Observable<any>{
-    const token = localStorage.getItem('token') || '';
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.post(this.url+'/comidas',dataComida,{ headers })
+  postComida(dataComida: ComidaRequest): Observable<any> {
+    return this.http.post(`${this.url}/comidas`, dataComida);
   }
 
-  putComida(dataComida:ComidaRequest,id_comida:number): Observable<any>{
-    const token = localStorage.getItem('token') || '';
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    });
-    return this.http.put(`${this.url}/comida/${id_comida}`,dataComida ,{ headers });
+  putComida(dataComida: ComidaRequest, id_comida: number): Observable<any> {
+    return this.http.put(`${this.url}/comida/${id_comida}`, dataComida);
   }
   
 }

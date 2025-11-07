@@ -74,12 +74,12 @@ export class Usuarios {
     this.usuariosSvc.deleteUsuario(id_usuario).subscribe({
       next: (res:any)=>{
         console.log("Usuario eliminado: ",res);
+        this.cargarPagina(1);
       },
       error: (err)=>{
         console.log("Error al eliminar usuario: ",err)
       }
     })
-    this.router.navigate(['/usuarios']);
   }
 
   goToEditarUsuario(id_usuario:any){

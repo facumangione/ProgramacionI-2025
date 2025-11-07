@@ -11,7 +11,7 @@ class Pedido(db.Model):
     id_pedido=db.Column(db.Integer, primary_key=True)
     id_usuario=db.Column(db.Integer,db.ForeignKey("usuario.id_usuario"),nullable=False)
     fecha=db.Column(db.DateTime,nullable=False)
-    estado=db.Column(db.Enum('LISTO','EN PREPARACION','RETIRADO'),nullable=False)
+    estado=db.Column(db.Enum('LISTO','EN PREPARACION','ENTREGADO'),nullable=False)
     total=db.Column(db.Float,nullable=False)
 
     usuario=db.relationship("Usuario", back_populates="pedidos", uselist=False, single_parent=True)
