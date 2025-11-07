@@ -68,10 +68,10 @@ export class Pedidos {
   private cargarPedidosUsuario(id_usuario: number,page: any): void {
     this.pedidosSvc.getPedidosByUsuario(
       id_usuario,
+      this.estadoBuscado,
+      this.idPedidoBuscado,
       page,
       this.perPage,
-      this.estadoBuscado,
-      this.idPedidoBuscado
     ).subscribe({
       next: (res: any) => {
         console.log('Pedidos del usuario:', res);
