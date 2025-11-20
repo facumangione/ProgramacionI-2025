@@ -6,6 +6,7 @@
 
     <div class="pedido-content">
         <div class="container">
+            @if (comida) {
             <div class="pedido-card">
                 <div class="pedido-info">
                     <div class="mb-3">
@@ -34,6 +35,16 @@
                     </div>
                 </div>
             </div>
+            } @else {
+                <div class="pedido-card">
+                    <div class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                        <p class="mt-3">Cargando información del pedido...</p>
+                    </div>
+                </div>
+            }
         </div>
     </div>
 

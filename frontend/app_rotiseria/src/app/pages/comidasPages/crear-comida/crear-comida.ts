@@ -27,7 +27,8 @@ export class CrearComida {
     this.comidaForm = this.formBuilder.group({
       nombre: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
-      precio: [null, [Validators.required]]
+      precio: [null, [Validators.required]],
+      imagen: ['']
     })
   }
 
@@ -65,6 +66,7 @@ export class CrearComida {
         },
         { label: 'Imagen:',
           type: 'file',
+          formControlName: "imagen",
           name: 'imagen',
           value: '',
           placeholder: "Selecciona una imagen para el producto (colocar nombre con formato <nombre_comida_en_minuscula>.JPG",

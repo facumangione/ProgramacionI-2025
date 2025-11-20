@@ -28,13 +28,16 @@ export class Resenas {
   ) {}
 
   ngOnInit() {
+    this.route.queryParams.subscribe(() => {
     this.cargarPagina(1);
+    });
   }
 
   private cargarPagina(page: number): void {
     const rol = localStorage.getItem('rol');
     const id_usuario = localStorage.getItem('id_usuario');
     const id_comida = this.route.snapshot.paramMap.get('id_comida');
+    const filter = this.route.snapshot.queryParamMap.get('filter');
     this.currentPage = page;
 
     if (id_comida){
@@ -43,11 +46,20 @@ export class Resenas {
       return;
     } 
 
-    if (rol === 'ADMIN') {
-      this.cargarTodasResenas(page);
-    } else if (rol === 'CLIENTE' && id_usuario) {
+    if (filter === 'usuario' && id_usuario) {
+      console.log('Cargar reseñas del usuario');
       this.cargarResenasUsuario(Number(id_usuario), page);
+      return;
     }
+
+    if (rol === 'ADMIN') {
+      console.log('Cargar todas las reseñas (Admin)');
+      this.cargarTodasResenas(page);
+      return;
+    }
+
+    console.log('Cargar todas las reseñas (público)');
+    this.cargarTodasResenas(page);
   }
 
   private cargarResenas(resenas: any[]): void {

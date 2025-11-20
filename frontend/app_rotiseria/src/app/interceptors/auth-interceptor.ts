@@ -10,8 +10,6 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
       }
     });
 
-    console.log('%c[AuthInterceptor] Request final:', 'color: green', newReq);
-
     return next(newReq);
   }
 

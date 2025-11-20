@@ -16,11 +16,11 @@
                             <i class="fas fa-bars me-2"></i>
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" (click)="goToResenas()">Reseñas</a></li>
+                            <li><a class="dropdown-item" (click)="goToResenas('todas')">Reseñas</a></li>
 
                             @if (getRol() == 'CLIENTE'){
                             <li><a class="dropdown-item" (click)="goToPedidos()">Mis Pedidos</a></li>
-                            <li><a class="dropdown-item" (click)="goToResenas()">Mis Reseñas</a></li>
+                            <li><a class="dropdown-item" (click)="goToResenas('usuario')">Mis Reseñas</a></li>
                             <li><a class="dropdown-item-cerrar-sesion" (click)="logout()" >CERRAR SESION</a></li>
                             }
                             @if (getRol() == 'ADMIN'){
