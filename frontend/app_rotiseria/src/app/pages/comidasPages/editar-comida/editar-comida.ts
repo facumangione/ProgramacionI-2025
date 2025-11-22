@@ -30,6 +30,7 @@ export class EditarComida {
       nombre: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
       precio: ['', [Validators.required]],
+      disponibilidad: [false, [Validators.required]],
       imagen: ['']
     })
   }
@@ -64,6 +65,16 @@ export class EditarComida {
           value: '',
           placeholder: "0",
           required: true 
+        },
+        { 
+          label: 'Disponibilidad:', 
+          type: 'select', 
+          formControlName: "disponibilidad",
+          name: 'disponibilidad',
+          options: [
+            { value: false, label: 'NO DISPONIBLE' },
+            { value: true, label: 'DISPONIBLE' },
+          ]
         },
         { label: 'Imagen:',
           type: 'file',
@@ -101,7 +112,9 @@ export class EditarComida {
     this.comidasSvc.putComida({
       nombre: formData.nombre,
       descripcion: formData.descripcion,
-      precio: Number(formData.precio)
+      precio: Number(formData.precio),
+      imagen: formData.imagen,
+      disponibilidad: formData.disponibilidad
       },
       this.comida.id_comida
     ).subscribe({

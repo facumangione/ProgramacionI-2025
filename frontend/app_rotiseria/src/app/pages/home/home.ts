@@ -22,11 +22,13 @@ export class Home {
     this.comidasSvc.getComidas().subscribe({
       next: (res:any)=>{
         console.log("Comidas: ",res);
-        this.comidas = res.comidas.map((comida: any) => ({
-        ...comida,
-        image: `assets/${comida.nombre.toLowerCase()}.jpg`,
-        alt: comida.nombre
-      }));
+        this.comidas = res.comidas
+          .filter((comida: any) => comida.disponibilidad === true)
+          .map((comida: any) => ({
+            ...comida,
+            image: `assets/${comida.nombre.toLowerCase()}.jpg`,
+            alt: comida.nombre
+          }));
         this.arrayFiltred=[...this.comidas]
       },
       error: (err)=>{

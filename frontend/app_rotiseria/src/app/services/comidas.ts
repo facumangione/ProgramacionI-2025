@@ -12,7 +12,7 @@ export class ComidasSvc {
   url = 'http://127.0.0.1:7000';
 
   getComidas(): Observable<any> {
-    return this.http.get(`${this.url}/comidas?page=1&per_page=999`);
+    return this.http.get(`${this.url}/comidas?page=1&per_page=999&CantPedidosYValoracion=True`);
   }
   
   getComidasPaginado(page: number, per_page: number): Observable<any> {

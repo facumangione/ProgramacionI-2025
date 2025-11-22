@@ -28,6 +28,7 @@ export class CrearComida {
       nombre: ['', [Validators.required]],
       descripcion: ['', [Validators.required]],
       precio: [null, [Validators.required]],
+      disponibilidad: [false, [Validators.required]],
       imagen: ['']
     })
   }
@@ -64,6 +65,16 @@ export class CrearComida {
           placeholder: "0",
           required: true 
         },
+        { 
+          label: 'Disponibilidad:', 
+          type: 'select', 
+          formControlName: "disponibilidad",
+          name: 'disponibilidad',
+          options: [
+            { value: false, label: 'NO DISPONIBLE' },
+            { value: true, label: 'DISPONIBLE' },
+          ]
+        },
         { label: 'Imagen:',
           type: 'file',
           formControlName: "imagen",
@@ -98,6 +109,8 @@ export class CrearComida {
       nombre: formData.nombre,
       descripcion: formData.descripcion,
       precio: Number(formData.precio),
+      disponibilidad: formData.disponibilidad,
+      imagen: formData.imagen
     }).subscribe({
       next: (res) => {
         console.log('Comida creada exitosamente:', res);

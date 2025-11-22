@@ -15,9 +15,8 @@ export class Pedidos {
 
   pedidos:any[]=[];
   arrayFiltred=[...this.pedidos];
-  idBuscado!: number;
+  idBuscado: any = '';
   estadoBuscado: any = '';
-  idPedidoBuscado: any = '';
 
   currentPage = 1;
   perPage = 5;
@@ -46,11 +45,13 @@ export class Pedidos {
 
   private cargarTodosPedidos(page: number): void {
 
+    const idBuscado = this.idBuscado || '';
+
     this.pedidosSvc.getPedidos(
       page, 
       this.perPage,
       this.estadoBuscado,
-      this.idPedidoBuscado
+      idBuscado
     ).subscribe({
       next: (res: any) => {
         console.log('Pedidos:', res);
@@ -66,10 +67,13 @@ export class Pedidos {
   }
 
   private cargarPedidosUsuario(id_usuario: number,page: any): void {
+
+    const idBuscado = this.idBuscado || '';
+    
     this.pedidosSvc.getPedidosByUsuario(
       id_usuario,
       this.estadoBuscado,
-      this.idPedidoBuscado,
+      idBuscado,
       page,
       this.perPage,
     ).subscribe({
@@ -93,9 +97,9 @@ export class Pedidos {
   }
 
   filtrarPedidos() {
-    console.log('Filtrando usuarios con:', { 
-      nombre: this.estadoBuscado, 
-      rol: this.idPedidoBuscado
+    console.log('Filtrando pedidos con:', { 
+      id_pedido: this.idBuscado,
+      estado: this.estadoBuscado
     });
     this.currentPage = 1;
     this.cargarPagina(1);
@@ -103,7 +107,7 @@ export class Pedidos {
 
   limpiarFiltros() {
     this.estadoBuscado = '';
-    this.idPedidoBuscado = '';
+    this.idBuscado = null;
     this.currentPage = 1;
     this.cargarPagina(1);
   }
