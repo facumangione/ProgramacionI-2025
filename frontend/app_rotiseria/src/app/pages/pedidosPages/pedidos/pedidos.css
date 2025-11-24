@@ -68,6 +68,7 @@
             font-weight: 600;
             font-size: 0.8rem;
             margin-right: 0.5rem;
+            margin-left: 0.5rem;
         }
         
         .btn-eliminar-small:hover {
@@ -88,6 +89,21 @@
         .btn-editar-small:hover {
             background-color: #cbd5e0;
             color: #2d3748;
+        }
+
+        .btn-anadir-resena {
+            background-color: #3fb178;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        .btn-anadir-resena:hover {
+            background-color: #2f855a;
+            color: white;
         }
 
         .search-section {
@@ -116,6 +132,8 @@
             transform: translateY(-50%);
             color: #4a5568;
         }
+
+        
 
         
 

@@ -40,7 +40,7 @@
                 <div class="col-2">COMIDAS</div>
                 <div class="col-2 text-center">ESTADO</div>
                 <div class="col-2 text-center">FECHA</div>
-                <div class="col-2 text-center">TOTAL</div>
+                <div class="col-1 text-center">TOTAL</div>
             </div>
             @for (pedido of arrayFiltred; track pedido.id_pedido){
             <div class="pedido-row">
@@ -58,10 +58,11 @@
                     <div class="col-2 text-center">
                         <span>{{pedido.fecha}}</span>
                     </div>
-                    <div class="col-2 text-center">
+                    <div class="col-1 text-center">
                             <strong>${{pedido.total}}</strong>
                         </div>
-                    <div class="col-2 text-center">
+                    <div class="col-3 text-center">
+                        <a (click)="goToCrearResena(pedido)" class="btn btn-anadir-resena">RESEÑAR</a>
                         <button (click)="eliminarPedido(pedido.id_pedido)" class="btn btn-eliminar-small">ELIMINAR</button>
                         <a (click)="goToEditarPedido(pedido.id_pedido)" class="btn btn-editar-small">EDITAR</a>
                     </div>

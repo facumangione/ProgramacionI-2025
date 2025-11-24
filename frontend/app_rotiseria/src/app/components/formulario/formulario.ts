@@ -26,10 +26,13 @@ export class Formulario implements OnInit, OnChanges {
   }
 
   actualizarCampos() {
-    if (this.config.formGroup) {
+  if (this.config?.formGroup) {
+    setTimeout(() => {
       this.config.formGroup.patchValue(this.infoActual);
+    });
   }
-  }
+}
+
 
   isFunction(value: any): value is Function {
     return typeof value === 'function';

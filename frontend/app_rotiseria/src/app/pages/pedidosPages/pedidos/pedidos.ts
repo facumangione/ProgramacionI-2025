@@ -133,6 +133,21 @@ export class Pedidos {
     this.router.navigate(['/pedido',id_pedido,'editar'])
   }
 
+  goToCrearResena(pedido: any) {
+    const comida = pedido.comidas[0];
+    
+    if (!comida) {
+      alert('Este pedido no tiene comidas asociadas');
+      return;
+    }
+
+    console.log("Redirigiendo a crear reseña con:", {
+      nombre: comida.nombre
+    });
+
+    this.router.navigate(['/resenas/crear', comida.id_comida, comida.nombre]);
+  }
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.cargarPagina(this.currentPage + 1);

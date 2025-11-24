@@ -20,7 +20,8 @@ export class EditarPedido {
   formConfig: any;
   pedidoForm!: FormGroup;
 
-  constructor(private route: ActivatedRoute,
+  constructor(
+    private route: ActivatedRoute,
     public router: Router,
     private location: Location, 
     private pedidosSvc: PedidosSvc,

@@ -142,10 +142,6 @@ export class Resenas {
     this.router.navigate(['/resena',id_resena,'editar'])
   }
 
-  goToCrearResena(){
-    console.log("redirigido a crear reseña")
-    this.router.navigate(['/resenas/crear'])
-  }
 
   showEditDeleteButtons(resena_id_usuario:number){
     const rol=localStorage.getItem('rol')

@@ -46,7 +46,7 @@ export const routes: Routes = [
     { path: 'pedido/:id_pedido/resumen', component: ResumenPedido, canActivate:[authsessionGuard] },
     { path: 'pedidos/id_usuario', component: Pedidos, canActivate:[authsessionGuard] },
     //reseñas:
-    { path: 'resenas/crear', component: CrearResena, canActivate:[authsessionGuard] },
+    { path: 'resenas/crear/:id_comida/:nombre_comida', component: CrearResena, canActivate:[authsessionGuard] },
     { path: 'resena/:id_resena/editar', component: EditarResena, canActivate:[authsessionGuard]},
     { path: 'resenas/:id_comida', component: Resenas },
     { path: 'resena/:id_usuario', component: Resenas, canActivate:[authsessionGuard]},

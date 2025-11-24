@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Header } from '../../../components/header/header';
 import { Footer } from '../../../components/footer/footer';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Formulario } from '../../../components/formulario/formulario';
 import { ResenasSvc } from '../../../services/resenas-svc';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -19,16 +19,32 @@ export class CrearResena {
   formConfig: any;
   resenaForm!: FormGroup;
 
+  id_comida!: number;
+  nombre_comida!: string;
+
   constructor(
+    private route: ActivatedRoute,
     public router: Router, 
     private location: Location,
     private formBuilder: FormBuilder,
     private resenaSvc: ResenasSvc,
-    private comidasSvc: ComidasSvc
   ) {
+
+    const id_comida = this.route.snapshot.paramMap.get('id_comida');
+    const nombre_comida = this.route.snapshot.paramMap.get('nombre_comida');
+
+    if (id_comida && nombre_comida) {
+      this.id_comida = Number(id_comida);
+      this.nombre_comida = nombre_comida;
+      console.log('Datos recibidos desde URL:', { id_comida: this.id_comida, nombre_comida: this.nombre_comida });
+    } else {
+      console.log('Faltan parámetros en la URL');
+      this.router.navigate(['/pedidos']);
+    }
+
     this.resenaForm = this.formBuilder.group({
       id_usuario: [Number(localStorage.getItem('id_usuario')),[Validators.required]],
-      id_comida: ['',[Validators.required]],
+      id_comida: [this.id_comida,[Validators.required]],
       comentario: ['', [Validators.required]],
       calificacion: [null, [Validators.required]]
     })
@@ -44,14 +60,13 @@ export class CrearResena {
       fields: [
         { 
           label: 'Comida:', 
-          type: 'select', 
-          formControlName: "id_comida",
+          type: 'text', 
           name: 'comida',
-          value: null,
+          formControlName: "id_comida",
+          value: this.nombre_comida,
+          placeholder: this.nombre_comida,
           required: true,
-          options: [
-            { value: null, label: 'Cargando comidas...', disabled: true }
-          ]
+          readonly: true
         },
         { 
           label: 'Calificación:', 
@@ -70,7 +85,7 @@ export class CrearResena {
           ]
         },
         { label: 'Comentario:',
-          type: 'text',
+          type: 'textarea',
           formControlName: "comentario",
           name: 'comentario',
           value: '',
@@ -81,45 +96,7 @@ export class CrearResena {
     };
 
     this.crearResena = this.crearResena.bind(this);
-
-    this.cargarComidas();
-
   }
-
-  cargarComidas() {
-    this.comidasSvc.getComidas().subscribe({
-      next: (res: any) => {
-        console.log('Comidas cargadas:', res);
-        const comidaField = this.formConfig.fields.find(
-          (field: any) => field.formControlName === 'id_comida'
-        );
-
-        if (comidaField) {
-          comidaField.options = [
-            { value: null, label: 'Seleccionar comida...', disabled: true },
-            ...res.comidas.map((comida: any) => ({
-              value: comida.id_comida,
-              label: comida.nombre
-            }))
-          ];
-          console.log('Opciones de comidas actualizadas:', comidaField.options);
-        }
-      },
-      error: (err) => {
-        console.error('Error al cargar comidas:', err);
-        const comidaField = this.formConfig.fields.find(
-          (field: any) => field.formControlName === 'id_comida'
-        );
-        if (comidaField) {
-          comidaField.options = [
-            { value: null, label: 'Error al cargar comidas', disabled: true }
-          ];
-        }
-        alert('Error al cargar las comidas. Por favor intente nuevamente.');
-      }
-    });
-  }
-
 
   goBack() {
     this.location.back(); 
@@ -140,7 +117,7 @@ export class CrearResena {
 
     this.resenaSvc.postResena({
       id_usuario: Number(localStorage.getItem('id_usuario')),
-      id_comida: Number(formData.id_comida),
+      id_comida: this.id_comida,
       comentario: formData.comentario,
       calificacion: Number(formData.calificacion),
     }).subscribe({
