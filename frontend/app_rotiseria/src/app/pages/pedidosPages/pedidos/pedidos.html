@@ -63,8 +63,10 @@
                         </div>
                     <div class="col-3 text-center">
                         <a (click)="goToCrearResena(pedido)" class="btn btn-anadir-resena">RESEÑAR</a>
-                        <button (click)="eliminarPedido(pedido.id_pedido)" class="btn btn-eliminar-small">ELIMINAR</button>
-                        <a (click)="goToEditarPedido(pedido.id_pedido)" class="btn btn-editar-small">EDITAR</a>
+                        @if (showEditDeleteButtons() == true){
+                            <button (click)="eliminarPedido(pedido.id_pedido)" class="btn btn-eliminar-small">ELIMINAR</button>
+                            <a (click)="goToEditarPedido(pedido.id_pedido)" class="btn btn-editar-small">EDITAR</a>
+                        }                       
                     </div>
                 </div>
             </div>

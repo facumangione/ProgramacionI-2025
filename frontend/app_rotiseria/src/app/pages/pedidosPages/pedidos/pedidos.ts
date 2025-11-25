@@ -148,6 +148,16 @@ export class Pedidos {
     this.router.navigate(['/resenas/crear', comida.id_comida, comida.nombre]);
   }
 
+  showEditDeleteButtons(){
+    const rol=localStorage.getItem('rol')
+    const id_usuario=Number(localStorage.getItem('id_usuario'))
+    if (rol==='ADMIN'){
+      return true
+    } else{
+      return false
+    }
+  }
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.cargarPagina(this.currentPage + 1);
