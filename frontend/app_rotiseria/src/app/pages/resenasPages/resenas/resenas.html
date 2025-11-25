@@ -2,8 +2,13 @@
 
 
 <div class="menu-title">
+    @if (esResenaUsuario() == true){
+        MIS RESEÑAS
+    }
+    @if (esResenaUsuario() == false){
         RESEÑAS
-    </div>
+    }
+</div>
 
     <div class="reseñas-content">
         <div class="container">

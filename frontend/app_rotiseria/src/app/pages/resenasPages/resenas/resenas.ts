@@ -19,7 +19,7 @@ export class Resenas {
   currentPage = 1;
   perPage = 5;
   totalPages!: number;
-  esResenasUsuario = false
+  resenasUsuario = false
 
   constructor(
     private router: Router,
@@ -50,7 +50,7 @@ export class Resenas {
     if (filter === 'usuario' && id_usuario) {
       console.log('Cargar reseñas del usuario');
       this.cargarResenasUsuario(Number(id_usuario), page);
-      this.esResenasUsuario=true
+      this.resenasUsuario=true
       return;
     }
 
@@ -153,6 +153,10 @@ export class Resenas {
     } else{
       return false
     }
+  }
+
+  esResenaUsuario(){
+    return this.resenasUsuario  
   }
 
   nextPage() {

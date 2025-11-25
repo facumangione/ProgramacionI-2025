@@ -44,7 +44,7 @@ export class CrearResena {
 
     this.resenaForm = this.formBuilder.group({
       id_usuario: [Number(localStorage.getItem('id_usuario')),[Validators.required]],
-      id_comida: [this.id_comida,[Validators.required]],
+      nombre_comida_display: [this.nombre_comida,[Validators.required]],
       comentario: ['', [Validators.required]],
       calificacion: [null, [Validators.required]]
     })
@@ -62,7 +62,7 @@ export class CrearResena {
           label: 'Comida:', 
           type: 'text', 
           name: 'comida',
-          formControlName: "id_comida",
+          formControlName: "nombre_comida_display",
           value: this.nombre_comida,
           placeholder: this.nombre_comida,
           required: true,
@@ -124,7 +124,7 @@ export class CrearResena {
       next: (res) => {
         console.log('Comida creada exitosamente:', res);
         alert('Comida creada exitosamente');
-        this.router.navigate(['/resenas',formData.id_comida]);
+        this.router.navigate(['/resenas']);
       },
       error: (err) => {
         console.error('Error al crear comida:', err);
