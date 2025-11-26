@@ -1,0 +1,17 @@
+Pedido cancelado, {{usuario.nombre}}
+
+Tu pedido ha sido CANCELADO
+
+Información del pedido cancelado:
+- Número de pedido: #{{pedido.id_pedido}}
+- Fecha: {{pedido.fecha.strftime("%d-%m-%Y %H:%M")}}
+
+Comidas del pedido:
+{% for comida in pedido.comidas %}
+- {{comida.nombre}}: ${{comida.precio}}
+  {{comida.descripcion}}
+{% endfor %}
+
+Total del pedido cancelado: ${{pedido.total}}
+
+Lamentamos que tu pedido haya sido cancelado. Esperamos verte pronto nuevamente.

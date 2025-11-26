@@ -1,0 +1,18 @@
+Actualización de tu pedido, {{usuario.nombre}}!
+
+El estado de tu pedido ha sido actualizado a: {{pedido.estado}}
+
+Información del pedido:
+- Número de pedido: #{{pedido.id_pedido}}
+- Fecha: {{pedido.fecha.strftime("%d-%m-%Y %H:%M")}}
+- Total: ${{pedido.total}}
+
+{% elif pedido.estado == 'EN_PREPARACION' %}
+¡Tu pedido está siendo preparado con cuidado!
+{% elif pedido.estado == 'LISTO' %}
+¡Tu pedido está listo para retirar! Te esperamos.
+{% elif pedido.estado == 'ENTREGADO' %}
+Tu pedido ha sido entregado. ¡Gracias por tu compra!
+{% endif %}
+
+Gracias por elegirnos. Si tienes alguna pregunta, no dudes en contactarnos.

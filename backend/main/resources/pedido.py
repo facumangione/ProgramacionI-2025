@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from flask import request,jsonify
 from sqlalchemy import func
-from ..models.init import PedidoModel, ComidaModel
+from ..models.init import PedidoModel, ComidaModel, UsuarioModel
 from .. import db
 from datetime import datetime
 from flask_jwt_extended import get_jwt_identity,get_jwt
@@ -24,10 +24,23 @@ class Pedido(Resource):
     def delete(self,id):
         pedido=db.session.query(PedidoModel).get_or_404(id)
         rol=get_jwt().get('rol')
+
         if rol=='CLIENTE' and pedido.id_usuario!=get_jwt_identity():
             return 'No tiene permiso para eliminar este pedido',403
+        
         if rol=='CLIENTE' and pedido.estado==['LISTO','ENTREGADO']:
             return 'Ya completo este pedido, no puede eliminarlo'
+        
+        usuario = db.session.query(UsuarioModel).get(pedido.id_usuario)
+        if usuario and usuario.mail:
+            sendMail(
+                [usuario.mail], 
+                'Pedido cancelado', 
+                'pedido_cancelado', 
+                usuario={'nombre': usuario.nombre}, 
+                pedido=pedido
+        )
+
         db.session.delete(pedido)
         db.session.commit()
         return pedido.to_json(), 204
@@ -37,12 +50,25 @@ class Pedido(Resource):
     def put(self,id):
         pedido=db.session.query(PedidoModel).get_or_404(id)
         data=request.get_json().items()
+
         for key,value in data:
             if key == 'fecha':
                 value = datetime.strptime(value, "%d-%m-%Y %H:%M")
             setattr(pedido,key,value)
+
         db.session.add(pedido)
         db.session.commit()
+
+        usuario = db.session.query(UsuarioModel).get(pedido.id_usuario)
+        if usuario and usuario.mail:
+            sendMail(
+                [usuario.mail], 
+                'Actualización de tu pedido', 
+                'estado_pedido', 
+                usuario={'nombre': usuario.nombre}, 
+                pedido=pedido
+            )
+
         return pedido.to_json(),201
     
 class Pedidos(Resource):
@@ -86,11 +112,13 @@ class Pedidos(Resource):
         new_pedido=PedidoModel.from_json(request.get_json())
         mail=get_jwt().get('mail')
         nombre= get_jwt().get('nombre')
-        send = sendMail([mail], 'Pedido confirmado', 'pedido', usuario={'nombre': nombre}, pedido=new_pedido)
+        
         if comidas_ids:
             comidas=ComidaModel.query.filter(ComidaModel.id_comida.in_(comidas_ids)).all()
             new_pedido.comidas.extend(comidas)
 
         db.session.add(new_pedido)
         db.session.commit()
+
+        send = sendMail([mail], 'Pedido confirmado', 'pedido', usuario={'nombre': nombre}, pedido=new_pedido)
         return new_pedido.to_json(),201

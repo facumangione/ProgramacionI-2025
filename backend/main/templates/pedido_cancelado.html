@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+<style>
+    .main{
+        border:2px solid #8B0000;
+        padding:35px;
+        background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+        margin:20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(139, 0, 0, 0.15);
+    }
+    body{
+        background: linear-gradient(45deg, #ffeaea 0%, #f5f5f5 100%);
+        font-family: Arial, sans-serif;
+    }
+    .cancelado-info{
+        background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+        box-shadow: 0 12px 20px rgba(198, 40, 40, 0.25);
+        padding:20px;
+        border:2px solid #c62828;
+        border-radius: 10px;
+        margin: 20px 0;
+        text-align: center;
+    }
+    .cancelado-badge{
+        display: inline-block;
+        padding: 12px 24px;
+        border-radius: 25px;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 15px 0;
+        text-transform: uppercase;
+        background: linear-gradient(135deg, #ef5350 0%, #c62828 100%);
+        color: white;
+        border: 2px solid #b71c1c;
+    }
+    .pedido-info{
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .comida-item{
+        background: #fafafa;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        margin: 10px 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    h1{
+        font-weight: bold;
+        font-size:32px;
+        color:#b71c1c;
+        text-shadow: 2px 2px 4px rgba(183, 28, 28, 0.1);
+        margin-bottom: 15px;
+    }
+    h2{
+        font-weight: bold;
+        font-size:20px;
+        color:#d32f2f;
+        margin-bottom: 10px;
+    }
+    p{
+        font-size: 16px;
+        color: #424242;
+        line-height: 1.6;
+    }
+    .mensaje-cancelado{
+        font-size: 18px;
+        color: #c62828;
+        font-weight: 500;
+        margin: 15px 0;
+    }
+    .precio{
+        font-weight: bold;
+        color: #c62828;
+        font-size: 18px;
+    }
+
+</style>
+<body>
+<br/>
+<div class="main">
+    <h1>Pedido cancelado, {{usuario.nombre}}</h1>
+    
+    <div class="cancelado-info">
+        <p class="mensaje-cancelado">Tu pedido ha sido cancelado</p>
+        <div class="cancelado-badge">
+            CANCELADO
+        </div>
+    </div>
+    
+    <div class="pedido-info">
+        <h2>Información del pedido cancelado:</h2>
+        <p><strong>Número de pedido:</strong> #{{pedido.id_pedido}}</p>
+        <p><strong>Fecha:</strong> {{pedido.fecha.strftime("%d-%m-%Y %H:%M")}}</p>
+        
+        <h2 style="margin-top: 20px;">Comidas del pedido:</h2>
+        {% for comida in pedido.comidas %}
+        <div class="comida-item">
+            <h3 style="color: #d32f2f; margin: 0 0 8px 0;">{{comida.nombre}}</h3>
+            <p style="margin: 5px 0; color: #666;">{{comida.descripcion}}</p>
+            <p class="precio">${{comida.precio}}</p>
+        </div>
+        {% endfor %}
+        
+        <p style="margin-top: 20px;"><strong>Total del pedido cancelado:</strong> <span style="color: #c62828; font-size: 20px; font-weight: bold;">${{pedido.total}}</span></p>
+    </div>
+    
+
+    
+    <p style="text-align: center;">Lamentamos que tu pedido haya sido cancelado. Esperamos verte pronto nuevamente.</p>
+</div>
+</body>
+</html>
