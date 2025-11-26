@@ -57,6 +57,9 @@ def create_app():
     #Añadir comida a pedido
     api.add_resource(resources.Añadir_carritoResource, '/anadircarrito')
 
+    #Eviar mail a todos los usuarios
+    api.add_resource(resources.EnviarEmailMasivoResource, '/email-masivo')
+
     api.init_app(app)
 
     app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')

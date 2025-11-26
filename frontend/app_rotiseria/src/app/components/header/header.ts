@@ -51,6 +51,9 @@ export class Header{
     this.router.navigate(['/usuarios'])
   }
 
+  goToEmailMasivo() {
+    this.router.navigate(['/email-masivo']);
+  }
 
   isToken(){
     return localStorage.getItem('token');

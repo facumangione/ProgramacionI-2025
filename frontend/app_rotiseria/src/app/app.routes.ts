@@ -22,6 +22,7 @@ import { EditarPedido } from './pages/pedidosPages/editar-pedido/editar-pedido';
 import { authsessionGuard } from './guards/authsession-guard';
 import { usermatchGuard } from './guards/usermatch-guard';
 import { roleGuard } from './guards/role-guard';
+import { EnviarEmailMasivo } from './pages/mail/enviar-mail-masivo/enviar-mail-masivo';
 
 export const routes: Routes = [
     { path:'error', component: ErrorPage },
@@ -55,5 +56,6 @@ export const routes: Routes = [
     { path: 'usuarios', component: Usuarios, canActivate:[authsessionGuard,roleGuard(['ADMIN', 'EMPLEADO'])] },
     { path: 'usuarios/crear', component: CrearUsuario, canActivate:[authsessionGuard,roleGuard(['ADMIN', 'EMPLEADO'])] },
     { path: 'usuario/:id_usuario/editar', component: EditarUsuario, canActivate:[authsessionGuard,roleGuard(['ADMIN', 'EMPLEADO'])] },
-    
+    //mail:
+    { path: 'email-masivo', component: EnviarEmailMasivo, canActivate:[authsessionGuard, roleGuard(['ADMIN'])] },
 ];

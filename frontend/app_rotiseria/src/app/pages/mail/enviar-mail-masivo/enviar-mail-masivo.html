@@ -1,0 +1,21 @@
+<app-header></app-header>
+
+<div class="menu-title">
+    ENVIAR EMAIL
+</div>
+
+<div class="info-banner">
+    <div class="container">
+        <div class="alert-info">
+            <i class="fas fa-info-circle"></i>
+            <p>Este email se enviará a <strong>TODOS los usuarios activos</strong> del sistema.</p>
+        </div>
+    </div>
+</div>
+
+<app-formulario 
+  [config]="formConfig"
+  [funcionGuardarCambio]="enviarEmail">
+</app-formulario>
+
+<app-footer></app-footer>

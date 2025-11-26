@@ -1,0 +1,11 @@
+
+EL BUEN SABOR
+================================
+
+BUENOS DIAS estimado usuario,
+
+{{ mensaje }}
+
+================================
+El Buen Sabor
+Gracias por confiar en nosotros

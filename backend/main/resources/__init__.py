@@ -9,3 +9,4 @@ from .resena import Resenas as ResenasResource
 from .notificacion import Notificacion as NotificacionResource
 from .notificacion import Notificaciones as NotificacionesResource
 from .anadir_carrito import Anadir_carrito as Añadir_carritoResource
+from .email_masivos import EnviarEmailMasivo as EnviarEmailMasivoResource

@@ -21,14 +21,17 @@
                             @if (getRol() == 'CLIENTE'){
                             <li><a class="dropdown-item" (click)="goToPedidos()">Mis Pedidos</a></li>
                             <li><a class="dropdown-item" (click)="goToResenas('usuario')">Mis Reseñas</a></li>
-                            <li><a class="dropdown-item-cerrar-sesion" (click)="logout()" >CERRAR SESION</a></li>
                             }
                             @if (getRol() == 'ADMIN' || getRol() == 'EMPLEADO'){
                             <li><a class="dropdown-item" (click)="goToPedidos()">Pedidos</a></li>
                             <li><a class="dropdown-item" (click)="goToUsuarios()">Usuarios</a></li>
                             <li><a class="dropdown-item" (click)="goToComidas()">Comidas</a></li>
-                            <li><a class="dropdown-item-cerrar-sesion" (click)="logout()" >CERRAR SESION</a></li>
                             }
+                            @if (getRol() == 'ADMIN'){
+                            <li><a class="dropdown-item" (click)="goToEmailMasivo()">Enviar Email</a></li>
+                            }
+                            <li><a class="dropdown-item-cerrar-sesion" (click)="logout()" >CERRAR SESION</a></li>
+                            
                         </ul>
                     </div>
                 </div>

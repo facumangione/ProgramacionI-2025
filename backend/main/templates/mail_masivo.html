@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<style>
+    .main{
+        border:2px solid #8B0000;
+        padding:35px;
+        background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+        margin:50px;
+        border-radius: 12px;
+        box-shadow: 0 8px 25px rgba(139, 0, 0, 0.15);
+    }
+    body{
+        background: linear-gradient(45deg, #ffeaea 0%, #f5f5f5 100%);
+        font-family: Arial, sans-serif;
+    }
+    .mensaje-box{
+        background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+        box-shadow: 0 12px 20px rgba(183, 28, 28, 0.25);
+        padding:25px;
+        border:2px solid #c62828;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+    h1{
+        font-weight: bold;
+        font-size:32px;
+        color:#b71c1c;
+        text-shadow: 2px 2px 4px rgba(183, 28, 28, 0.1);
+        margin-bottom: 15px;
+    }
+    h2{
+        font-weight: 600;
+        font-size:20px;
+        color:#d32f2f;
+        margin-bottom: 15px;
+    }
+    p{
+        font-size: 16px;
+        color: #424242;
+        line-height: 1.6;
+    }
+    .footer{
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #ffcdd2;
+        text-align: center;
+        color: #757575;
+        font-size: 14px;
+    }
+    .logo{
+        color: #b71c1c;
+        font-weight: bold;
+        font-size: 18px;
+    }
+</style>
+<body style="background: linear-gradient(45deg, #ffeaea 0%, #f5f5f5 100%); font-family: Arial, sans-serif;">
+<br/>
+<div class="main" style="border: 2px solid #8B0000;padding: 35px;background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);margin: 50px;border-radius: 12px;box-shadow: 0 8px 25px rgba(139, 0, 0, 0.15);">
+    
+    <h1 style="font-weight: bold;font-size: 32px;color: #b71c1c;text-shadow: 2px 2px 4px rgba(183, 28, 28, 0.1);margin-bottom: 15px;">
+        El Buen Sabor
+    </h1>
+    
+    <p style="font-size: 16px;color: #424242;line-height: 1.6;">
+        BUENOS DIAS estimado usuario,
+    </p>
+    
+    <div class="mensaje-box" style="background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);box-shadow: 0 12px 20px rgba(183, 28, 28, 0.25);padding: 25px;border: 2px solid #c62828;border-radius: 10px;margin-top: 20px;">
+        <p style="font-size: 16px;color: #424242;line-height: 1.6;white-space: pre-wrap;">
+            {{ mensaje }}
+        </p>
+    </div>
+    
+    <div class="footer" style="margin-top: 30px;padding-top: 20px;border-top: 2px solid #ffcdd2;text-align: center;color: #757575;font-size: 14px;">
+        <p class="logo" style="color: #b71c1c;font-weight: bold;font-size: 18px;">
+            El Buen Sabor
+        </p>
+        <p style="font-size: 16px;color: #424242;line-height: 1.6;">
+            Gracias por confiar en nosotros
+        </p>
+    </div>
+    
+</div>
+</body>
+</html>
