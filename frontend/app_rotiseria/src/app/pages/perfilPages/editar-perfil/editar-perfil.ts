@@ -92,14 +92,15 @@ export class EditarPerfil {
       nombre: formData.nombre,
       telefono: Number(formData.telefono),
       mail: formData.mail,
-      rol: formData.rol
+      rol: this.usuario.rol,
+      activo: this.usuario.activo
       },
       this.usuario.id_usuario
     ).subscribe({
       next: (res) => {
         console.log('Perfil editado exitosamente:', res);
         alert('Perfil editado exitosamente');
-        this.router.navigate(['/usuarios']);
+        this.router.navigate(['/perfil',this.usuario.id_usuario]);
       },
       error: (err) => {
         console.error('Error al editar perfil:', err);

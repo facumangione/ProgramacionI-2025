@@ -9,8 +9,13 @@ auth=Blueprint('auth',__name__,url_prefix='/auth')
 @auth.route('/login',methods=['POST'])
 def login():
     usuario=db.session.query(UsuarioModel).filter(UsuarioModel.mail==request.get_json().get('mail')).first()
+
     if (usuario is None) or not (usuario.validate_pass(request.get_json().get("password"))):
         return 'Invalid user or password', 401
+    
+    if not usuario.activo:
+        return 'Tu cuenta está desactivada. Consulta para activarla', 403
+
     access_token=create_access_token(identity=usuario)
     data={
         'id_usuario':usuario.id_usuario,

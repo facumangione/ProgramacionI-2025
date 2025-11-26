@@ -36,7 +36,7 @@ export class Pedidos {
     const id_usuario = localStorage.getItem('id_usuario');
     this.currentPage = page;
 
-    if (rol === 'ADMIN') {
+    if (rol === 'ADMIN' || rol === 'EMPLEADO') {
       this.cargarTodosPedidos(page);
     } else if (rol === 'CLIENTE' && id_usuario) {
       this.cargarPedidosUsuario(Number(id_usuario), page);
@@ -120,12 +120,13 @@ export class Pedidos {
     this.pedidosSvc.deletePedido(id_pedido).subscribe({
       next: (res:any)=>{
         console.log("Pedido eliminado: ",res);
+        this.cargarPagina(1);
       },
       error: (err)=>{
         console.log("Error al eliminar pedido: ",err)
       }
     })
-    this.cargarPagina(1);
+    
   }
 
   goToEditarPedido(id_pedido:any){
@@ -150,8 +151,16 @@ export class Pedidos {
 
   showEditDeleteButtons(){
     const rol=localStorage.getItem('rol')
-    const id_usuario=Number(localStorage.getItem('id_usuario'))
-    if (rol==='ADMIN'){
+    if (rol==='ADMIN' || rol==='EMPLEADO'){
+      return true
+    } else{
+      return false
+    }
+  }
+
+  showResenarButton(id_usuario_pedido:number){
+    const id = Number(localStorage.getItem('id_usuario'))
+    if (id==id_usuario_pedido){
       return true
     } else{
       return false

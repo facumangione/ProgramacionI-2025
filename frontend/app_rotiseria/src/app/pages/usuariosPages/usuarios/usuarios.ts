@@ -82,6 +82,15 @@ export class Usuarios {
     })
   }
 
+  showDeleteButtons(){
+    const rol=localStorage.getItem('rol')
+    if (rol==='ADMIN'){
+      return true
+    } else{
+      return false
+    }
+  }
+
   goToEditarUsuario(id_usuario:any){
     console.log("redirigido a editar usuario en:  /usuario",id_usuario,"editar" )
     this.router.navigate(['/usuario',id_usuario,'editar'])

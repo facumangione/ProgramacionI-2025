@@ -30,7 +30,8 @@ export class EditarUsuario {
       nombre: ['', [Validators.required]],
       telefono: ['', [Validators.required]],
       mail: ['', [Validators.required, Validators.email]],
-      rol: ['', [Validators.required]]
+      rol: ['', [Validators.required]],
+      activo: [false, [Validators.required]]
     })
   }
 
@@ -75,7 +76,20 @@ export class EditarUsuario {
           options: [
             { value: null, label: 'Seleccionar rol...',disabled: true },
             { value: "CLIENTE", label: "CLIENTE" },
+            { value: "EMPLEADO", label: "EMPLEADO" },
             { value: "ADMIN", label: "ADMIN" },
+          ]
+        },
+        { 
+          label: 'ESTADO:', 
+          type: 'select', 
+          formControlName: "activo",
+          name: 'activo',
+          required: true,
+          options: [
+            { value: null, label: 'Seleccionar estado...',disabled: true },
+            { value: true, label: "ACTIVO" },
+            { value: false, label: "DESACTIVADO" },
           ]
         },
       ]
@@ -108,12 +122,47 @@ export class EditarUsuario {
     }
 
     const formData = this.usuarioForm.value;
+    const rol = localStorage.getItem('rol')
+    
+    if (rol === 'ADMIN'){
+      this.adminPut(formData)
+    } else if (rol === 'EMPLEADO'){
+      this.empleadoPut(formData)
+    } else {
+      console.warn('No tiene permisos para editar el usuario');
 
+    }
+  }
+
+  adminPut(formData: any){
     this.usuariosSvc.putUsuario({
       nombre: formData.nombre,
       telefono: Number(formData.telefono),
       mail: formData.mail,
-      rol: formData.rol
+      rol: formData.rol,
+      activo: formData.activo
+      },
+      this.usuario.id_usuario
+    ).subscribe({
+      next: (res) => {
+        console.log('Usuario editado exitosamente:', res);
+        alert('Usuario editado exitosamente');
+        this.router.navigate(['/usuarios']);
+      },
+      error: (err) => {
+        console.error('Error al editar usuario:', err);
+        alert('Error al editar usuario');
+      }
+    });
+  }
+
+  empleadoPut(formData: any){
+    this.usuariosSvc.putUsuario({
+      nombre: this.usuario.nombre,
+      telefono: this.usuario.telefono,
+      mail: this.usuario.mail,
+      rol: this.usuario.rol,
+      activo: formData.activo
       },
       this.usuario.id_usuario
     ).subscribe({

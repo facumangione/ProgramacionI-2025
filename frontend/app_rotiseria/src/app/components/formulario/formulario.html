@@ -27,6 +27,21 @@
                 [placeholder]="field.placeholder"
                 [required]="field.required"
                 [formControlName]="field.formControlName"></textarea>
+            } @else if (field.type === 'file') {
+              @if (archivo) {
+                <div class="archivo-actual mb-2">
+                  <small class="text-muted">Archivo actual: <strong>{{ archivo }}</strong></small>
+                </div>
+              }
+              <input 
+                type="file" 
+                class="form-control"
+                [id]="field.name"
+                [name]="field.name"
+                [placeholder]="field.placeholder"
+                [required]="field.required"
+                (change)="onFileChange($event, field.formControlName)"
+                [accept]="field.accept || ''">
             } @else {
               <input 
                 [type]="field.type" 

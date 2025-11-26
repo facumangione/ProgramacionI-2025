@@ -3,4 +3,5 @@ interface UsuarioPutRequest{
     telefono: number,
     mail: string, 
     rol: string,
+    activo: boolean
 }

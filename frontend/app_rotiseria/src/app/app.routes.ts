@@ -20,8 +20,8 @@ import { ResumenPedido } from './pages/pedidosPages/resumen-pedido/resumen-pedid
 import { Pedidos } from './pages/pedidosPages/pedidos/pedidos';
 import { EditarPedido } from './pages/pedidosPages/editar-pedido/editar-pedido';
 import { authsessionGuard } from './guards/authsession-guard';
-import { roladminGuard } from './guards/roladmin-guard';
 import { usermatchGuard } from './guards/usermatch-guard';
+import { roleGuard } from './guards/role-guard';
 
 export const routes: Routes = [
     { path:'error', component: ErrorPage },
@@ -35,13 +35,13 @@ export const routes: Routes = [
     { path: 'perfil/:id_usuario', component: Perfil, canActivate:[authsessionGuard,usermatchGuard] },
     { path: 'perfil/:id_usuario/editar', component: EditarPerfil, canActivate:[authsessionGuard,usermatchGuard] },
     //comida:
-    { path: 'comidas', component: Comidas, canActivate:[authsessionGuard,roladminGuard] },
-    { path: 'comidas/crear', component: CrearComida, canActivate:[authsessionGuard,roladminGuard] },
+    { path: 'comidas', component: Comidas, canActivate:[authsessionGuard,roleGuard(['ADMIN','EMPLEADO'])] },
+    { path: 'comidas/crear', component: CrearComida, canActivate:[authsessionGuard,roleGuard(['ADMIN','EMPLEADO'])] },
     { path: 'comida/:id_comida', component: Comida },
-    { path: 'comida/:id_comida/editar', component: EditarComida, canActivate:[authsessionGuard,roladminGuard] },
+    { path: 'comida/:id_comida/editar', component: EditarComida, canActivate:[authsessionGuard,roleGuard(['ADMIN','EMPLEADO'])] },
     //pedidos:
     { path: 'pedidos', component: Pedidos, canActivate:[authsessionGuard] },
-    { path: 'pedido/:id_pedido/editar', component: EditarPedido, canActivate:[authsessionGuard,roladminGuard] },
+    { path: 'pedido/:id_pedido/editar', component: EditarPedido, canActivate:[authsessionGuard,roleGuard(['ADMIN','EMPLEADO'])] },
     { path: 'pedido/:id_comida/confirmar', component: ConfirmarPedido, canActivate:[authsessionGuard]},
     { path: 'pedido/:id_pedido/resumen', component: ResumenPedido, canActivate:[authsessionGuard] },
     { path: 'pedidos/id_usuario', component: Pedidos, canActivate:[authsessionGuard] },
@@ -52,8 +52,8 @@ export const routes: Routes = [
     { path: 'resena/:id_usuario', component: Resenas, canActivate:[authsessionGuard]},
     { path: 'resenas', component: Resenas },
     //usuarios:
-    { path: 'usuarios', component: Usuarios, canActivate:[authsessionGuard,roladminGuard] },
-    { path: 'usuarios/crear', component: CrearUsuario, canActivate:[authsessionGuard,roladminGuard] },
-    { path: 'usuario/:id_usuario/editar', component: EditarUsuario, canActivate:[authsessionGuard,roladminGuard] },
+    { path: 'usuarios', component: Usuarios, canActivate:[authsessionGuard,roleGuard(['ADMIN', 'EMPLEADO'])] },
+    { path: 'usuarios/crear', component: CrearUsuario, canActivate:[authsessionGuard,roleGuard(['ADMIN', 'EMPLEADO'])] },
+    { path: 'usuario/:id_usuario/editar', component: EditarUsuario, canActivate:[authsessionGuard,roleGuard(['ADMIN', 'EMPLEADO'])] },
     
 ];

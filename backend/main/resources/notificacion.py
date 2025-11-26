@@ -4,11 +4,12 @@ from ..models.init import NotificacionModel
 from .. import db
 from datetime import datetime
 from flask_jwt_extended import jwt_required,get_jwt_identity,get_jwt
-from main.auth.decorators import role_required
+from main.auth.decorators import role_required, active_user
+
 
 class Notificacion(Resource):
     
-    @role_required(roles=["ADMIN",'CLIENTE'])
+    @role_required(roles=["ADMIN",'EMPLEADO'])
     def get(self,id):
         notificacion=db.session.query(NotificacionModel).get_or_404(id)
         rol=get_jwt().get('rol')
@@ -16,14 +17,16 @@ class Notificacion(Resource):
             return 'No tiene permiso para ver esta notificacion',403
         return notificacion.to_json()
 
-    @role_required(roles=["ADMIN"])
+    @active_user
+    @role_required(roles=["ADMIN",'EMPLEADO'])
     def delete(self,id):
         notificacion=db.session.query(NotificacionModel).get_or_404(id)
         db.session.delete(notificacion)
         db.session.commit()
         return notificacion.to_json(), 204
 
-    @role_required(roles=["ADMIN"])
+    @active_user
+    @role_required(roles=["ADMIN",'EMPLEADO'])
     def put(self,id):
         notificacion=db.session.query(NotificacionModel).get_or_404(id)
         data=request.get_json().items()
@@ -35,8 +38,10 @@ class Notificacion(Resource):
         db.session.commit()
         return notificacion.to_json(),201
     
+
 class Notificaciones(Resource):
-    @role_required(roles=["ADMIN"])
+    @active_user
+    @role_required(roles=["ADMIN",'EMPLEADO'])
     def get(self):
         page=1
         per_page=5
@@ -56,7 +61,8 @@ class Notificaciones(Resource):
                        'per_page':page
                        })
     
-    @role_required(roles=["ADMIN"])
+    @active_user
+    @role_required(roles=["ADMIN",'EMPLEADO'])
     def post(self):
         new_notificacion=NotificacionModel.from_json(request.get_json())
         db.session.add(new_notificacion)

@@ -32,8 +32,10 @@
                     <div class="col-2 text-center">
                         <span>${{comida.precio}}</span>
                     </div>
-                    <div class="col-2 text-center">
+                    <div class="col-2 text-end">
+                        @if (showDeleteButton() == true ){
                         <button (click)="eliminarComida(comida.id_comida)" class="btn btn-eliminar-small">ELIMINAR</button>
+                        }
                         <a (click)="goToEditarComida(comida.id_comida)" class="btn btn-editar-small">EDITAR</a>
                     </div>
                 </div>
@@ -45,12 +47,14 @@
             <span> Página {{currentPage}} de {{totalPages}} </span>
             <button (click)="nextPage()"  class="btn btn-editar-small">Siguiente</button>
         </div>
-        
-            <div class="text-end">
-                <a (click)="goToCrearComida()" class="btn btn-crear-comida">
-                    AÑADIR COMIDA
-                </a>
-            </div>
+
+        @if (showDeleteButton() == true ){
+        <div class="text-end">
+            <a (click)="goToCrearComida()" class="btn btn-crear-comida">
+                AÑADIR COMIDA
+            </a>
+        </div>
+        }
 
         </div>
     </div><p></p>

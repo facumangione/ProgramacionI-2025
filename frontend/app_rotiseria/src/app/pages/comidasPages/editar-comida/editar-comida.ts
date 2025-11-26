@@ -82,7 +82,7 @@ export class EditarComida {
           name: 'imagen',
           value: '',
           placeholder: "Selecciona una imagen para el producto (en formato JPG y en minuscula)",
-          required: true 
+          required: false
         },
         
       ]
@@ -108,7 +108,18 @@ export class EditarComida {
   editarComida(){
 
     const formData = this.comidaForm.value;
+    const rol = localStorage.getItem('rol')
 
+    if (rol === 'ADMIN'){
+      this.adminPut(formData)
+    } else if (rol === 'EMPLEADO'){
+      this.empleadoPut(formData)
+    } else {
+      console.warn('No tiene permisos para editar la comida');
+    }
+  }
+
+  adminPut(formData:any){
     this.comidasSvc.putComida({
       nombre: formData.nombre,
       descripcion: formData.descripcion,
@@ -130,5 +141,26 @@ export class EditarComida {
     });
   }
 
+  empleadoPut(formData:any){
+    this.comidasSvc.putComida({
+      nombre: this.comida.nombre,
+      descripcion: this.comida.descripcion,
+      precio: this.comida.precio,
+      imagen: this.comida.imagen,
+      disponibilidad: formData.disponibilidad
+      },
+      this.comida.id_comida
+    ).subscribe({
+      next: (res) => {
+        console.log('Comida editada exitosamente:', res);
+        alert('Comida editada exitosamente');
+        this.router.navigate(['/comidas']);
+      },
+      error: (err) => {
+        console.error('Error al editar comida:', err);
+        alert('Error al editar comida');
+      }
+    });
+  }
 }
 

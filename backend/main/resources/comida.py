@@ -4,7 +4,7 @@ from ..models.init import ComidaModel, PedidoModel, ResenaModel
 from .. import db
 from sqlalchemy import func,desc
 from flask_jwt_extended import jwt_required,get_jwt_identity,get_jwt
-from main.auth.decorators import role_required
+from main.auth.decorators import role_required,active_user
 
 class Comida(Resource):
     @jwt_required(optional=True)
@@ -12,6 +12,7 @@ class Comida(Resource):
         comida=db.session.query(ComidaModel).get_or_404(id)
         return comida.to_json()
 
+    @active_user
     @role_required(roles=['ADMIN'])
     def delete(self, id):
         comida=db.session.query(ComidaModel).get_or_404(id)
@@ -19,7 +20,8 @@ class Comida(Resource):
         db.session.commit()
         return comida.to_json(), 204
 
-    @role_required(roles=['ADMIN'])
+    @active_user
+    @role_required(roles=['ADMIN','EMPLEADO'])
     def put(self, id):
         comida=db.session.query(ComidaModel).get_or_404(id)
         data=request.get_json().items()
@@ -82,6 +84,7 @@ class Comidas(Resource):
                        'per_page':page
                        })
     
+    @active_user
     @role_required(roles=['ADMIN'])
     def post(self):
         new_comida=ComidaModel.from_json(request.get_json())

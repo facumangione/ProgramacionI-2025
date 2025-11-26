@@ -30,7 +30,8 @@ export class CrearUsuario {
       mail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
-      rol: [null, [Validators.required]]
+      rol: [null, [Validators.required]],
+      activo: [null, [Validators.required]]
     })
   }
 
@@ -92,7 +93,21 @@ export class CrearUsuario {
           options: [
             { value: null, label: 'Seleccionar rol...',disabled: true },
             { value: "CLIENTE", label: "CLIENTE" },
+            { value: "EMPLEADO", label: "EMPLEADO" },
             { value: "ADMIN", label: "ADMIN" },
+          ]
+        },
+        { 
+          label: 'ESTADO:', 
+          type: 'select', 
+          formControlName: "activo",
+          name: 'activo',
+          required: true,
+          value: null,
+          options: [
+            { value: null, label: 'Seleccionar estado...',disabled: true },
+            { value: true, label: "ACTIVO" },
+            { value: false, label: "DESACTIVADO" },
           ]
         },
       ]
@@ -127,7 +142,8 @@ export class CrearUsuario {
       telefono: Number(formData.telefono),
       mail: formData.mail,
       password: formData.password,
-      rol: formData.rol
+      rol: formData.rol,
+      activo: formData.activo
     }).subscribe({
       next: (res) => {
         console.log('Usuario creado exitosamente:', res);

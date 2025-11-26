@@ -4,7 +4,7 @@ from ..models.init import UsuarioModel, PedidoModel
 from .. import db
 from sqlalchemy import func,desc
 from flask_jwt_extended import jwt_required,get_jwt_identity,get_jwt
-from main.auth.decorators import role_required
+from main.auth.decorators import role_required, active_user
 
 class Usuario(Resource): 
 
@@ -13,40 +13,60 @@ class Usuario(Resource):
         usuario=db.session.query(UsuarioModel).get_or_404(id)
         current_identity=get_jwt_identity()
         rol=get_jwt().get('rol')
-        if current_identity==usuario.id_usuario or rol=='ADMIN':
+
+        if current_identity==usuario.id_usuario or rol=='ADMIN' or rol=='EMPLEADO':
             return usuario.to_json()
         else: return usuario.to_json_nombre()
 
+    @active_user
     @role_required(roles=["ADMIN",'CLIENTE'])
     def delete(self,id):
         usuario=db.session.query(UsuarioModel).get_or_404(id)
         rol=get_jwt().get('rol')
+
         if rol=='CLIENTE' and usuario.id_usuario!=get_jwt_identity():
             return 'No tiene permiso para eliminar este usuario',403
+        
         db.session.delete(usuario)
         db.session.commit()
         return usuario.to_json(), 204
 
-    @role_required(roles=['ADMIN','CLIENTE'])
+    @active_user
+    @role_required(roles=['ADMIN','CLIENTE', 'EMPLEADO'])
     def put(self,id):
         usuario=db.session.query(UsuarioModel).get_or_404(id)
         rol=get_jwt().get('rol')
+
         if rol=='CLIENTE' and usuario.id_usuario!=get_jwt_identity():
             return 'No tiene permiso para editar este usuario',403
-        data=request.get_json().items()
-        if rol=='CLIENTE' and 'rol' in data:
-            data.pop('rol')
+        
+        if rol=='EMPLEADO' and usuario.rol=='ADMIN':
+            return 'No tiene permiso para editar este usuario',403
+        
+        data=request.get_json()
+        
+        if rol=='CLIENTE':
+            data.pop('rol',None)
+            data.pop('activo',None)
+
+        if rol=='EMPLEADO':
+            data.pop('rol',None)
+
+        data=data.items()
+
         for key,value in data:
             if rol=='CLIENTE' and key=='rol':
-                continue
+                continue        
             setattr(usuario,key,value)
+        
         db.session.add(usuario)
         db.session.commit()
         return usuario.to_json(),201
     
 class Usuarios(Resource):
 
-    @role_required(roles=['ADMIN'])
+    @active_user
+    @role_required(roles=['ADMIN', 'EMPLEADO'])
     def get(self):
         page=1
         per_page=5
@@ -63,6 +83,10 @@ class Usuarios(Resource):
 
         if request.args.get('nombre'):
             usuarios=usuarios.filter(UsuarioModel.nombre.like("%"+request.args.get('nombre')+"%"))
+
+        if request.args.get('activo') is not None:
+            activo = request.args.get('activo').lower() == 'true'
+            usuarios = usuarios.filter(UsuarioModel.activo == activo)
 
         if request.args.get('MayorCantPedido'):
             usuarios = usuarios.outerjoin(UsuarioModel.pedidos).group_by(UsuarioModel.id_usuario).order_by(func.count(PedidoModel.id_pedido).desc())

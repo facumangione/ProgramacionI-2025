@@ -7,7 +7,8 @@ class Usuario(db.Model):
     mail=db.Column(db.String(100),unique=True,index=True,nullable=False)
     password=db.Column(db.String(100),nullable=False)
     telefono=db.Column(db.Integer,nullable=False)
-    rol=db.Column(db.Enum('ADMIN','CLIENTE'),nullable=False,server_default='CLIENTE')
+    rol=db.Column(db.Enum('ADMIN','CLIENTE','EMPLEADO'),nullable=False,server_default='CLIENTE')
+    activo = db.Column(db.Boolean, default=False, nullable=False)
 
     resenas=db.relationship("Resena", back_populates="usuario",cascade="all, delete-orphan")
     notificaciones=db.relationship("Notificacion", back_populates="usuario",cascade="all, delete-orphan")
@@ -34,6 +35,7 @@ class Usuario(db.Model):
             'mail':str(self.mail),
             'telefono':self.telefono,
             'rol':self.rol,
+            'activo': self.activo,
             'cantidad_pedidos':len(self.pedidos)
         }
         return usuario_json 
@@ -51,11 +53,13 @@ class Usuario(db.Model):
         mail=usuario_json.get('mail')
         password=usuario_json.get('password')
         telefono=usuario_json.get('telefono')
-        rol=usuario_json.get('rol')
+        rol=usuario_json.get('rol','CLIENTE')
+        activo = usuario_json.get('activo', False)
         return Usuario(id_usuario=id_usuario,
                        nombre=nombre,
                        mail=mail,
                        plain_password=password,
                        telefono=telefono,
-                       rol=rol
+                       rol=rol,
+                       activo=activo
                        )

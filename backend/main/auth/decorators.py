@@ -14,6 +14,17 @@ def role_required(roles):
         return wrapper
     return decorator
 
+def active_user(fn):
+    @wraps(fn)
+    def wrapper(*args,**kwargs):
+        verify_jwt_in_request()
+        claims=get_jwt()
+        if claims['activo']==True:
+            return fn(*args,**kwargs)
+        else: 
+            return 'PERMISO DENEGADO, USUARIO INACTIVO', 403
+    return wrapper
+
 @jwt.user_identity_loader
 def user_identity_lookup(usuario):
     return usuario.id_usuario
@@ -24,6 +35,7 @@ def add_claims_to_access_token(usuario):
         'rol':usuario.rol,
         'id':usuario.id_usuario,
         'mail': usuario.mail,
-        'nombre':usuario.nombre
+        'nombre':usuario.nombre,
+        'activo': usuario.activo
     }
     return claims

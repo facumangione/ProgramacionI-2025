@@ -3,7 +3,7 @@ from flask import request,jsonify
 from ..models.init import ResenaModel
 from .. import db
 from flask_jwt_extended import jwt_required,get_jwt_identity,get_jwt
-from main.auth.decorators import role_required
+from main.auth.decorators import role_required, active_user
 
 class Resena(Resource):
     @jwt_required(optional=True)
@@ -11,6 +11,7 @@ class Resena(Resource):
         resena=db.session.query(ResenaModel).get_or_404(id)
         return resena.to_json()
 
+    @active_user
     @role_required(roles=["ADMIN",'CLIENTE'])
     def delete(self, id):
         resena=db.session.query(ResenaModel).get_or_404(id)
@@ -21,6 +22,7 @@ class Resena(Resource):
         db.session.commit()
         return resena.to_json(), 204
     
+    @active_user
     @role_required(roles=["ADMIN",'CLIENTE'])
     def put(self,id):
         resena=db.session.query(ResenaModel).get_or_404(id)
@@ -60,7 +62,8 @@ class Resenas(Resource):
                        'pages':resenas.pages,
                        'per_page':page})
     
-    @role_required(roles=['ADMIN','CLIENTE'])
+    @active_user
+    @role_required(roles=['ADMIN','CLIENTE','EMPLEADO'])
     def post(self):
         new_resena=ResenaModel.from_json(request.get_json())
         db.session.add(new_resena)

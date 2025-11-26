@@ -22,6 +22,7 @@
                             <select (change)="filtrarUsuarios()" [(ngModel)]="rolBuscado" class="search-input select-filter" id="rol" name="rol">
                                 <option value="" selected>Seleccionar Rol</option>
                                 <option value="ADMIN" selected>ADMIN</option>
+                                <option value="EMPLEADO">EMPLEADO</option>
                                 <option value="CLIENTE">CLIENTE</option>
                             </select>
                         </div>
@@ -32,8 +33,9 @@
             <div class="row table-header">
                 <div class="col-2 text-center">NOMBRE</div>
                 <div class="col-2 text-center">TELÉFONO</div>
-                <div class="col-4 text-center">MAIL</div>
-                <div class="col-2">ROL</div>
+                <div class="col-3 text-center">MAIL</div>
+                <div class="col-1 text-center">ROL</div>
+                <div class="col-2 text-center">ESTADO</div>
             </div>
             @for (usuario of arrayFiltred; track usuario.id_usuario){
             <div class="usuario-row">
@@ -45,14 +47,23 @@
                     <div class="col-2 text-center">
                         <span>{{usuario.telefono}}</span>
                     </div>
-                    <div class="col-4 text-center">
+                    <div class="col-3 text-center">
                         <span>{{usuario.mail}}</span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-1 text-center">
                         <span>{{usuario.rol}}</span>
                     </div>
                     <div class="col-2 text-center">
+                        @if (usuario.activo==true){
+                            <span>ACTIVO</span>
+                        } @else{
+                            <span>DESACTIVADO</span>
+                        }                        
+                    </div>
+                    <div class="col-2 text-end">
+                        @if (showDeleteButtons()==true){
                         <button (click)="eliminarUsuario(usuario.id_usuario)" class="btn btn-eliminar-small">ELIMINAR</button>
+                        }
                         <a (click)="goToEditarUsuario(usuario.id_usuario)" class="btn btn-editar-small">EDITAR</a>
                     </div>
                 </div>

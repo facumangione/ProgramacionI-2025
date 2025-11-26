@@ -4,4 +4,5 @@ interface UsuarioPostRequest{
     mail: string, 
     password: string,
     rol: string,
+    activo: boolean
 }

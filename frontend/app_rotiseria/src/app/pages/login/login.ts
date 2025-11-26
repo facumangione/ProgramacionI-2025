@@ -54,7 +54,11 @@ export class Login {
         }
       },
       error: (err)=> {
-        alert('usuario o contraseña incorrectos');
+        if (err.error==='Tu cuenta está desactivada. Consulta para activarla'){
+          alert('Tu cuenta está desactivada. Consulta al local para activarla')
+        } else { 
+          alert('usuario o contraseña incorrectos')
+        };
         console.log('Error en el login: ',err); 
         localStorage.removeItem('token');
         localStorage.removeItem('mail');

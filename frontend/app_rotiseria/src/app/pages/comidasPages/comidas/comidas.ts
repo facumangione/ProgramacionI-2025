@@ -60,6 +60,15 @@ export class Comidas {
     this.router.navigate(['/comidas/crear'])
   }
 
+  showDeleteButton(){
+    const rol=localStorage.getItem('rol')
+    if (rol==='ADMIN'){
+      return true
+    } else{
+      return false
+    }
+  }
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage= this.currentPage + 1

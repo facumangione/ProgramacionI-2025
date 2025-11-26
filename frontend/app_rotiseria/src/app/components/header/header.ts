@@ -61,6 +61,7 @@ export class Header{
     localStorage.removeItem('mail');
     localStorage.removeItem('id_usuario');
     localStorage.removeItem('rol');
+    this.router.navigate(['/home']);
   }
 
   getRol(){

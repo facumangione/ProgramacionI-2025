@@ -17,6 +17,8 @@ export class Formulario implements OnInit, OnChanges {
   @Input() infoActual: any;
   @Input() funcionGuardarCambio: any
 
+  archivo: string = '';
+
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -26,12 +28,30 @@ export class Formulario implements OnInit, OnChanges {
   }
 
   actualizarCampos() {
-  if (this.config?.formGroup) {
-    setTimeout(() => {
-      this.config.formGroup.patchValue(this.infoActual);
-    });
+    if (this.config?.formGroup) {
+      setTimeout(() => {
+        const datosParaPatch = { ...this.infoActual };
+        
+        if (datosParaPatch.imagen) {
+          const nombreArchivo = datosParaPatch.imagen.split('\\').pop().split('/').pop();
+          this.archivo = nombreArchivo;
+          datosParaPatch.imagen = nombreArchivo;
+        }
+        
+        this.config.formGroup.patchValue(datosParaPatch);
+      });
+    }
   }
-}
+
+  onFileChange(event: any, formControlName: string) {
+    const file = event.target.files[0];
+    if (file) {
+      const nombreArchivo = file.name;
+      this.config.formGroup.patchValue({
+        [formControlName]: nombreArchivo
+      });
+    }
+  }
 
 
   isFunction(value: any): value is Function {
