@@ -30,6 +30,13 @@
             color: #2d3748;
             font-weight: 500;
         }
+
+        .pedido-item > div {
+            padding-right: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
         
         .pedido-arrow {
             margin-right: 1rem;

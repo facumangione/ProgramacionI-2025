@@ -1,10 +1,20 @@
-/backend/bin/
-/include
-/backend/lib
-/lib64
-pyvenv.cfg
+# Python venv (pueden estar en backend/ o frontend/ por error)
+venv/
+**/venv/
+__pycache__/
+**/__pycache__/
+*.pyc
 .env
-/venv
-/backend/main/__pycache__/
-/backend/main/resources/__pycache__/
-/backend/include
+**/.env
+
+# Base de datos SQLite
+*.db
+
+# Node / Angular
+node_modules/
+**/node_modules/
+dist/
+.angular/
+
+# Otros
+pyvenv.cfg

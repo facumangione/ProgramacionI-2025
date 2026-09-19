@@ -7,7 +7,7 @@ import { UsuariosSvc } from '../../../services/usuarios';
 
 @Component({
   selector: 'app-usuarios',
-  imports: [Header,Footer,FormsModule],
+  imports: [Header, Footer, FormsModule],
   templateUrl: './usuarios.html',
   styleUrl: './usuarios.css'
 })
@@ -15,8 +15,9 @@ export class Usuarios {
 
   nombreBuscado: string = '';
   rolBuscado: string = '';
-  usuarios:any[]=[];
-  arrayFiltred=[...this.usuarios]
+  soloPendientes: boolean = false;
+  usuarios: any[] = [];
+  arrayFiltred = [...this.usuarios];
 
   currentPage = 1;
   perPage = 5;
@@ -25,40 +26,42 @@ export class Usuarios {
   constructor(
     private router: Router,
     private usuariosSvc: UsuariosSvc
-  ){}
+  ) {}
 
-  ngOnInit(){
+  ngOnInit() {
     this.cargarPagina(1);
   }
 
   private cargarPagina(page: number): void {
-
-    console.log('Filtros aplicados:', { nombre: this.nombreBuscado, rol: this.rolBuscado });
+    const activoFiltro = this.soloPendientes ? false : undefined;
 
     this.usuariosSvc.getUsuarios(
-      page, 
+      page,
       this.perPage,
       this.rolBuscado,
-      this.nombreBuscado
+      this.nombreBuscado,
+      activoFiltro
     ).subscribe({
-      next: (res:any)=>{
-        console.log("Usuarios: ",res);
-        this.usuarios=res.usuarios;
-        this.arrayFiltred=[...this.usuarios]
-        this.totalPages = Number(res.pages)
+      next: (res: any) => {
+        console.log("Usuarios: ", res);
+        this.usuarios = res.usuarios;
+        this.arrayFiltred = [...this.usuarios];
+        this.totalPages = Number(res.pages);
         this.currentPage = page;
       },
-      error: (err)=>{
-        console.log("Error al traer usuarios: ",err)
+      error: (err) => {
+        console.log("Error al traer usuarios: ", err);
       }
-    })
+    });
   }
 
-  filtrarUsuarios(){
-    console.log('Filtrando usuarios con:', { 
-      nombre: this.nombreBuscado, 
-      rol: this.rolBuscado 
-    });
+  filtrarUsuarios() {
+    this.currentPage = 1;
+    this.cargarPagina(1);
+  }
+
+  togglePendientes() {
+    this.soloPendientes = !this.soloPendientes;
     this.currentPage = 1;
     this.cargarPagina(1);
   }
@@ -66,57 +69,72 @@ export class Usuarios {
   limpiarFiltros() {
     this.nombreBuscado = '';
     this.rolBuscado = '';
+    this.soloPendientes = false;
     this.currentPage = 1;
     this.cargarPagina(1);
   }
 
-  eliminarUsuario(id_usuario:any) {
+  activarUsuario(id_usuario: number) {
+    this.usuariosSvc.activarUsuario(id_usuario).subscribe({
+      next: () => {
+        alert('Usuario activado exitosamente');
+        this.cargarPagina(this.currentPage);
+      },
+      error: (err) => {
+        console.error('Error al activar usuario:', err);
+        alert('Error al activar usuario');
+      }
+    });
+  }
+
+  desbloquearUsuario(id_usuario: number) {
+    this.usuariosSvc.desbloquearUsuario(id_usuario).subscribe({
+      next: () => {
+        alert('Usuario desbloqueado y cancelaciones reiniciadas');
+        this.cargarPagina(this.currentPage);
+      },
+      error: (err) => {
+        console.error('Error al desbloquear usuario:', err);
+        alert('Error al desbloquear usuario');
+      }
+    });
+  }
+
+  eliminarUsuario(id_usuario: any) {
     this.usuariosSvc.deleteUsuario(id_usuario).subscribe({
-      next: (res:any)=>{
-        console.log("Usuario eliminado: ",res);
+      next: () => {
         this.cargarPagina(1);
       },
-      error: (err)=>{
-        console.log("Error al eliminar usuario: ",err)
+      error: (err) => {
+        console.log("Error al eliminar usuario: ", err);
       }
-    })
+    });
   }
 
-  showDeleteButtons(){
-    const rol=localStorage.getItem('rol')
-    if (rol==='ADMIN'){
-      return true
-    } else{
-      return false
-    }
+  showDeleteButtons() {
+    const rol = localStorage.getItem('rol');
+    return rol === 'ADMIN';
   }
 
-  goToEditarUsuario(id_usuario:any){
-    console.log("redirigido a editar usuario en:  /usuario",id_usuario,"editar" )
-    this.router.navigate(['/usuario',id_usuario,'editar'])
+  goToEditarUsuario(id_usuario: any) {
+    this.router.navigate(['/usuario', id_usuario, 'editar']);
   }
 
-  goToCrearUsuario(){
-    console.log("redirigido a crear usuario")
-    this.router.navigate(['/usuarios/crear'])
+  goToCrearUsuario() {
+    this.router.navigate(['/usuarios/crear']);
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
-      this.currentPage= this.currentPage + 1
+      this.currentPage = this.currentPage + 1;
       this.cargarPagina(this.currentPage);
-    } else {
-      return
     }
   }
 
   prevPage() {
     if (this.currentPage > 1) {
-      this.currentPage= this.currentPage - 1
+      this.currentPage = this.currentPage - 1;
       this.cargarPagina(this.currentPage);
-    } else {
-      return
     }
   }
-
 }

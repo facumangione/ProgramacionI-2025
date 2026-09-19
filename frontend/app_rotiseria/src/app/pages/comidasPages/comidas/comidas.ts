@@ -6,85 +6,95 @@ import { ComidasSvc } from '../../../services/comidas';
 
 @Component({
   selector: 'app-comidas',
-  imports: [Header,Footer],
+  imports: [Header, Footer],
   templateUrl: './comidas.html',
   styleUrl: './comidas.css'
 })
 export class Comidas {
 
-  comidas:any[]=[];
+  comidas: any[] = [];
 
   currentPage = 1;
   perPage = 5;
   totalPages!: number;
 
-  constructor(private router: Router,private comidasSvc: ComidasSvc) {}
+  constructor(private router: Router, private comidasSvc: ComidasSvc) {}
 
-  ngOnInit(){
-     this.cargarPagina(1);
+  ngOnInit() {
+    this.cargarPagina(1);
   }
 
   private cargarPagina(page: number): void {
     this.comidasSvc.getComidasPaginado(page, this.perPage).subscribe({
-      next: (res:any)=>{
-        console.log("Comidas: ",res);
-        this.comidas=res.comidas; 
-        this.totalPages = Number(res.pages)
-      }, 
-      error: (err)=>{ 
-        console.log("Error al traer comidas: ",err) 
-      } 
-    })
+      next: (res: any) => {
+        console.log("Comidas: ", res);
+        this.comidas = res.comidas;
+        this.totalPages = Number(res.pages);
+      },
+      error: (err) => {
+        console.log("Error al traer comidas: ", err);
+      }
+    });
   }
 
-  eliminarComida(id_comida:any) {
+  eliminarComida(id_comida: any) {
     this.comidasSvc.deleteComida(id_comida).subscribe({
-      next: (res:any)=>{
-        console.log("Comida eliminada: ",res);
+      next: (res: any) => {
+        console.log("Comida eliminada: ", res);
         this.cargarPagina(1);
       },
-      error: (err)=>{
-        console.log("Error al eliminar comida: ",err)
+      error: (err) => {
+        console.log("Error al eliminar comida: ", err);
       }
-    })
-    ;
+    });
   }
 
-  goToEditarComida(id_comida:any){
-    console.log("redirigido a editar comida en:  /comida",id_comida,"editar" )
-    this.router.navigate(['/comida',id_comida,'editar'])
-  }
-
-  goToCrearComida(){
-    console.log("redirigido a crear comida")
-    this.router.navigate(['/comidas/crear'])
-  }
-
-  showDeleteButton(){
-    const rol=localStorage.getItem('rol')
-    if (rol==='ADMIN'){
-      return true
-    } else{
-      return false
+  reponerStock(id_comida: number) {
+    const cantidad = prompt('¿Cuánto stock querés agregar?', '10');
+    if (!cantidad || isNaN(Number(cantidad)) || Number(cantidad) <= 0) {
+      alert('Cantidad inválida');
+      return;
     }
+
+    this.comidasSvc.reponerStock(id_comida, Number(cantidad)).subscribe({
+      next: (res: any) => {
+        console.log('Stock repuesto:', res);
+        alert('Stock repuesto exitosamente');
+        this.cargarPagina(this.currentPage);
+      },
+      error: (err) => {
+        console.error('Error al reponer stock:', err);
+        alert('Error al reponer stock');
+      }
+    });
+  }
+
+  goToEditarComida(id_comida: any) {
+    console.log("redirigido a editar comida en:  /comida", id_comida, "editar");
+    this.router.navigate(['/comida', id_comida, 'editar']);
+  }
+
+  goToCrearComida() {
+    console.log("redirigido a crear comida");
+    this.router.navigate(['/comidas/crear']);
+  }
+
+  showDeleteButton() {
+    const rol = localStorage.getItem('rol');
+    return rol === 'ADMIN';
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
-      this.currentPage= this.currentPage + 1
+      this.currentPage = this.currentPage + 1;
       this.cargarPagina(this.currentPage);
-    } else {
-      return
     }
   }
 
   prevPage() {
     if (this.currentPage > 1) {
-      this.currentPage= this.currentPage - 1
+      this.currentPage = this.currentPage - 1;
       this.cargarPagina(this.currentPage);
-    } else {
-      return
     }
   }
-
 }

@@ -28,7 +28,8 @@ export class EditarPerfil {
       nombre: ['', [Validators.required]],
       telefono: ['', [Validators.required]],
       mail: ['', [Validators.required, Validators.email]],
-      rol: ['', [Validators.required]]
+      rol: ['', [Validators.required]],
+      password: ['']
     })
   }
   
@@ -60,6 +61,13 @@ export class EditarPerfil {
           name: 'mail', 
           required: true 
         },
+        { label: 'Nueva contraseña (dejar vacío para no cambiar):', 
+          type: 'password', 
+          formControlName: "password",
+          name: 'password',
+          placeholder: 'Dejar en blanco para mantener la actual',
+          required: false 
+        },
       ]
     };
 
@@ -88,15 +96,19 @@ export class EditarPerfil {
 
     const formData = this.usuarioForm.value;
 
-    this.usuariosSvc.putUsuario({
+    const body: any = {
       nombre: formData.nombre,
       telefono: Number(formData.telefono),
       mail: formData.mail,
       rol: this.usuario.rol,
       activo: this.usuario.activo
-      },
-      this.usuario.id_usuario
-    ).subscribe({
+    };
+
+    if (formData.password) {
+      body.password = formData.password;
+    }
+
+    this.usuariosSvc.putUsuario(body, this.usuario.id_usuario).subscribe({
       next: (res) => {
         console.log('Perfil editado exitosamente:', res);
         alert('Perfil editado exitosamente');

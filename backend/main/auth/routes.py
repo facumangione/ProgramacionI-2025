@@ -13,8 +13,11 @@ def login():
     if (usuario is None) or not (usuario.validate_pass(request.get_json().get("password"))):
         return 'Invalid user or password', 401
     
+    if usuario.bloqueado:
+        return 'Tu cuenta fue bloqueada por exceso de cancelaciones. Contactá al local.', 403
+
     if not usuario.activo:
-        return 'Tu cuenta está desactivada. Consulta para activarla', 403
+        return 'Tu cuenta está pendiente de aprobación. Esperá a que un empleado la valide.', 403
 
     access_token=create_access_token(identity=usuario)
     data={
@@ -34,7 +37,7 @@ def signin():
         try:
             db.session.add(usuario)
             db.session.commit()
-            send=sendMail([usuario.mail],'Bienvenido/a', 'register',usuario=usuario)
+            #send=sendMail([usuario.mail],'Bienvenido/a', 'register',usuario=usuario) 
         except Exception as error:
             db.session.rollback()
             return str(error),409

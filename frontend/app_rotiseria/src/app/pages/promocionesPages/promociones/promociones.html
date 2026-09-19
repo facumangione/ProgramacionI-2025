@@ -1,0 +1,69 @@
+<!-- Componente reutilizable: mismo header en todas las páginas -->
+<app-header></app-header>
+
+<div class="menu-title">
+    PROMOCIONES
+</div>
+
+<div class="promociones-content">
+    <div class="container">
+
+        <div class="row table-header d-none d-md-flex">
+            <div class="col-md-3">TÍTULO</div>
+            <div class="col-md-2 text-center">COMIDA</div>
+            <div class="col-md-1 text-center">DESCUENTO</div>
+            <div class="col-md-2 text-center">VIGENCIA</div>
+            <div class="col-md-2 text-center">ESTADO</div>
+        </div>
+
+        <!-- @for con track: identifica cada elemento por su id único,
+             para que Angular reutilice nodos DOM en vez de recrearlos
+             enteros cuando la lista cambia -->
+        @for (promo of promociones; track promo.id_promocion) {
+        <div class="promocion-row">
+            <div class="row promocion-item">
+                <div class="col-12 col-md-3">
+                    <span>{{ promo.titulo }}</span>
+                </div>
+                <div class="col-12 col-md-2 text-md-center">
+                    <span class="d-md-none fw-bold">Comida: </span>
+                    <span>{{ promo.comida }}</span>
+                </div>
+                <div class="col-12 col-md-1 text-md-center">
+                    <span class="d-md-none fw-bold">Descuento: </span>
+                    <span>{{ promo.porcentaje_descuento }}%</span>
+                </div>
+                <div class="col-12 col-md-2 text-md-center">
+                    <span class="d-md-none fw-bold">Vigencia: </span>
+                    <span>{{ promo.fecha_inicio }} - {{ promo.fecha_fin }}</span>
+                </div>
+                <div class="col-12 col-md-2 text-md-center">
+                    <!-- @if / @else: control flow moderno de Angular 17+,
+                         reemplaza *ngIf / *ngIf else -->
+                    @if (promo.activa) {
+                        <span style="color: green; font-weight: bold;">ACTIVA</span>
+                    } @else {
+                        <span style="color: gray;">INACTIVA</span>
+                    }
+                </div>
+                <div class="col-12 col-md-2 text-md-end">
+                    @if (showAdminButtons()) {
+                        <button (click)="eliminarPromocion(promo.id_promocion)" class="btn btn-eliminar-small">ELIMINAR</button>
+                    }
+                </div>
+            </div>
+        </div>
+        }
+
+        @if (showAdminButtons()) {
+        <div class="text-end">
+            <a (click)="goToCrearPromocion()" class="btn btn-crear-comida">
+                CREAR PROMOCIÓN
+            </a>
+        </div>
+        }
+
+    </div>
+</div><p></p>
+
+<app-footer></app-footer>

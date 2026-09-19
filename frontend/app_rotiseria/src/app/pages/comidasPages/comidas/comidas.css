@@ -34,6 +34,13 @@
             color: #2d3748;
             font-weight: 500;
         }
+
+        .comida-item > div {
+            padding-right: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
         
         .comida-arrow {
             margin-right: 1rem;

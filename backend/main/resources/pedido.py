@@ -20,7 +20,7 @@ class Pedido(Resource):
         return pedido.to_json()
 
     @active_user
-    @role_required(roles=["ADMIN",'EMPLEADO'])
+    @role_required(roles=["ADMIN",'EMPLEADO', 'CLIENTE'])
     def delete(self,id):
         pedido=db.session.query(PedidoModel).get_or_404(id)
         rol=get_jwt().get('rol')
@@ -28,8 +28,8 @@ class Pedido(Resource):
         if rol=='CLIENTE' and pedido.id_usuario!=get_jwt_identity():
             return 'No tiene permiso para eliminar este pedido',403
         
-        if rol=='CLIENTE' and pedido.estado==['LISTO','ENTREGADO']:
-            return 'Ya completo este pedido, no puede eliminarlo'
+        if rol=='CLIENTE' and pedido.estado in ['LISTO','ENTREGADO']:
+            return 'Ya completo este pedido, no puede eliminarlo', 400
         
         usuario = db.session.query(UsuarioModel).get(pedido.id_usuario)
         if usuario and usuario.mail:
@@ -41,9 +41,18 @@ class Pedido(Resource):
                 pedido=pedido
         )
 
+        # cuenta la cancelación y bloquea al cliente si llega al límite
+        if usuario:
+            usuario.cancelaciones = usuario.cancelaciones + 1
+            if usuario.cancelaciones >= 5:
+                usuario.bloqueado = True
+                usuario.activo = False
+            db.session.add(usuario)
+
         db.session.delete(pedido)
         db.session.commit()
-        return pedido.to_json(), 204
+
+        return {'mensaje': 'Pedido cancelado', 'cancelaciones_usuario': usuario.cancelaciones if usuario else 0}, 200
 
     @active_user
     @role_required(roles=["ADMIN",'EMPLEADO'])
@@ -108,17 +117,37 @@ class Pedidos(Resource):
     @active_user
     @role_required(roles=["ADMIN","CLIENTE",'EMPLEADO'])
     def post(self):
+        usuario = db.session.query(UsuarioModel).get(get_jwt_identity())
+        if usuario and usuario.bloqueado:
+            return {'error': 'Tu cuenta está bloqueada por exceso de cancelaciones. No podés hacer pedidos.'}, 403
+
         comidas_ids=request.get_json().get('comidas')
         new_pedido=PedidoModel.from_json(request.get_json())
+        new_pedido.estado = 'PENDIENTE'
         mail=get_jwt().get('mail')
         nombre= get_jwt().get('nombre')
-        
         if comidas_ids:
             comidas=ComidaModel.query.filter(ComidaModel.id_comida.in_(comidas_ids)).all()
+
+            # valida stock antes de crear el pedido
+            for id_comida in comidas_ids:
+                comida = db.session.query(ComidaModel).get(id_comida)
+                if not comida or comida.stock <= 0:
+                    nombre_comida = comida.nombre if comida else id_comida
+                    return {'error': f'Sin stock disponible para {nombre_comida}'}, 400
+
             new_pedido.comidas.extend(comidas)
 
-        db.session.add(new_pedido)
-        db.session.commit()
+            # descuenta stock por cada unidad pedida
+            for id_comida in comidas_ids:
+                comida = db.session.query(ComidaModel).get(id_comida)
+                comida.stock = max(comida.stock - 1, 0)
+                if comida.stock <= 0:
+                    comida.disponibilidad = False
+                db.session.add(comida)
+            db.session.add(new_pedido)
+            db.session.commit()
 
-        send = sendMail([mail], 'Pedido confirmado', 'pedido', usuario={'nombre': nombre}, pedido=new_pedido)
-        return new_pedido.to_json(),201
+            send = sendMail([mail], 'Pedido confirmado', 'pedido', usuario={'nombre': nombre}, pedido=new_pedido)
+
+            return new_pedido.to_json(), 201

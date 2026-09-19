@@ -23,6 +23,8 @@ import { authsessionGuard } from './guards/authsession-guard';
 import { usermatchGuard } from './guards/usermatch-guard';
 import { roleGuard } from './guards/role-guard';
 import { EnviarEmailMasivo } from './pages/mail/enviar-mail-masivo/enviar-mail-masivo';
+import { Promociones } from './pages/promocionesPages/promociones/promociones';
+import { CrearPromocion } from './pages/promocionesPages/crear-promocion/crear-promocion';
 
 export const routes: Routes = [
     { path:'error', component: ErrorPage },
@@ -37,6 +39,8 @@ export const routes: Routes = [
     { path: 'perfil/:id_usuario/editar', component: EditarPerfil, canActivate:[authsessionGuard,usermatchGuard] },
     //comida:
     { path: 'comidas', component: Comidas, canActivate:[authsessionGuard,roleGuard(['ADMIN','EMPLEADO'])] },
+    { path: 'promociones', component: Promociones, canActivate:[authsessionGuard] },
+    { path: 'promociones/crear', component: CrearPromocion, canActivate:[authsessionGuard,roleGuard(['ADMIN'])] },
     { path: 'comidas/crear', component: CrearComida, canActivate:[authsessionGuard,roleGuard(['ADMIN','EMPLEADO'])] },
     { path: 'comida/:id_comida', component: Comida },
     { path: 'comida/:id_comida/editar', component: EditarComida, canActivate:[authsessionGuard,roleGuard(['ADMIN','EMPLEADO'])] },

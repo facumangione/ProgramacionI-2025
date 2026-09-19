@@ -39,6 +39,11 @@ export class Header{
     this.router.navigate(['/comidas']);
   }
 
+  goToPromociones(){
+    this.router.navigate(['/promociones']);
+  }
+  
+
   goToResenas(tipo: 'todas' | 'usuario' = 'todas'){
     if (tipo === 'usuario') {
       this.router.navigate(['/resenas'], { queryParams: { filter: 'usuario' } });

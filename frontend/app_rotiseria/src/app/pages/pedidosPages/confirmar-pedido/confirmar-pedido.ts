@@ -26,25 +26,24 @@ export class ConfirmarPedido {
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id_comida'));
     this.comidasSvc.getComidaById(id).subscribe({
-    next: (res) => {
-      console.log('Comida encontrada:', res);
-      this.comida = {
-        ...res,
-        image: `assets/${res.nombre.toLowerCase()}.jpg`,
-        alt: res.nombre
-      };
-    },
-    error: (err) => {
-      console.error('Error al traer comida:', err);
-    }
-  });
+      next: (res) => {
+        console.log('Comida encontrada:', res);
+        this.comida = {
+          ...res,
+          image: `assets/${res.nombre.toLowerCase()}.jpg`,
+          alt: res.nombre
+        };
+      },
+      error: (err) => {
+        console.error('Error al traer comida:', err);
+      }
+    });
   }
 
   goBack() {
     this.location.back(); 
   }
 
-  
   crearPedido(){
 
     const now = new Date();
@@ -64,7 +63,8 @@ export class ConfirmarPedido {
       },
       error: (err) => {
         console.error('Error al crear pedido', err);
-        alert('Error al crear pedido');
+        const mensaje = err.error?.error || 'Error al crear pedido';
+        alert(mensaje);
       }
     });
 
@@ -74,5 +74,3 @@ export class ConfirmarPedido {
     this.router.navigate(['/pedido',id_pedido,'resumen'])
   }
 }
-
-

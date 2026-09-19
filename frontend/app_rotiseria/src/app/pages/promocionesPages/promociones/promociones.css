@@ -1,0 +1,15 @@
+.menu-title {background-color: #c53030;color: white;text-align: center;padding: 1rem;margin: 0;font-size: 1.5rem;font-weight: bold;}
+
+.promociones-content {background-color: #f8f9fa;min-height: 600px;padding: 2rem 0;}
+
+.table-header {background-color: #e2e8f0;padding: 1rem;font-weight: bold;color: #2d3748;border-radius: 8px 8px 0 0;margin-top: 1rem;}
+
+.promocion-row {background-color: #9db2d4;margin-bottom: 0.5rem;border-radius: 8px;padding: 1rem;}
+
+.promocion-item {display: flex;align-items: center;color: #2d3748;font-weight: 500;}
+
+.promocion-item > div {padding-right: 0.5rem;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+
+.btn-eliminar-small {background-color: #e53e3e;color: white;border: none;padding: 0.25rem 0.75rem;border-radius: 15px;font-weight: 600;font-size: 0.8rem;}
+
+.btn-crear-comida {background-color: #3fb178;color: white;border: none;padding: 0.75rem 2rem;border-radius: 25px;font-weight: 600;margin-top: 2rem;text-decoration: none;}

@@ -6,35 +6,49 @@
 
 <div class="comidas-content">
         <div class="container">
-            <div class="row table-header">
-                <div class="col-3">NOMBRE</div>
-                <div class="col-3">DESCRIPCIÓN</div>
-                <div class="col-2 text-center ">DISPONIBILIDAD</div>
-                <div class="col-2 text-center">PRECIO</div>
+            <div class="row table-header d-none d-md-flex">
+                <div class="col-md-2">NOMBRE</div>
+                <div class="col-md-3">DESCRIPCIÓN</div>
+                <div class="col-md-2 text-center">DISPONIBILIDAD</div>
+                <div class="col-md-1 text-center">PRECIO</div>
+                <div class="col-md-1 text-center">STOCK</div>
             </div>
             @for (comida of comidas; track comida.id_comida){
             <div class="comida-row">
                 <div class="row comida-item">
-                    <div class="col-3">
+                    <div class="col-12 col-md-2">
                         <span class="comida-arrow">▶</span>
                         <span> {{comida.nombre}}</span>
                     </div>
-                    <div class="col-3">
+                    <div class="col-12 col-md-3">
+                        <span class="d-md-none fw-bold">Descripción: </span>
                         <span>{{comida.descripcion}}</span>
                     </div>
-                    <div class="col-2 text-center">
+                    <div class="col-12 col-md-2 text-md-center">
+                        <span class="d-md-none fw-bold">Estado: </span>
                         @if ( comida.disponibilidad == true){
                             <span>DISPONIBLE</span>
                         } @else {
                             <span>NO DISPONIBLE</span>
                         }
                     </div>
-                    <div class="col-2 text-center">
+                    <div class="col-12 col-md-1 text-md-center">
+                        <span class="d-md-none fw-bold">Precio: </span>
                         <span>${{comida.precio}}</span>
                     </div>
-                    <div class="col-2 text-end">
+                    <div class="col-12 col-md-1 text-md-center">
+                        <span class="d-md-none fw-bold">Stock: </span>
+                        <span [style.color]="comida.stock < 10 ? 'red' : 'inherit'"
+                              [style.fontWeight]="comida.stock < 10 ? 'bold' : 'normal'">
+                            {{comida.stock}}
+                        </span>
+                    </div>
+                    <div class="col-12 col-md-3 text-md-end">
                         @if (showDeleteButton() == true ){
                         <button (click)="eliminarComida(comida.id_comida)" class="btn btn-eliminar-small">ELIMINAR</button>
+                        }
+                        @if (comida.stock < 10) {
+                        <button (click)="reponerStock(comida.id_comida)" class="btn btn-editar-small">REPONER</button>
                         }
                         <a (click)="goToEditarComida(comida.id_comida)" class="btn btn-editar-small">EDITAR</a>
                     </div>

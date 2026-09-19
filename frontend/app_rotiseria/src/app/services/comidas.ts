@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -12,9 +12,9 @@ export class ComidasSvc {
   url = 'http://127.0.0.1:7000';
 
   getComidas(): Observable<any> {
-    return this.http.get(`${this.url}/comidas?page=1&per_page=999&CantPedidosYValoracion=True`);
+    return this.http.get(`${this.url}/comidas?page=1&per_page=999&OrdenarPorValoracion=True`);
   }
-  
+
   getComidasPaginado(page: number, per_page: number): Observable<any> {
     return this.http.get(`${this.url}/comidas?page=${page}&per_page=${per_page}`);
   }
@@ -27,13 +27,19 @@ export class ComidasSvc {
     return this.http.delete(`${this.url}/comida/${id_comida}`);
   }
 
-  postComida(dataComida: ComidaRequest): Observable<any> {
+  postComida(dataComida: any): Observable<any> {
     return this.http.post(`${this.url}/comidas`, dataComida);
   }
 
-  putComida(dataComida: ComidaRequest, id_comida: number): Observable<any> {
+  putComida(dataComida: any, id_comida: number): Observable<any> {
     return this.http.put(`${this.url}/comida/${id_comida}`, dataComida);
   }
-  
+
+  subirImagen(data: { nombre: string, imagen_base64: string }): Observable<any> {
+    return this.http.post(`${this.url}/comida/imagen`, data);
+  }
+
+  reponerStock(id_comida: number, cantidad: number): Observable<any> {
+    return this.http.put(`${this.url}/comida/${id_comida}/stock`, { cantidad });
+  }
 }
-  

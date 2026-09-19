@@ -26,7 +26,7 @@ export class Home {
           .filter((comida: any) => comida.disponibilidad === true)
           .map((comida: any) => ({
             ...comida,
-            image: `assets/${comida.nombre.toLowerCase()}.jpg`,
+            image: `http://127.0.0.1:7000/assets/${comida.nombre.toLowerCase()}.jpg`,
             alt: comida.nombre
           }));
         this.arrayFiltred=[...this.comidas]
@@ -37,10 +37,13 @@ export class Home {
     })
   }
 
-  buscar(nombreBuscado:string){
-    console.log('Home.buscar recibió:', nombreBuscado);
-    nombreBuscado=nombreBuscado.toLowerCase();
-    this.arrayFiltred=this.comidas.filter(u => u.nombre.toLowerCase().includes(nombreBuscado));
+  buscar(textoBuscado:string){
+    console.log('Home.buscar recibió:', textoBuscado);
+    textoBuscado=textoBuscado.toLowerCase();
+    this.arrayFiltred=this.comidas.filter(comida =>
+      comida.nombre.toLowerCase().includes(textoBuscado) ||
+      (comida.categoria && comida.categoria.toLowerCase().includes(textoBuscado))
+    );
   }
 
 }

@@ -30,6 +30,13 @@
             color: #2d3748;
             font-weight: 500;
         }
+
+        .reseña-item > div {
+            padding-right: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
         
         .reseña-arrow {
             margin-right: 1rem;

@@ -7,6 +7,8 @@ from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
 from flask_cors import CORS
+import os
+from flask import send_from_directory
 
 api = Api()
 
@@ -56,6 +58,12 @@ def create_app():
 
     #Añadir comida a pedido
     api.add_resource(resources.Añadir_carritoResource, '/anadircarrito')
+    api.add_resource(resources.SubirImagenComida, '/comida/imagen')
+    api.add_resource(resources.ReponerStockResource, '/comida/<id>/stock')
+    api.add_resource(resources.CategoriaResource, '/categoria/<id>')
+    api.add_resource(resources.CategoriasResource, '/categorias')
+    api.add_resource(resources.PromocionResource, '/promocion/<id>')
+    api.add_resource(resources.PromocionesResource, '/promociones')
 
     #Eviar mail a todos los usuarios
     api.add_resource(resources.EnviarEmailMasivoResource, '/email-masivo')
@@ -78,5 +86,12 @@ def create_app():
     app.config['FLASKY_MAIL_SENDER'] = os.getenv('FLASKY_MAIL_SENDER')
     
     mailsender.init_app(app)
+    
+
+
+    @app.route('/assets/<nombre_archivo>')
+    def servir_imagen(nombre_archivo):
+        ruta_assets = '/home/facundo/Escritorio/ESCRITORIO/ProgramacionI-2025/frontend/app_rotiseria/src/assets'
+        return send_from_directory(ruta_assets, nombre_archivo)
 
     return app

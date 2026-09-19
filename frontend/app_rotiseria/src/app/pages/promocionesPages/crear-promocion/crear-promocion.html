@@ -1,0 +1,17 @@
+<app-header></app-header>
+
+<div class="crear-promocion-content">
+    <div class="container">
+        <!-- Delegamos el renderizado del form al componente genérico
+             Formulario, pasándole la config armada en el .ts. El
+             Formulario no sabe nada de "promociones" en particular. -->
+        <app-formulario
+            [config]="formConfig"
+            [infoActual]="null"
+            [funcionGuardarCambio]="crearPromocion">
+        </app-formulario>
+    </div>
+</div>
+
+<app-footer></app-footer>
+

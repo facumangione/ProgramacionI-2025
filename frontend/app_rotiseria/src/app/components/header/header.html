@@ -17,6 +17,7 @@
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li><a class="dropdown-item" (click)="goToResenas('todas')">Reseñas</a></li>
+                            <li><a class="dropdown-item" (click)="goToPromociones()">Promociones</a></li>
 
                             @if (getRol() == 'CLIENTE'){
                             <li><a class="dropdown-item" (click)="goToPedidos()">Mis Pedidos</a></li>

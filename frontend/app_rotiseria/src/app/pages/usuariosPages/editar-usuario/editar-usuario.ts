@@ -31,7 +31,8 @@ export class EditarUsuario {
       telefono: ['', [Validators.required]],
       mail: ['', [Validators.required, Validators.email]],
       rol: ['', [Validators.required]],
-      activo: [false, [Validators.required]]
+      activo: [false, [Validators.required]],
+      password: ['']
     })
   }
 
@@ -92,6 +93,14 @@ export class EditarUsuario {
             { value: false, label: "DESACTIVADO" },
           ]
         },
+        { label: 'Nueva contraseña (dejar vacío para no cambiar):',
+          type: 'password',
+          formControlName: "password",
+          name: 'password',
+          value: '',
+          placeholder: "Dejar en blanco para mantener la actual",
+          required: false
+        },
       ]
     };
 
@@ -135,15 +144,19 @@ export class EditarUsuario {
   }
 
   adminPut(formData: any){
-    this.usuariosSvc.putUsuario({
+    const body: any = {
       nombre: formData.nombre,
       telefono: Number(formData.telefono),
       mail: formData.mail,
       rol: formData.rol,
       activo: formData.activo
-      },
-      this.usuario.id_usuario
-    ).subscribe({
+    };
+
+    if (formData.password) {
+      body.password = formData.password;
+    }
+
+    this.usuariosSvc.putUsuario(body, this.usuario.id_usuario).subscribe({
       next: (res) => {
         console.log('Usuario editado exitosamente:', res);
         alert('Usuario editado exitosamente');

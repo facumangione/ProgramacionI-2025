@@ -52,6 +52,11 @@ class Usuario(Resource):
         if rol=='EMPLEADO':
             data.pop('rol',None)
 
+        # si viene password nuevo, hashearlo con el setter correcto
+        nueva_password = data.pop('password', None)
+        if nueva_password:
+            usuario.plain_password = nueva_password
+
         data=data.items()
 
         for key,value in data:

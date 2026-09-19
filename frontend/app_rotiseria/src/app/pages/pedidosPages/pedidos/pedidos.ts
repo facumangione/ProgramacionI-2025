@@ -158,6 +158,32 @@ export class Pedidos {
     }
   }
 
+    showCancelarButton(pedido: any) {
+    const rol = localStorage.getItem('rol');
+    const id_usuario = Number(localStorage.getItem('id_usuario'));
+
+    if (rol !== 'CLIENTE') return false;
+    if (pedido.id_usuario !== id_usuario) return false;
+    if (pedido.estado === 'LISTO' || pedido.estado === 'ENTREGADO') return false;
+
+    return true;
+  }
+
+  cancelarPedido(id_pedido: any) {
+    if (!confirm('¿Seguro que querés cancelar este pedido?')) return;
+
+    this.pedidosSvc.deletePedido(id_pedido).subscribe({
+      next: () => {
+        alert('Pedido cancelado');
+        this.cargarPagina(this.currentPage);
+      },
+      error: (err) => {
+        console.error('Error al cancelar pedido:', err);
+        alert('Error al cancelar el pedido');
+      }
+    });
+  }
+
   showResenarButton(id_usuario_pedido:number){
     const id = Number(localStorage.getItem('id_usuario'))
     if (id==id_usuario_pedido){

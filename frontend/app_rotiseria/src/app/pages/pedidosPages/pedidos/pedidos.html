@@ -35,35 +35,43 @@
                 </div>
             </div>
 
-            <div class="row table-header">
-                <div class="col-2 text-center">ID_PEDIDO</div>
-                <div class="col-2">COMIDAS</div>
-                <div class="col-2 text-center">ESTADO</div>
-                <div class="col-2 text-center">FECHA</div>
-                <div class="col-1 text-center">TOTAL</div>
+            <div class="row table-header d-none d-md-flex">
+                <div class="col-md-2 text-center">ID_PEDIDO</div>
+                <div class="col-md-2">COMIDAS</div>
+                <div class="col-md-2 text-center">ESTADO</div>
+                <div class="col-md-2 text-center">FECHA</div>
+                <div class="col-md-1 text-center">TOTAL</div>
             </div>
             @for (pedido of arrayFiltred; track pedido.id_pedido){
             <div class="pedido-row">
                 <div class="row pedido-item">
-                    <div class="col-2 text-center">
+                    <div class="col-12 col-md-2 text-center">
                         <span class="pedido-arrow">▶</span>
+                        <span class="d-md-none fw-bold">ID: </span>
                         <span>{{pedido.id_pedido}}</span>
                     </div>
-                    <div class="col-2">
+                    <div class="col-12 col-md-2">
+                        <span class="d-md-none fw-bold">Comidas: </span>
                         <span>{{ getComida(pedido) }}</span>
                     </div>
-                    <div class="col-2 text-center">
+                    <div class="col-12 col-md-2 text-center">
+                        <span class="d-md-none fw-bold">Estado: </span>
                         <span>{{pedido.estado}}</span>
                     </div>
-                    <div class="col-2 text-center">
+                    <div class="col-12 col-md-2 text-center">
+                        <span class="d-md-none fw-bold">Fecha: </span>
                         <span>{{pedido.fecha}}</span>
                     </div>
-                    <div class="col-1 text-center">
+                    <div class="col-12 col-md-1 text-center">
+                            <span class="d-md-none fw-bold">Total: </span>
                             <strong>${{pedido.total}}</strong>
                         </div>
-                    <div class="col-3 text-end">
+                    <div class="col-12 col-md-3 text-md-end">
                         @if (showResenarButton(pedido.id_usuario) == true ){ 
                             <a (click)="goToCrearResena(pedido)" class="btn btn-anadir-resena">RESEÑAR</a>
+                        }
+                        @if (showCancelarButton(pedido) == true){
+                            <button (click)="cancelarPedido(pedido.id_pedido)" class="btn btn-eliminar-small">CANCELAR</button>
                         }
                         @if (showEditDeleteButtons() == true){
                             <button (click)="eliminarPedido(pedido.id_pedido)" class="btn btn-eliminar-small">ELIMINAR</button>

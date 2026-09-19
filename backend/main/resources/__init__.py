@@ -1,12 +1,24 @@
+#En resources/__init__.py centralizo las exportaciones de todas las clases Resource,
 from .usuario import Usuario as UsuarioResource
 from .usuario import Usuarios as UsuariosResource
 from .pedido import Pedido as PedidoResource
 from .pedido import Pedidos as PedidosResource
 from .comida import Comida as ComidaResource 
 from .comida import Comidas as ComidasResource
+from .comida import SubirImagenComida as SubirImagenComida
+from .comida import ReponerStock as ReponerStockResource
 from .resena import Resena as ResenaResource
 from .resena import Resenas as ResenasResource
 from .notificacion import Notificacion as NotificacionResource
 from .notificacion import Notificaciones as NotificacionesResource
 from .anadir_carrito import Anadir_carrito as Añadir_carritoResource
 from .email_masivos import EnviarEmailMasivo as EnviarEmailMasivoResource
+from .categoria import Categoria as CategoriaResource
+from .categoria import Categorias as CategoriasResource
+from .promocion import Promocion as PromocionResource
+from .promocion import Promociones as PromocionesResource
+
+
+
+
+

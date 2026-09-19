@@ -9,16 +9,18 @@ class Usuario(db.Model):
     telefono=db.Column(db.Integer,nullable=False)
     rol=db.Column(db.Enum('ADMIN','CLIENTE','EMPLEADO'),nullable=False,server_default='CLIENTE')
     activo = db.Column(db.Boolean, default=False, nullable=False)
+    cancelaciones = db.Column(db.Integer, default=0, nullable=False)
+    bloqueado = db.Column(db.Boolean, default=False, nullable=False)
 
     resenas=db.relationship("Resena", back_populates="usuario",cascade="all, delete-orphan")
     notificaciones=db.relationship("Notificacion", back_populates="usuario",cascade="all, delete-orphan")
     pedidos=db.relationship("Pedido", back_populates="usuario",cascade="all, delete-orphan")
 
     @property
-    def plain_passsword(self):
+    def plain_password(self):
         raise AttributeError('password cant be read')
 
-    @plain_passsword.setter
+    @plain_password.setter
     def plain_password(self,password):
         self.password=generate_password_hash(password)
 
@@ -36,6 +38,8 @@ class Usuario(db.Model):
             'telefono':self.telefono,
             'rol':self.rol,
             'activo': self.activo,
+            'cancelaciones': self.cancelaciones,
+            'bloqueado': self.bloqueado,
             'cantidad_pedidos':len(self.pedidos)
         }
         return usuario_json 

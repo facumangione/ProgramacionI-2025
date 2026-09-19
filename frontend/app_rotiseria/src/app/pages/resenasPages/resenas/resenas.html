@@ -12,30 +12,34 @@
 
     <div class="reseñas-content">
         <div class="container">
-            <div class="row table-header">
-                <div class="col-2 text-center">USUARIO</div>
-                <div class="col-2 text-center">COMIDA</div>
-                <div class="col-2 text-center">CALIFICACIÓN</div>
-                <div class="col-6">COMENTARIO</div>
+            <div class="row table-header d-none d-md-flex">
+                <div class="col-md-2 text-center">USUARIO</div>
+                <div class="col-md-2 text-center">COMIDA</div>
+                <div class="col-md-2 text-center">CALIFICACIÓN</div>
+                <div class="col-md-6">COMENTARIO</div>
             </div>
             @for (resena of resenas; track resena.id_resena){
             <div class="reseña-row">
                 <div class="row reseña-item">
-                    <div class="col-2 text-center">
+                    <div class="col-12 col-md-2 text-center">
                         <span class="reseña-arrow">▶</span>
+                        <span class="d-md-none fw-bold">Usuario: </span>
                         <span>{{resena.nombre_usuario}}</span>
                     </div>
-                    <div class="col-2 text-center">
+                    <div class="col-12 col-md-2 text-center">
+                        <span class="d-md-none fw-bold">Comida: </span>
                         <span>{{resena.nombre_comida}}</span>
                     </div>
-                    <div class="col-2 text-center">
+                    <div class="col-12 col-md-2 text-center">
+                        <span class="d-md-none fw-bold">Calificación: </span>
                         <span>{{resena.calificacion}}</span>
                     </div>
-                    <div class="col-4">
+                    <div class="col-12 col-md-4">
+                        <span class="d-md-none fw-bold">Comentario: </span>
                         <span>{{resena.comentario}}</span>
                     </div>
                     @if (showEditDeleteButtons(resena.id_usuario) == true){
-                    <div class="col-2 text-end">
+                    <div class="col-12 col-md-2 text-md-end">
                         <button (click)="eliminarResena(resena.id_resena)" class="btn btn-eliminar-small">ELIMINAR</button>
                         <a (click)="goToEditarResena(resena.id_resena)" class="btn btn-editar-small">EDITAR</a>
                     </div>
